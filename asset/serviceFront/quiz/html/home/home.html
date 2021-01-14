@@ -1,0 +1,786 @@
+<!doctype html>
+<html lang="ko">
+	<head>
+	  <meta charset="UTF-8">
+	  <meta name="Generator" content="EditPlus®">
+	  <meta name="Author" content="">
+	  <meta name="Keywords" content="">
+	  <meta name="Description" content="">
+	  <title>Document</title>
+	  
+	  <script type="text/javascript" src="http://www.i-scream.co.kr/asset/serviceFront/js/jquery-1.9.1.min.js"></script>
+	  <script type="text/javascript" src="http://www.i-scream.co.kr/asset/serviceFront/js/default.js"></script>
+	  <script type="text/javascript" src="../../../js/jquery.bxslider.min.js"></script>
+	  <script type="text/javascript" src="../../../js/newCommon.js"></script>
+
+	  <link rel="stylesheet" href="../../../css/style.css" />
+	  <link rel="stylesheet" href="../../../css/default2.css" />
+	  <link rel="stylesheet" href="../../../css/bbs.css" />
+	  <!-- <link rel="stylesheet" href="http://www.i-scream.co.kr/asset/serviceFront/css/custom.css"> -->
+
+	  <script type="text/javascript" defer="defer"> /* 메인 카테고리영역 참고 */
+		var getContents = true;
+
+		function fnGetContentsList(target){
+			var category_type =  $(target).data('type');
+			var listSize = 0;
+			
+			if(getContents || (getContents == false && $(target).closest('li').hasClass('active') == false)){
+				/*$.ajax({
+					url : '/user/main/SelectCategoryContentsList.json',
+					async : false,
+					type : 'POST',
+					dataType : 'html',
+					data : {
+						'category_type' : category_type
+						,'categorySequence' : $(target).data('seq')
+					},
+					success : function(data){
+						var e = $(data).find('.quiz-tags-item .quiz-image-box');
+						$(".quiz-tags-item").html(e); 				    
+						getContents = false; 				    
+					}
+				});*/
+			}else{
+				//카테고리 url 미설정
+				/*if($(target).data("href").trim() == ''){
+					return false;
+				}else{
+					location.href = $(target).data("href");
+				}*/
+			}
+		} 
+
+		$(document).ready(function(){
+			var quizItemSlider = $('.quizSlider').bxSlider({
+				auto: false,
+				pager: true,
+				controls: true,
+				autoControlsCombine: false,
+				autoControls: false,
+				minSlides: 3,
+				maxSlides: 3,
+				moveSlides: 3,
+				slideWidth: 242,
+				slideMargin: 12
+			});
+		});
+	  </script>
+	</head> 
+<body>
+<aside id="SkipToQuick" class="minimal fix"><input type="checkbox" id="quickSwitch" checked="checked" class="showHideSwitch"><label for="quickSwitch">퀵메뉴 토글 스위치</label><section><h2>Quick Pad</h2><div class="userLog" id="SkipToLogin"><a href="/user/research/mypage/member_modify_check.do" class="userThumb"><img id="myPhoto" src="/asset/serviceFront/images/temp/userThumbs.jpg" alt="개발999 선생님"></a><p style="z-index:100;"><strong class="nickname">개발</strong><em class="s">경기시공초등학교</em><span class="userType ustyp_2">관리자</span><button type="button" onclick="wiseLogCommon.clickDataSend('132');location.href='j_spring_security_logout';">로그아웃</button></p><div><a href="/user/research/mypage/message_list.do" onclick="wiseLogCommon.clickDataSend('164');ga('send', 'event', '쪽지', '클릭', '쪽지열람_퀵패드');" title="쪽지">쪽지<strong style="letter-spacing:-1px;"><imagine class="noReadCount">0</imagine></strong></a><a href="/user/research/mypage/member_modify_check.do" onclick="wiseLogCommon.clickDataSend('165');" title="정보수정">정보수정</a></div></div><ul><li class="paid"><a href="/user/member/pay.do" onclick="wiseLogCommon.clickDataSend('135');ga('send', 'event', '유료신청', '클릭', '유료신청-퀵패드');" title="유료신청"><span>유료신청</span></a></li><li class="pod"><a href="#none" title="나만의 상품만들기" onclick="javascript:fnLinkedDiy();"><span>나만의 상품만들기</span></a></li><li class="iBox"><a href="#none" title="자료띵커벨 보관함" onclick="wiseLogCommon.clickDataSend('136');javascript:golibrary();"><span>자료띵커벨 보관함</span></a></li><li class="attention"><a href="javascript:attention();" onclick="wiseLogCommon.clickDataSend('137');" title="주의집중"><span>주의집중</span></a></li><li class="writing"><a href="javascript:fnShowBoard();" onclick="wiseLogCommon.clickDataSend('138');" title="판서"><span>판서</span></a></li><li class="timer"><a href="javascript:fnShowTimer();" onclick="wiseLogCommon.clickDataSend('139');" title="타이머"><span>타이머</span></a></li><li class="notification"><a href="javascript:fnNoticeNoteOpen();" onclick="wiseLogCommon.clickUrlSend('M007');wiseLogCommon.clickDataSend('140');" title="우리반 알림장"><span>우리반 알림장</span></a></li><li class="sms"><a href="#none" title="무료문자" onclick="javascript:goSMS();"><span>무료문자</span></a></li><li class="announcement"><a href="javascript:fnPopHelpOpen();" onclick="wiseLogCommon.clickDataSend('141');" title="발표도우미"><span>발표도우미</span></a></li><li class="colorPen"><a href="javascript:fnPaint();" onclick="wiseLogCommon.clickDataSend('142');" title="색연필"><span>색연필</span></a></li></ul><a href="#" class="totop" title="Top">Top</a><audio id="attention"></audio></section></aside>
+<div id="wrap">
+<header id="header">
+    <div>
+        <div>
+            <ul class="family">
+                <li class="current"><a href="http://www.i-scream.co.kr/" target="_self" onclick="wiseLogCommon.clickDataSend('10');" title="아이스크림">아이스크림</a></li>
+                <li><a href="http://teacher.i-scream.co.kr/" target="_blank" onclick="wiseLogCommon.clickUrlSend('M001');wiseLogCommon.clickDataSend('11');" title="연수원">연수원</a></li>
+                <li><a href="#none" class="asp_move_es_btn" onclick="wiseLogCommon.clickUrlSend('M002');wiseLogCommon.clickDataSend('12');" title="교육쇼핑몰">교육쇼핑몰</a></li>
+                <li><a href="http://life.i-screammall.co.kr/sso/confirm" target="_blank" onclick="wiseLogCommon.clickUrlSend('M003');wiseLogCommon.clickDataSend('13');" title="아이스크림복지몰">아이스크림복지몰</a></li>
+            </ul>
+            <ul class="util">
+                <li><a href="j_spring_security_logout" onclick="wiseLogCommon.clickDataSend('16');">로그아웃</a></li>
+                <li class=""><a href="/user/research/mypage/research_index.do" onclick="wiseLogCommon.clickDataSend('17');">내연구실</a></li>
+                <li class="spot">
+                	<a href="/user/member/pay.do" onclick="wiseLogCommon.clickDataSend('18');"><strong>유료신청</strong></a>
+                </li>
+                <li class=""><a href="/user/custom/iscream_info_01.do" target="_blank" onclick="wiseLogCommon.clickDataSend('19');">고객센터</a></li>
+                <li class="new"><a href="javascript:exePopOpen();">간편접속</a></li>
+            </ul>
+        </div>
+    </div>
+    <div>
+        <h1>
+	       	<a href="/user/main/MainPage.do" target="_self" onclick="iscreamLog.clickLogSequence('63','banner');" alt="로고_기본">
+	       		<img src="http://www.i-scream.co.kr/asset/serviceFront/images/common/logo_beta.png" alt="로고_기본">
+	       	</a>   
+        </h1>        
+        <fieldset>
+            <legend>검색</legend>
+            <form id="mainSearchForm" name="mainSearchForm" method="post">
+           		<input id="searchQuery" name="searchQuery" type="search" title="검색어" class="placeholder" placeholder="검색어를 입력하세요." accesskey="s" value="" onkeyup="emptyChk();" onkeypress="fnSearchGoEnter(event)">
+            <button type="button" onclick="fnSearchGo();"><span class="blind">검색</span></button>
+            </form>
+        </fieldset>
+		<div class="headerBnn">
+	       	<a href="http://www.i-scream.co.kr/user/member/pay.do" target="_self" onclick="iscreamLog.clickLogSequence('372','banner');" alt="연수플러스">
+	       		<img src="http://download.i-scream.co.kr/s_images/banner/main/upload/2017/04/05/170405182638_iscream_header_bn_20170405.png" alt="연수플러스">
+	       	</a>       
+		</div>
+	</div>
+   	 <nav id="SkipToGNB">
+   		<div class="allNav">
+            <input type="checkbox" id="showAllNav" class="showHideSwitch" onclick="wiseLogCommon.clickDataSend('113');"><label for="showAllNav">전체메뉴보기</label>
+        </div>
+        <ul>
+            <!-- <li><a href="#none" title="전체메뉴보기">전체메뉴보기</a></li> -->
+            <li class=""><a href="/user/subject/SubjectChasiList.do" onclick="wiseLogCommon.clickDataSend('114');"><span>교과활동</span></a></li>
+            <li class=""><a href="/user/discretion/index.do" onclick="wiseLogCommon.clickDataSend('115');"><span>창의적 체험활동</span></a></li>
+            <li class=""><a href="/user/rest/RestList.do" onclick="wiseLogCommon.clickDataSend('116');"><span>쉬는 시간</span></a></li>
+            <li class=""><a href="/user/evaluation/evaluationList.do" onclick="wiseLogCommon.clickDataSend('117');"><span>평가자료</span></a></li>
+            <li class=""><a href="/user/reference/Submain.do" data-title="UP! 교실 무용" onclick="wiseLogCommon.clickDataSend('167');"><span>자료실</span></a></li><!-- 20170529 변경 -->
+            <li class=""><a href="/user/blog/ssamBlogMain.do" onclick="wiseLogCommon.clickDataSend('168');"><span>쌤블로그</span></a></li>            
+            <li class=""><a href="" onclick=""><span><i class="ssamtube"><img src="/asset/serviceFront/images/ssamtube/ssamtube.svg" alt="" /></i> 쌤튜브</span></a></li>
+            <li class=""><a href="" onclick=""><span>띵커벨</span></a></li>
+        </ul>
+    </nav>
+	<!-- 위치변경으로 인한 임시 주석 처리(2015.08.17) -->
+</header>
+<div class="subArea">
+
+	<nav id="SkipToLNB">
+		<h2><span>띵커벨</span></h2>
+		<ul>
+			<li><a href="" onclick="">홈</a></li>
+			<li class="current"><a href="" onclick="">띵커벨 보관함</a>
+				<ul>
+					<li class="current"><a href="#none">내 자료</a></li>
+					<li><a href="#none">스크랩</a></li>
+				</ul>
+			</li>
+			<li><a href="" onclick="">통계</a></li>
+			<li><a href="" onclick="">이용안내</a></li>
+		</ul>
+		<ul style="border:0px;">
+			<li>
+				<a href="http://www.i-scream.co.kr/user/discretion/popup/selfRegulatedActivity01.do" target="_blank" onclick="iscreamLog.clickLogSequence('342','banner');" alt="자율활동">
+					<img src="http://download.i-scream.co.kr/s_images/banner/main/upload/2017/03/10/170310170012_LNB_bn_02_170310.png">
+				</a>
+			</li>
+			<li>
+				<a href="/asset/serviceFront/html/subject/math_basic.html" target="_blank" onclick="iscreamLog.clickLogSequence('122','banner');" alt="수학 기초 연산 자료">
+					<img src="http://download.i-scream.co.kr/s_images/banner/main/upload/2016/11/28/161128085900_lnb_bn_math_161123.png">
+				</a>
+			</li>					
+		</ul>
+	</nav>
+	<section id="SkipToContents">
+		<h3  class="currentMenuName">띵커벨</h3>
+
+		<main>
+			<div class="btn-right-top">
+				<button type="button" class="btn-qmake"><span>만들기</span></button>
+			</div>
+			<div class="data-table-list">		
+				<div class="quiz-tags-list">
+					<nav>
+						<a class="prev" href="#none" title="이전"><span>이전</span></a>
+						<a class="next" href="#none" title="다음"><span>다음</span></a>
+					</nav>
+					<div class="tabs-nav">
+						<ul>
+							<li class="active"><a href="#none">#2018년</a></li>
+							<li><a href="#none">#골든벨</a></li>
+							<li><a href="#none">#우리반</a></li>
+							<li><a href="#none">#상식</a></li>
+							<li><a href="#none">#퀴즈</a></li>
+							<li><a href="#none">#한국사</a></li>
+							<li><a href="#none">#만화</a></li>
+							<li><a href="#none">#까박샘</a></li>
+							<li><a href="#none">#아이스크림</a></li>
+							<li><a href="#none">#과학</a></li>
+							<li><a href="#none">#사회</a></li>
+							<li><a href="#none">#국어</a></li>
+							<li><a href="#none">#수학</a></li>
+							<li><a href="#none">#영어</a></li>
+							<li><a href="#none">#중국어</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="quiz-tags-item">
+					<ul class="quiz-image-box quizSlider"><!-- 썸네일 형태일땐 quiz-image-box  -->
+						<li>
+							<section>
+								<a href="#none" class="quiz-thumb">							
+									<figure>
+										<img src="../../images/temp/thumb01.jpg" alt="국어 퀴즈 10문제" />
+										<figcaption class="lbl">
+											<span>국어</span>									
+											<span>퀴즈 10문제</span>
+										</figcaption>							
+									</figure>
+								</a>
+								<a href="#none" class="tit">2018년 우리반 골든벨 2018년 우리반 골든벨 2018년 우리반 골든벨 - 상식 퀴즈 결승전</a>
+								<span class="author">
+									<a href="#none">coolside</a> / <time>1주전</time>
+								</span>
+								<div class="tags">
+									<span>#까박샘</span><span>#아이스크림</span><span>#과학</span><span>#퀴즈</span>
+									<span>#까박샘</span><span>#아이스크림</span><span>#과학</span><span>#퀴즈</span>
+								</div>
+								<div class="btn_list">
+									<a href="#none" onclick=""><em>999</em>스크랩</a>
+									<a href="#none" onclick="">미리보기</a>
+									<a href="#none" onclick="" class="spot">시작하기</a>
+								</div>
+							</section>					
+							<div class="chasi">
+								<span>3학년 > 1학기 > [개정 전 교과] > 국어 1-1 ㉮/국어활동 1-1 ㉮ > 2. 재미있는 낱자 > [1-3차시]한글의 자음자를 알고 순서에 맞게 쓰기(국22-29p)</span>
+							</div>
+						</li>
+						<li>
+							<section>
+								<a href="#none" class="quiz-thumb">							
+									<figure>
+										<img src="../../images/temp/thumb01.jpg" alt="국어 퀴즈 10문제" />
+										<figcaption class="lbl">
+											<span>국어</span>									
+											<span>퀴즈 10문제</span>
+										</figcaption>							
+									</figure>
+								</a>
+								<a href="#none" class="tit">2018년 우리반 골든벨 2018년 우리반 골든벨 2018년 우리반 골든벨 - 상식 퀴즈 결승전</a>
+								<span class="author">
+									<a href="#none">coolside</a> / <time>1주전</time>
+								</span>
+								<div class="tags">
+									<span>#까박샘</span><span>#아이스크림</span><span>#과학</span><span>#퀴즈</span>
+									<span>#까박샘</span><span>#아이스크림</span><span>#과학</span><span>#퀴즈</span>
+								</div>
+								<div class="btn_list">
+									<a href="#none" onclick=""><em>1k</em>스크랩</a>
+									<a href="#none" onclick="">미리보기</a>
+									<a href="#none" onclick="" class="spot">시작하기</a>
+								</div>
+							</section>					
+							<div class="chasi">
+								<span>3학년 > 1학기 > [개정 전 교과] > 국어 1-1 ㉮/국어활동 1-1 ㉮ > 2. 재미있는 낱자 > [1-3차시]한글의 자음자를 알고 순서에 맞게 쓰기(국22-29p)</span>
+							</div>
+						</li>			
+						<li>
+							<section>
+								<a href="#none" class="quiz-thumb">							
+									<figure>
+										<img src="../../images/temp/thumb01.jpg" alt="국어 퀴즈 10문제" />
+										<figcaption class="lbl">
+											<span>국어</span>									
+											<span>퀴즈 10문제</span>
+										</figcaption>							
+									</figure>
+								</a>
+								<a href="#none" class="tit">2018년 우리반 골든벨 - 상식 퀴즈 결승전</a>
+								<span class="author">
+									<a href="#none">coolside</a> / <time>1주전</time>
+								</span>
+								<div class="tags">
+									<span>#까박샘</span><span>#아이스크림</span><span>#과학</span><span>#퀴즈</span>
+								</div>
+								<div class="btn_list">
+									<a href="#none" onclick="">공유안함</a>
+									<a href="#none" onclick="">미리보기</a>
+									<a href="#none" onclick="" class="spot">시작하기</a>
+								</div>
+							</section>					
+							<div class="chasi">
+								<span>1학기 > [개정 전 교과] > 국어 1-1 ㉮/국어활동 1-1 ㉮ 국어 1-1 ㉮/국어활동 1-1 ㉮ > 2. 재미있는 낱자 > [1-3차시]한글의 자음자를 알고 순서에 맞게 쓰기(국22-29p)</span>
+							</div>
+						</li>
+						<li>
+							<section>
+								<a href="#none" class="quiz-thumb">							
+									<figure>
+										<img src="../../images/temp/thumb01.jpg" alt="국어 퀴즈 10문제" />
+										<figcaption class="lbl">
+											<span>국어</span>									
+											<span>퀴즈 10문제</span>
+										</figcaption>							
+									</figure>
+								</a>
+								<a href="#none" class="tit">2018년 우리반 골든벨 2018년 우리반 골든벨 2018년 우리반 골든벨 - 상식 퀴즈 결승전</a>
+								<span class="author">
+									<a href="#none">coolside</a> / <time>1주전</time>
+								</span>
+								<div class="tags">
+									<span>#까박샘</span><span>#아이스크림</span><span>#과학</span><span>#퀴즈</span>
+									<span>#까박샘</span><span>#아이스크림</span><span>#과학</span><span>#퀴즈</span>
+								</div>
+								<div class="btn_list">
+									<a href="#none" onclick=""><em>999</em>스크랩</a>
+									<a href="#none" onclick="">미리보기</a>
+									<a href="#none" onclick="" class="spot">시작하기</a>
+								</div>
+							</section>					
+							<div class="chasi">
+								<span>3학년 > 1학기 > [개정 전 교과] > 국어 1-1 ㉮/국어활동 1-1 ㉮ > 2. 재미있는 낱자 > [1-3차시]한글의 자음자를 알고 순서에 맞게 쓰기(국22-29p)</span>
+							</div>
+						</li>
+						<li>
+							<section>
+								<a href="#none" class="quiz-thumb">							
+									<figure>
+										<img src="../../images/temp/thumb01.jpg" alt="국어 퀴즈 10문제" />
+										<figcaption class="lbl">
+											<span>국어</span>									
+											<span>퀴즈 10문제</span>
+										</figcaption>							
+									</figure>
+								</a>
+								<a href="#none" class="tit">2018년 우리반 골든벨 2018년 우리반 골든벨 2018년 우리반 골든벨 - 상식 퀴즈 결승전</a>
+								<span class="author">
+									<a href="#none">coolside</a> / <time>1주전</time>
+								</span>
+								<div class="tags">
+									<span>#까박샘</span><span>#아이스크림</span><span>#과학</span><span>#퀴즈</span>
+									<span>#까박샘</span><span>#아이스크림</span><span>#과학</span><span>#퀴즈</span>
+								</div>
+								<div class="btn_list">
+									<a href="#none" onclick=""><em>1k</em>스크랩</a>
+									<a href="#none" onclick="">미리보기</a>
+									<a href="#none" onclick="" class="spot">시작하기</a>
+								</div>
+							</section>					
+							<div class="chasi">
+								<span>3학년 > 1학기 > [개정 전 교과] > 국어 1-1 ㉮/국어활동 1-1 ㉮ > 2. 재미있는 낱자 > [1-3차시]한글의 자음자를 알고 순서에 맞게 쓰기(국22-29p)</span>
+							</div>
+						</li>			
+						<li>
+							<section>
+								<a href="#none" class="quiz-thumb">							
+									<figure>
+										<img src="../../images/temp/thumb01.jpg" alt="국어 퀴즈 10문제" />
+										<figcaption class="lbl">
+											<span>국어</span>									
+											<span>퀴즈 10문제</span>
+										</figcaption>							
+									</figure>
+								</a>
+								<a href="#none" class="tit">2018년 우리반 골든벨 - 상식 퀴즈 결승전</a>
+								<span class="author">
+									<a href="#none">coolside</a> / <time>1주전</time>
+								</span>
+								<div class="tags">
+									<span>#까박샘</span><span>#아이스크림</span><span>#과학</span><span>#퀴즈</span>
+								</div>
+								<div class="btn_list">
+									<a href="#none" onclick="">공유안함</a>
+									<a href="#none" onclick="">미리보기</a>
+									<a href="#none" onclick="" class="spot">시작하기</a>
+								</div>
+							</section>					
+							<div class="chasi">
+								<span>1학기 > [개정 전 교과] > 국어 1-1 ㉮/국어활동 1-1 ㉮ 국어 1-1 ㉮/국어활동 1-1 ㉮ > 2. 재미있는 낱자 > [1-3차시]한글의 자음자를 알고 순서에 맞게 쓰기(국22-29p)</span>
+							</div>
+						</li>
+					</ul>
+				</div>	
+				
+				<div class="q-sch">
+					<button class="btn-filter" onclick="$('#mask, .pop-qfilter').show()"><span>선택조건(1)</span></button>
+					<fieldset action="" class="q-sch-box">
+						<legend>퀴즈, 토의·토론검색</legend>
+						<div class="select_box">
+							<a class="current" href="#"><em>제목</em><span class="icon_btn"></span></a>
+							<ul class="sel-list" seq="">
+								<li>
+									<input type="radio" id="r1" value="Y">
+									<label for="r1">제목</label>
+								</li>
+								<li>
+									<input type="radio" id="r2" value="N">
+									<label for="r2">제목</label>
+								</li>
+							</ul>
+						</div>
+						<input type="text" accesskey="s" id="" name="" value="" onfocus="this.value = this.value;">
+						<button type="submit" class="btn-sch"><span>검색</span></button>
+					</fieldset>
+
+					<div class="filtered-word">
+						<span>
+							5학년 / 2학기
+							<button class="q-del" type="button"><span>삭제</span></button>
+						</span>						
+						<span>
+							5학년 / 2학기 / 과학 / 국어 3-2 ㉯ / 1. 날씨와 우리 생활 / [3차시]이슬과 안개는 어떻게 생길까요?이슬과 안개는 어떻게 생길까요?(과150-151p,실관112-113p)
+							<button class="q-del" type="button"><span>삭제</span></button>
+						</span>
+					</div>
+				</div>
+
+				<ul class="globalTab">
+					<li>
+						<a href="#none" class="selected" onclick="fnSearchList('','', '',237712, '', 'ajax');">전체 New</a>	
+					</li>
+					<li>
+						<a href="#none" onclick="fnSearchList('','', '',237712, '', 'ajax');">퀴즈 Pick</a>	
+					</li>
+					<li>
+						<a href="#none" onclick="fnSearchList('','', '',237712, '', 'ajax');">토의·토론 Pick</a>	
+					</li>
+				</ul>
+				<div class="quiz-tags-item">
+					<ul class="quiz-image-box quizSlider"><!-- 썸네일 형태일땐 quiz-image-box  -->
+						<li>
+							<section>
+								<a href="#none" class="quiz-thumb">							
+									<figure>
+										<img src="../../images/temp/thumb01.jpg" alt="국어 퀴즈 10문제" />
+										<figcaption class="lbl">
+											<span>국어</span>									
+											<span>퀴즈 10문제</span>
+										</figcaption>							
+									</figure>
+								</a>
+								<a href="#none" class="tit">2018년 우리반 골든벨 2018년 우리반 골든벨 2018년 우리반 골든벨 - 상식 퀴즈 결승전</a>
+								<span class="author">
+									<a href="#none">coolside</a> / <time>1주전</time>
+								</span>
+								<div class="tags">
+									<span>#까박샘</span><span>#아이스크림</span><span>#과학</span><span>#퀴즈</span>
+									<span>#까박샘</span><span>#아이스크림</span><span>#과학</span><span>#퀴즈</span>
+								</div>
+								<div class="btn_list">
+									<a href="#none" onclick=""><em>999</em>스크랩</a>
+									<a href="#none" onclick="">미리보기</a>
+									<a href="#none" onclick="" class="spot">시작하기</a>
+								</div>
+							</section>					
+							<div class="chasi">
+								<span>3학년 > 1학기 > [개정 전 교과] > 국어 1-1 ㉮/국어활동 1-1 ㉮ > 2. 재미있는 낱자 > [1-3차시]한글의 자음자를 알고 순서에 맞게 쓰기(국22-29p)</span>
+							</div>
+						</li>
+						<li>
+							<section>
+								<a href="#none" class="quiz-thumb">							
+									<figure>
+										<img src="../../images/temp/thumb01.jpg" alt="국어 퀴즈 10문제" />
+										<figcaption class="lbl">
+											<span>국어</span>									
+											<span>퀴즈 10문제</span>
+										</figcaption>							
+									</figure>
+								</a>
+								<a href="#none" class="tit">2018년 우리반 골든벨 2018년 우리반 골든벨 2018년 우리반 골든벨 - 상식 퀴즈 결승전</a>
+								<span class="author">
+									<a href="#none">coolside</a> / <time>1주전</time>
+								</span>
+								<div class="tags">
+									<span>#까박샘</span><span>#아이스크림</span><span>#과학</span><span>#퀴즈</span>
+									<span>#까박샘</span><span>#아이스크림</span><span>#과학</span><span>#퀴즈</span>
+								</div>
+								<div class="btn_list">
+									<a href="#none" onclick=""><em>1k</em>스크랩</a>
+									<a href="#none" onclick="">미리보기</a>
+									<a href="#none" onclick="" class="spot">시작하기</a>
+								</div>
+							</section>					
+							<div class="chasi">
+								<span>3학년 > 1학기 > [개정 전 교과] > 국어 1-1 ㉮/국어활동 1-1 ㉮ > 2. 재미있는 낱자 > [1-3차시]한글의 자음자를 알고 순서에 맞게 쓰기(국22-29p)</span>
+							</div>
+						</li>			
+						<li>
+							<section>
+								<a href="#none" class="quiz-thumb">							
+									<figure>
+										<img src="../../images/temp/thumb01.jpg" alt="국어 퀴즈 10문제" />
+										<figcaption class="lbl">
+											<span>국어</span>									
+											<span>퀴즈 10문제</span>
+										</figcaption>							
+									</figure>
+								</a>
+								<a href="#none" class="tit">2018년 우리반 골든벨 - 상식 퀴즈 결승전</a>
+								<span class="author">
+									<a href="#none">coolside</a> / <time>1주전</time>
+								</span>
+								<div class="tags">
+									<span>#까박샘</span><span>#아이스크림</span><span>#과학</span><span>#퀴즈</span>
+								</div>
+								<div class="btn_list">
+									<a href="#none" onclick="">공유안함</a>
+									<a href="#none" onclick="">미리보기</a>
+									<a href="#none" onclick="" class="spot">시작하기</a>
+								</div>
+							</section>					
+							<div class="chasi">
+								<span>1학기 > [개정 전 교과] > 국어 1-1 ㉮/국어활동 1-1 ㉮ 국어 1-1 ㉮/국어활동 1-1 ㉮ > 2. 재미있는 낱자 > [1-3차시]한글의 자음자를 알고 순서에 맞게 쓰기(국22-29p)</span>
+							</div>
+						</li>
+						<li>
+							<section>
+								<a href="#none" class="quiz-thumb">							
+									<figure>
+										<img src="../../images/temp/thumb01.jpg" alt="국어 퀴즈 10문제" />
+										<figcaption class="lbl">
+											<span>국어</span>									
+											<span>퀴즈 10문제</span>
+										</figcaption>							
+									</figure>
+								</a>
+								<a href="#none" class="tit">2018년 우리반 골든벨 2018년 우리반 골든벨 2018년 우리반 골든벨 - 상식 퀴즈 결승전</a>
+								<span class="author">
+									<a href="#none">coolside</a> / <time>1주전</time>
+								</span>
+								<div class="tags">
+									<span>#까박샘</span><span>#아이스크림</span><span>#과학</span><span>#퀴즈</span>
+									<span>#까박샘</span><span>#아이스크림</span><span>#과학</span><span>#퀴즈</span>
+								</div>
+								<div class="btn_list">
+									<a href="#none" onclick=""><em>999</em>스크랩</a>
+									<a href="#none" onclick="">미리보기</a>
+									<a href="#none" onclick="" class="spot">시작하기</a>
+								</div>
+							</section>					
+							<div class="chasi">
+								<span>3학년 > 1학기 > [개정 전 교과] > 국어 1-1 ㉮/국어활동 1-1 ㉮ > 2. 재미있는 낱자 > [1-3차시]한글의 자음자를 알고 순서에 맞게 쓰기(국22-29p)</span>
+							</div>
+						</li>
+						<li>
+							<section>
+								<a href="#none" class="quiz-thumb">							
+									<figure>
+										<img src="../../images/temp/thumb01.jpg" alt="국어 퀴즈 10문제" />
+										<figcaption class="lbl">
+											<span>국어</span>									
+											<span>퀴즈 10문제</span>
+										</figcaption>							
+									</figure>
+								</a>
+								<a href="#none" class="tit">2018년 우리반 골든벨 2018년 우리반 골든벨 2018년 우리반 골든벨 - 상식 퀴즈 결승전</a>
+								<span class="author">
+									<a href="#none">coolside</a> / <time>1주전</time>
+								</span>
+								<div class="tags">
+									<span>#까박샘</span><span>#아이스크림</span><span>#과학</span><span>#퀴즈</span>
+									<span>#까박샘</span><span>#아이스크림</span><span>#과학</span><span>#퀴즈</span>
+								</div>
+								<div class="btn_list">
+									<a href="#none" onclick=""><em>1k</em>스크랩</a>
+									<a href="#none" onclick="">미리보기</a>
+									<a href="#none" onclick="" class="spot">시작하기</a>
+								</div>
+							</section>					
+							<div class="chasi">
+								<span>3학년 > 1학기 > [개정 전 교과] > 국어 1-1 ㉮/국어활동 1-1 ㉮ > 2. 재미있는 낱자 > [1-3차시]한글의 자음자를 알고 순서에 맞게 쓰기(국22-29p)</span>
+							</div>
+						</li>			
+						<li>
+							<section>
+								<a href="#none" class="quiz-thumb">							
+									<figure>
+										<img src="../../images/temp/thumb01.jpg" alt="국어 퀴즈 10문제" />
+										<figcaption class="lbl">
+											<span>국어</span>									
+											<span>퀴즈 10문제</span>
+										</figcaption>							
+									</figure>
+								</a>
+								<a href="#none" class="tit">2018년 우리반 골든벨 - 상식 퀴즈 결승전</a>
+								<span class="author">
+									<a href="#none">coolside</a> / <time>1주전</time>
+								</span>
+								<div class="tags">
+									<span>#까박샘</span><span>#아이스크림</span><span>#과학</span><span>#퀴즈</span>
+								</div>
+								<div class="btn_list">
+									<a href="#none" onclick="">공유안함</a>
+									<a href="#none" onclick="">미리보기</a>
+									<a href="#none" onclick="" class="spot">시작하기</a>
+								</div>
+							</section>					
+							<div class="chasi">
+								<span>1학기 > [개정 전 교과] > 국어 1-1 ㉮/국어활동 1-1 ㉮ 국어 1-1 ㉮/국어활동 1-1 ㉮ > 2. 재미있는 낱자 > [1-3차시]한글의 자음자를 알고 순서에 맞게 쓰기(국22-29p)</span>
+							</div>
+						</li>
+					</ul>
+
+					<p class="m_box2">
+						<a href="javascript:catSubmit('chasi');" class="ser_more">국어 전체보기 (5,000개)<span></span></a>
+					</p>
+				</div>
+
+			</div>
+		</main>
+	</section>
+
+	<div class="n_window pop-qfilter" id="" style="display:none;"> 
+		<div class="cont">
+			<h1>선택조건</h1>
+			<div class="cont_inner">
+				<fieldset action="" class="q-sch-box">
+					<legend>퀴즈, 토의·토론검색</legend>
+					<div class="select_box">
+						<a class="current" href="#"><em>제목</em><span class="icon_btn"></span></a>
+						<ul class="sel-list" seq="">
+							<li>
+								<input type="radio" id="popR1" value="Y">
+								<label for="popR1">제목</label>
+							</li>
+							<li>
+								<input type="radio" id="popR2" value="N">
+								<label for="popR2">내용</label>
+							</li>
+						</ul>
+					</div>
+					<input type="text" accesskey="s" id="" name="" value="" onfocus="this.value = this.value;">
+					<button type="submit" class="btn-sch"><span>검색</span></button>
+				</fieldset>
+
+				<section class="qfilter">
+					<div class="qfilter-list"><!-- changeChasiLayer.jsp 마크업 동일 -->
+						<ul>
+							<li><a href="#none">1학년</a></li>
+							<li class="active"><a href="#none">2학년</a></li>
+							<li><a href="#none">3학년</a></li>
+							<li><a href="#none">4학년</a></li>
+							<li><a href="#none">5학년</a></li>
+							<li><a href="#none">6학년</a></li>
+						</ul>
+						<ul>
+							<li><a href="#none">1학기</a></li>
+							<li class="active"><a href="#none">2학기</a></li>
+						</ul>
+						<ul>
+							<li><a href="#none">국어</a></li>
+							<li><a href="#none">도덕</a></li>
+							<li><a href="#none">사회</a></li>
+							<li><a href="#none">수학</a></li>
+							<li class="active"><a href="#none">과학</a></li>
+							<li><a href="#none">실과</a></li>
+							<li><a href="#none">체육</a></li>
+							<li><a href="#none">보건</a></li>
+							<li><a href="#none">음악</a></li>
+							<li><a href="#none">미술</a></li>
+							<li><a href="#none">영어</a></li>
+							<li><a href="#none">창의</a></li>
+							<li><a href="#none">이중언어</a></li>
+							<li><a href="#none">교과학습 보충자료</a></li>
+						</ul>
+						<ul>
+							<li class="active"><a href="#none">국정</a></li>
+						</ul>
+						<ul>
+							<li class="active"><a href="#none">1.우리역사의 시작과 발전</a></li>
+							<li><a href="#none">2.세계와 활발하게 교류한 고려</a></li>
+							<li><a href="#none">3.유교 문화가 발달한 조선</a></li>
+						</ul>
+						<ul>
+							<li><a href="#none">단원도입</a></li>
+							<li><a href="#none">1.선사시대의 생활 모습</a></li>
+							<li><a href="#none">2.최초의 국가 고조선</a></li>
+							<li><a href="#none">1.선사시대의 생활 모습</a></li>
+							<li><a href="#none">2.최초의 국가 고조선</a></li>
+						</ul>
+						<ul>
+							<li><a href="#none">[1차시]단원 학습 내용 예상하기(사6-1p)</a></li>
+							<li><a href="#none">[2차시]단원 학습 내용 예상 안하기(사6-699999p)</a></li>
+						</ul>
+					</div>					
+					<div class="btn_list">
+						<button class="spot" type="button"><span>선택조건 추가</span></button>
+						<button type="submit"><span>검색</span></a>
+					</div>
+					<div class="filtered-word">
+						<h2>선택조건</h2>
+						<span>
+							5학년 / 2학기
+							<button class="q-del" type="button"><span>삭제</span></button>
+						</span>						
+						<span>
+							3학년 / 1학기 / 수학 / 국어 3-2 ㉯ 
+							<button class="q-del" type="button"><span>삭제</span></button>
+						</span>					
+						<span>
+							2학년 / 1학기 / 과학 / 화학 3-2 ㉯ / 1. 날씨와 우리 생활 / [3차시]이슬과 안개는 어떻게 생길까요?(과150-151p,실관112-113p)
+							<button class="q-del" type="button"><span>삭제</span></button>
+						</span>					
+						<span>
+							5학년 / 2학기 / 과학 / 국어 3-2 ㉯ / 1. 날씨와 우리 생활 / [3차시]이슬과 안개는 어떻게 생길까요?이슬과 안개는 어떻게 생길까요?(과150-151p,실관112-113p)
+							<button class="q-del" type="button"><span>삭제</span></button>
+						</span>
+					</div>
+				</section>
+			</div>	
+			<a class="close" title="닫기"></a>					
+		</div>
+	</div>
+	
+	<div class="pop-selClass" id="" style="display:none;"> 
+		<div class="cont">
+			<p class="txt">띵커벨을 진행 할 클래스를 선택해주세요.</p>
+			<div class="select_box">
+				<a class="current" href="#"><em>시공초등학교 2학년 3반</em><span class="icon_btn"></span></a>
+				<ul class="sel-list" seq="">
+					<li>
+						<input type="radio" id="popR11" value="Y">
+						<label for="popR11">시공초등학교 2학년 3반</label>
+					</li>
+					<li>
+						<input type="radio" id="popR22" value="N">
+						<label for="popR22">이화여자대학교사범대학부속초등학교 1학년 3반</label>
+					</li>
+					<li>
+						<input type="radio" id="popR33" value="N">
+						<label for="popR33">판교초등학교 6학년 하늘반</label>
+					</li>
+				</ul>
+			</div>
+			<div class="btn-pop-bottom">
+				<button class="spot" type="button"><span>시작하기</span></button>
+				<button type="submit"><span>닫기</span></a>
+			</div>		
+		</div>
+	</div>
+	
+	<div class="alert" id="" style="display:none;">
+		<div class="msg" id="">
+			<strong>
+				이용기간을 선택 하세요.<br />
+				이용기간을 선택 하세요.
+			</strong>
+		</div>
+		<div class="btnCon">
+			<button onClick="$(this).closest('.alert').hide();"><span>취소</span></a>
+			<button onClick="$(this).closest('.alert').hide();"><span>확인</span></a>
+		</div>on onClick="$(this).closest('.alert').hide();"><span>확인</span></a>
+		
+	</div>
+</div>
+
+<footer>
+	<ul>
+		<li><a href="/user/introduce/index.do" onclick="wiseLogCommon.clickDataSend('1620');" title="아이스크림 소개">아이스크림 소개</a></li>
+		<li><a href="/user/introduce/sigong1.do" onclick="wiseLogCommon.clickDataSend('1621');" title="회사소개">회사소개</a></li>
+		<li><a href="/user/custom/agreement.do" title="이용약관" onclick="wiseLogCommon.clickDataSend('1622');">이용약관</a></li>
+		<li class="pp"><a href="/user/custom/self_apply.do" onclick="wiseLogCommon.clickDataSend('1623');" title="개인정보 처리방침">개인정보 처리방침</a></li>
+		<li><a href="/user/custom/suggestion.do" title="광고 및 제휴문의">광고 및 제휴문의</a></li>
+		<li class="pp"><a href="/user/custom/pc_service.do" onclick="wiseLogCommon.clickDataSend('1624');" title="PC원격지원"><strong>PC원격지원</strong></a></li>
+		<li><a href="https://www.facebook.com/iscreamteacher/" onclick="wiseLogCommon.clickDataSend('1625');" title="아이스크림 페이스북 바로가기" target="_blank"><img src="http://download.i-scream.co.kr/s_images/footer/iscream_facebook.png" style="margin-bottom:-1px;"></a></li>
+		<li><a href="http://pf.kakao.com/_xdilMxl" onclick="wiseLogCommon.clickDataSend('1626');" title="아이스크림 플러스친구 바로가기" target="_blank"><img src="http://download.i-scream.co.kr/s_images/footer/iscream_kakaotalk.png" style="margin-bottom:-2px;"></a></li>
+	</ul>
+	<section>
+		<h2>사업자 정보</h2>
+		
+		<div>
+			<article>
+				<h3>SIGONGmedia</h3>
+				<dl><dt>주소</dt><dd><address>경기도 성남시 분당구 판교역로 225-20(삼평동)</address></dd><dt>대표이사</dt><dd>박기석</dd><dt>사업자등록번호</dt><dd>120-86-33565</dd><dt>통신판매업신고번호</dt><dd>2011-경기성남-1785</dd><dt>대표전화</dt><dd>1544-6020</dd><dt>팩스</dt><dd>(02)512-5909</dd><dt>E-mail</dt><dd><a href="mailto:info@sigongmedia.co.kr" title="시공미디어에 이메일 보내기">info@sigongmedia.co.kr</a></dd></dl>
+			</article>
+			<article>
+				<h3>KBS Media</h3>
+				<dl><dt>주소</dt><dd><address>서울시 마포구 매봉산로 45 KBS미디어센터</address></dd><dt>대표자</dt><dd>이선재</dd><dt>사업자등록번호</dt><dd>116-81-40951</dd></dl>
+			</article>
+			<article>
+				
+				<h3>Customer center</h3>
+				<dl><dt>아이스크림</dt><dd>1544-6020</dd><dt>원격교육연수원</dt><dd>1544-3070</dd><dt>교육상품몰</dt><dd>1544-6040</dd><!-- <dt>아이스크림북스</dt><dd>1544-5535</dd> --><dt>복지몰</dt><dd>1544-6040</dd><dt>쌤튜브플러스</dt><dd>1833-9845</dd></dl>
+			</article>
+			<p>COPYRIGHT(C)2016 <strong>SIGONGMEDIA</strong> CO. LTD ALL RIGHTS RESERVED. <a style="color:#fff;display:none" href="http://www.freepik.com"> Selected by freepik</a><font color="white">222.231.26.207</font></p>
+			<article>
+				<h3>아이스크림 인증</h3>
+				<a href="/user/custom/news_view.do?code=news&amp;listURL=%2Fuser%2Fcustom%2Fnews.do&amp;pageIndex=&amp;search_category=&amp;no=24408&amp;currentPageNo=1" class="mark1" title="플립러닝 공식 인증 미션 파트너">플립러닝 공식 인증<br>미션 파트너</a>
+				<a href="/user/custom/notice_view.do?no=8836&amp;code=news&amp;page=6" class="mark2" title="I.M.S Learning Impact 국제이러닝 표준화기구 주최 대상 2010 ">I.M.S Learning Impact<br>국제이러닝 표준화기구<br>주최 대상 2010</a>
+				<a href="/user/custom/notice_view.do?no=6120&amp;code=news&amp;keyfield=comment&amp;keyword=%C1%F6%BD%C4%B0%E6%C1%A6%BA%CE" class="mark3" title="IT 혁신대상 지식경제부 2009">IT 혁신대상<br>지식경제부 2009</a>
+				<a href="/user/custom/news_view.do?code=news&amp;listURL=%2Fuser%2Fcustom%2Fnews.do&amp;pageIndex=&amp;search_category=&amp;no=25737&amp;currentPageNo=1" class="mark4" title="우수 콘텐츠 인증획득
+굿콘텐츠서비스인증">[굿콘텐츠서비스인증]<br>우수 콘텐츠 서비스 인증 획득</a>
+				<a href="javascript:popupWin('http://download.i-scream.co.kr/images_renew/2013/com/digital_bookmark.html', 'digital_mark', '728', '660', '0', '0', 'no', 'no', 'no', 'no', 'yes');" class="mark5" title="전자출판물 인증서 품질인증 2012">전자출판물 인증서<br>품질인증 2012</a>
+			</article>
+		</div>
+	</section>
+	<p><a href="#none" onclick="fnMakeClass();">&nbsp;&nbsp;&nbsp;</a></p>
+</footer>
+<div id="mask"></div>
+</div>
+</body>
+</html>

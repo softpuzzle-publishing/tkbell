@@ -1,0 +1,3349 @@
+<!-- viewer -->
+<!-- memo -->
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-102824088-17"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-102824088-17');
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-WTJ5V3G');
+    </script>
+    <!-- End Google Tag Manager -->
+    <title>띵커벨 ThinkerBell</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="Author" content="hyojeong yang">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <link href="/asset/css/style.make.css" rel="stylesheet" />
+    <!--[if lt IE 9]><script type="text/javascript" src="/asset/js/user/html5.js"></script><![endif]-->
+    <style>
+        .profilebox label img {
+            position: relative;
+            pointer-events: none;
+        }
+    </style>
+
+    <script src="/asset/js/jquery-1.12.4.min.js"></script>
+    <script src="/asset/js/jquery-ui.min.js"></script>
+    <script src="/asset/js/jquery.form.min.js"></script>
+    <script src="/asset/js/jquery.caret.min.js"></script>
+    <script src="/asset/js/jquery.tag-editor.min.js"></script>
+    <!--     <script src="/asset/js/common.make.js"></script> -->
+
+    <script src="/asset/js/quiz-make-common.js"></script>
+    <script src="/asset/js/quiz-iscream-chasi.js"></script>
+    <script src="/asset/js/quiz-iscream-common.js"></script>
+    <script src="/asset/js/jquery.cookie.js"></script>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+
+    <script>
+        var maxQuestionRow = 30;
+        var isAjaxing = false;
+        var serviceImgUrl = "https://www.tkbell.co.kr";
+        var localImgUrl = "http://127.0.0.1:8887/data/datafiles/quiz/";
+        var iscreamResultList; // 아이스크림 미디어 검색 결과 리스트
+        var youtubeResultList; // 유튜브 미디어 검색 결과 리스트
+        var mediaSearchPageUnit = 12; // 미디어 검색 결과 unit 수
+        var maxMediaLength = 2; // 최대 미디어 추가 수
+        var lastChasiDesc = "";
+        var $targetSearchYoutubeDiv;
+        // 수정 가능 상태 설정
+        var viewType = "";
+        var myScrapCount = parseInt("");
+        var memberSchoolType = "EM";
+        var iscreamPaidYn = "N";
+        var quizSchoolType = "";
+
+
+        /* onload */
+        $(function () {
+            // published
+            $(".sortable").sortable({
+                items: ".sortable-item",
+                handle: '.fnc-bar',
+                placeholder: 'highlight',
+                start: function (event, ui) {
+                    $(this).addClass('sorting');
+                    $(this).sortable('refreshPositions');
+                },
+                stop: function (event, ui) {
+                    $(this).removeClass('sorting');
+
+                },
+                update: function (event, ui) {
+                    // 					console.log("change!!!!!!!!!!!");
+                    reorderingQuestionRow(true);
+                    // 					reorderingQuestionRow(false);
+
+                }
+            });
+
+            // banner init
+            var bannerDateYn = "";
+            var bannerSeq = "";
+            if (bannerDateYn != "Y") {
+                $(".due-wrap").hide();
+            }
+            if (bannerSeq == "") {
+                $("#deleteQuizBannerLinkBtn").hide();
+            }
+            // banner datepicker
+            $(".cal").datepicker();
+
+            // banner 게시기간설정 선택
+            $("input:radio[name='bannerDateYn']").click(function () {
+                var checkVal = $(this).val();
+                if (checkVal == "Y") {
+                    $(".due-wrap").show();
+                } else {
+                    $(".due-wrap").hide();
+                }
+            });
+
+            // 빈칸형 보기 텍스트 설정
+            showBlankBoxResult();
+
+            // 질문 rowNo 다시 넘버링
+            // 			reorderingQuestionRow();
+            /* $('.btn-qfilter, .qfilter button').on('click', function () {
+		        var hasText = $.trim($('.option-preview').text());
+		        $('.qfilter').slideToggle();
+// 				if(hasText.length == 0) {
+// 					$('.option-preview').fadeToggle();
+// 				} else {
+// 					$('.option-preview').fadeIn();
+// 				}
+		    }); */
+
+            //tag 입력
+            $('.tags-area input[type=text]#quizTag').tagEditor({
+                placeholder: '태그를 입력하세요.(최대 10개)',
+                initialTags: [],
+                delimiter: '# ,',
+                maxLength: 12,
+                maxTags: 10,
+                removeDuplicates: false,
+            });
+
+            //hidden tag 입력
+            $('.tags-area input[type=text]#hiddenTag').tagEditor({
+                placeholder: '숨김 태그',
+                initialTags: [],
+                delimiter: '# ,',
+                maxLength: 12,
+                maxTags: 10,
+                removeDuplicates: false,
+            });
+
+            // 			$("#quizForm input[type=checkbox], input[type=radio]").checkboxradio();
+
+
+            // viewType에 따른  edit 설정
+            if (viewType == "VIEW" || viewType == "VIEW_ADMIN") {
+                // 				$("#quizTitle").prop("readonly", true);
+                // 				$("#userTags").prop("readonly", true);
+                // 				$("#quizForm input[name=sharedYn]").prop("readonly", true);
+                // 				$("#quizForm input[name=sharedYn]").checkboxradio({disabled: true});
+                $("#quizForm .ui-checkboxradio-label").css("cursor", "default");
+                $("#quizForm .profilebox label").css("cursor", "default");
+                $("#quizForm .btn-qfilter").css("cursor", "default");
+                $("#quizForm .qfilter").remove();
+                // 			} else if(viewType == "EDIT_SCRAPE"){
+            }
+
+
+            // 화면 초기화
+            initPage(viewType);
+
+            //tag 입력
+            // 			$("#userTags").tagEditor({
+            // 			    placeholder: '태그를 입력하세요.(최대 5개)',
+            // 			    initialTags: [],
+            // 			    delimiter: '# ,',
+            // 			    maxLength: 6,
+            // 			    maxTags: 5,
+            // 			    removeDuplicates: false
+            // 			});
+
+
+            // quiz action 버튼
+            // 시작하기
+            $("#playQuizBtn").click(function () {
+                var quizIdx = $("#quizForm input[name=quizIdx]").val();
+                // 				checkClassBeforePlay(quizIdx);
+                playQuizContent(quizIdx, 'ONLINE');
+            });
+
+            // 스크랩하기
+            $("#scrapQuizBtn").click(function () {
+                var quizIdx = $("#quizForm input[name=quizIdx]").val();
+                insertOnlyScrap(quizIdx);
+            });
+
+            // 신고하기
+            $("#reportQuizBtn").click(function () {
+                var quizIdx = $("#quizForm input[name=quizIdx]").val();
+                // 				alert(quizIdx + " 신고!");
+                $("#quizErrorPopupDiv").fadeIn();
+            });
+
+            // 미리보기
+            $("#previewQuizBtn").click(function () {
+                var quizIdx = $("#quizForm input[name=quizIdx]").val();
+                popQuizContentPreview(quizIdx, true);
+            });
+
+            // 콘텐츠 저장하기, 수정하기
+            $("#saveQuizBtn").click(function () {
+                saveQuizContent();
+            });
+
+            // 콘텐츠 임시 저장
+            $("#tempQuizBtn").click(function () {
+                tempQuizContent();
+            });
+
+            // 스크랩한 콘텐츠 수정하러 가기
+            $("#editScrapQuizBtn").click(function () {
+                var quizIdx = $("#quizForm input[name=quizIdx]").val();
+                var quizCategory = $("#quizForm input[name=quizCategory]").val();
+                goMakeContent(quizIdx, quizCategory, 'EDIT_SCRAPE', false);
+            });
+
+            // 콘텐츠 삭제
+            $("#deleteQuizBtn").click(function () {
+                var quizIdx = $("#quizForm input[name=quizIdx]").val();
+                if (confirm("삭제하시겠습니까?")) {
+                    // 					console.log(quizIdx);
+                    var data = {
+                        'quizIdx': quizIdx
+                    };
+                    $.ajax({
+                        url: '/user/content/deleteQuizContentOne.json',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: data,
+                        success: function (result) {
+                            if (result.success) {
+                                if (viewType == "EDIT_SCRAPE") {
+                                    history.back();
+                                } else {
+                                    // 									location.href = "/user/content/quizUserMyQuiz.do";
+                                    location.href = "/user/storage/myQuizStorage.do";
+                                }
+                            }
+                        },
+                        error: function (e) {
+                            console.log("ERROR : ", e);
+                        },
+                        beforeSend: function () {
+                            loadingProgressOn();
+                        },
+                        complete: function () {
+                            loadingProgressOff();
+                        }
+                    });
+                }
+            });
+
+            // 대표이미지 파일 선택시
+            $("#quizForm input[name=quizImageFile]").change(function (e) {
+                e.preventDefault();
+
+                var fileVal = $(this).val();
+                if (fileVal != "") {
+                    //	 		    	console.log(fileVal);
+                    var fileValSplit = fileVal.split(".");
+                    var fileExt = fileValSplit[fileValSplit.length - 1].toLowerCase();
+                    // 			    	console.log(fileExt);
+
+                    if ((fileExt == "jpg" || fileExt == "jpeg" || fileExt == "bmp" || fileExt == "png")) {
+                        $('#quizForm').ajaxForm({
+                            type: 'post',
+                            enctype: 'multipart/form-data',
+                            url: "/user/content/insertQuizTempFile.json",
+                            dataType: 'json',
+                            beforeSubmit: function () {
+                                loadingProgressOn();
+                            },
+                            success: function (result) {
+                                loadingProgressOff();
+                                console.log(result);
+                                if (result.tempFile != null) {
+                                    var imgUrl = result.tempFile.filePath + result.tempFile.newFileName;
+                                    if ((location.hostname.indexOf("localhost") > -1 || location.hostname.indexOf("10.0.1.") > -1 || location.hostname.indexOf(
+                                            "192.168.10.") > -1) &&
+                                        navigator.userAgent.toLowerCase().indexOf("chrome") > -1) {
+                                        imgUrl = 'http://localhost:8887/data/datafiles/quiz/' + result.tempFile.newFileName;
+                                    }
+                                    $("#quizForm input[name=quizImageFile]").val("");
+                                    $("#quizForm input[name=tempFileSeq]").val(result.tempFile.tempFileSeq);
+                                    $("#quizForm .quizImage").attr("src", imgUrl);
+                                    $("#quizForm .quizImage").attr("alt", "대표이미지");
+                                    $("#quizForm .quizImage").removeClass("img-default");
+                                    $("#quizForm .profilebox label").addClass("on");
+                                }
+                            },
+                            error: function (e) {
+                                console.log("ERROR : ", e);
+                                loadingProgressOff();
+                            }
+                        }).submit();
+                    } else {
+                        // 			    		alert("이미지 파일만 사용하실 수 있습니다.");
+                        var msg = "이미지 파일만 사용하실 수 있습니다.";
+                        msgLayerOpen(msg);
+                        $(this).val("");
+                    }
+
+                }
+            });
+
+
+            // 퀴즈 대표 이미지 삭제
+            $("#quizForm #deleteQuizImageBtn").click(function () {
+                var quizIdx = $("#quizForm input[name=quizIdx]").val();
+                var quizMediaSeq = $("#quizForm input[name=quizMediaSeq]").val();
+                var tempFileSeq = $("#quizForm input[name=tempFileSeq]").val();
+
+                // 저장된 파일 삭제
+                if (quizIdx != "" && quizMediaSeq != "") {
+                    var data = {
+                        'quizIdx': quizIdx,
+                        'quizMediaSeq': quizMediaSeq
+                    };
+
+                    $.ajax({
+                        url: '/user/content/deleteQuizMediaFile.json',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: data,
+                        success: function (result) {
+                            // 		    				console.log(result);
+                            $("#quizForm input[name=quizImageFile]").val("");
+                            $("#quizForm input[name=tempFileSeq]").val("");
+                            $("#quizForm .quizImage").attr("src", "/asset/images/make/noimage.png");
+                            $("#quizForm .quizImage").attr("alt", "클릭하여 대표이미지를 등록하세요.");
+
+                            $("#quizForm .quizImage").addClass("img-default");
+                            $("#quizForm .profilebox label").removeClass("on");
+                            $("#quizForm .profilebox span").show();
+                        },
+                        error: function (e) {
+                            console.log("ERROR : ", e);
+                        },
+                        beforeSend: function () {
+                            loadingProgressOn();
+                        },
+                        complete: function () {
+                            loadingProgressOff();
+                        }
+                    });
+                } else if (tempFileSeq != "") { // 임시 파일 삭제
+                    var data = {
+                        'tempFileSeq': tempFileSeq
+                    };
+
+                    $.ajax({
+                        url: '/user/content/deleteTempFile.json',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: data,
+                        success: function (result) {
+                            // 	        				console.log(result);
+                            $("#quizForm input[name=quizImageFile]").val("");
+                            $("#quizForm input[name=tempFileSeq]").val("");
+                            $("#quizForm .quizImage").attr("src", "/asset/images/make/noimage.png");
+                            $("#quizForm .quizImage").attr("alt", "클릭하여 대표이미지를 등록하세요.");
+
+                            $("#quizForm .quizImage").addClass("img-default");
+                            $("#quizForm .profilebox label").removeClass("on");
+                        },
+                        error: function (e) {
+                            console.log("ERROR : ", e);
+                        },
+                        beforeSend: function () {
+                            loadingProgressOn();
+                        },
+                        complete: function () {
+                            loadingProgressOff();
+                        }
+                    });
+                }
+            });
+
+            // 수정하러 들어올 경우 질문 영역 추가
+            //	 	 	console.log(viewType);
+            if (viewType == "EDIT" || viewType == "EDIT_SCRAPE") {
+                var questionRowCnt = $("#questionAllDiv .questionRow").length;
+                if (questionRowCnt < maxQuestionRow) {
+                    addQuestionRow();
+                }
+            }
+
+
+            // 이전 검색 정보
+            var lastUrl = '';
+            var lastSearchParam = '';
+            // console.log(lastSearchParam);
+            var searchParamObject = unserialize(lastSearchParam);
+            // console.log(searchParamObject);
+
+            var $form = $('<form id="searchForm"></form>');
+            $form.attr('action', lastUrl);
+            $form.attr('method', 'post');
+            $form.attr('target', '_self');
+            if (typeof searchParamObject.completeYn != "undefined") {
+                $form.append('<input type="hidden" name="completeYn" value="' + searchParamObject.completeYn + '">');
+            }
+            if (typeof searchParamObject.currentPageNo != "undefined") {
+                $form.append('<input type="hidden" name="currentPageNo" value="' + searchParamObject.currentPageNo + '">');
+            }
+            if (typeof searchParamObject.viewType != "undefined") {
+                $form.append('<input type="hidden" name="viewType" value="' + searchParamObject.viewType + '">');
+            }
+            if (typeof searchParamObject.orderBy != "undefined") {
+                $form.append('<input type="hidden" name="orderBy" value="' + searchParamObject.orderBy + '">');
+            }
+            if (typeof searchParamObject.quizCategory != "undefined") {
+                $form.append('<input type="hidden" name="quizCategory" value="' + searchParamObject.quizCategory + '">');
+            }
+            if (typeof searchParamObject.gradeCd != "undefined") {
+                $form.append('<input type="hidden" name="gradeCd" value="' + searchParamObject.gradeCd + '">');
+            }
+            if (typeof searchParamObject.termCd != "undefined") {
+                $form.append('<input type="hidden" name="termCd" value="' + searchParamObject.termCd + '">');
+            }
+            if (typeof searchParamObject.searchType != "undefined") {
+                $form.append('<input type="hidden" name="searchType" value="' + searchParamObject.searchType + '">');
+            }
+            if (typeof searchParamObject.searchWord != "undefined") {
+                $form.append('<input type="hidden" name="searchWord" value="' + searchParamObject.searchWord + '">');
+            }
+            $form.appendTo('body');
+        });
+
+        // 배너 preview 초기화
+        function initThumbUpload() {
+            $("#bannerImg").replaceWith($("#bannerImg").clone(true));
+            $("#bannerImg").val("");
+            $('#bannerImg').attr('class', '');
+        }
+
+        // 파일 선택시 배너 preview
+        function fnThumbChange(value) {
+            var regExp = /(.gif|.jpeg|.jpg|.png|.bmp)$/i;
+
+            var tempObj = $('#bannerImg');
+
+            if (tempObj.val() != '' && tempObj.val() != undefined) {
+                if (!regExp.test(tempObj.val().toLowerCase())) {
+                    alert("jpg, jpeg, gif, png , bmp파일만 등록 가능합니다.");
+                    initThumbUpload();
+                    return false;
+                } else if (tempObj[0].files[0].size > 10485760) {
+                    alert("파일 크기는 최대 10MB 까지 가능합니다.");
+                    initThumbUpload();
+                    return false;
+                } else {
+                    if (value.files && value.files[0]) {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            $('#thumbPreview').attr('src', e.target.result);
+                        }
+                        reader.readAsDataURL(value.files[0]);
+                    }
+                }
+            } else {
+                initThumbUpload();
+            }
+        }
+
+        // 배너 저장
+        function fnSaveBanner() {
+            console.log("fnSaveBanner");
+
+            // bannerTitle
+            if ($("#bannerTitle").val() == "") {
+                alert("배너명을 입력해주세요.");
+                $("#bannerTitle").focus();
+                return false;
+            }
+
+            // bannerImg 첨부파일
+            if ($("#bannerImg").val() == "" && $("#thumbPreview").attr("src") == "") {
+                alert("배너 이미지는 필수 입니다.");
+                $("#bannerImg").focus();
+                return false;
+            } else if ($("#bannerImg").val().indexOf(" ") > -1) {
+                alert("첨부한 파일 중 파일명에 공백이 포함되어 있습니다.\n파일명을 수정해주세요.");
+                return false;
+            }
+
+            // bannerLink
+            if ($("#bannerLink").val() == "") {
+                alert("배너 링크를 입력해주세요.");
+                $("#bannerLink").focus();
+                return false;
+            }
+
+            // bannerTarget
+            if (!$("input:radio[name=bannerLinkTarget]").is(":checked")) {
+                alert("링크 타겟을 선택해주세요.");
+                $("input:radio[name=bannerTarget]").focus();
+                return false;
+            }
+
+            // bannerOpenYn
+            if (!$("input:radio[name=bannerOpenYn]").is(":checked")) {
+                alert("게시여부를 선택해주세요.");
+                $("input:radio[name=bannerOpenYn]").focus();
+                return false;
+            }
+
+            // bannerDateYn radio
+            if (!$("input:radio[name=bannerDateYn]").is(":checked")) {
+                alert("게시기간설정을 선택해주세요.");
+                $("input:radio[name=bannerDateYn]").focus();
+                return false;
+            }
+
+            //bannerDateYn date
+            if ($("input:radio[name=bannerDateYn]:checked").val() == "Y") {
+                if ($("#bannerStartDate").val() == "") {
+                    alert("시작 날짜를 선택해주세요.");
+                    $("#bannerStartDate").focus();
+                    return false;
+                } else if ($("#bannerEndDate").val() == "") {
+                    alert("종료 날짜를 선택해주세요.");
+                    $("#bannerEndDate").focus();
+                    return false;
+                } else {
+                    var now = new Date();
+                    var year = now.getFullYear();
+                    var mon = (now.getMonth() + 1) > 9 ? '' + (now.getMonth() + 1) : '0' + (now.getMonth() + 1);
+                    var day = now.getDate() > 9 ? '' + now.getDate() : '0' + now.getDate();
+                    var nowDate = year + '-' + mon + '-' + day;
+                    console.log(nowDate);
+                    console.log($("#bannerStartDate").val());
+                    console.log($("#bannerEndDate").val());
+                    console.log(nowDate > $("#bannerStartDate").val());
+
+                    // 			      	if(!(nowDate >= $("#bannerStartDate").val() && nowDate <= $("#bannerEndDate").val())){
+                    if (nowDate > $("#bannerStartDate").val()) {
+                        alert("지난 날짜를 게시 기간으로 설정할 수 없습니다. \n 게시기간을 다시 선택해 주세요");
+                        return false;
+                    }
+                }
+            }
+
+            var quizIdx = $("#quizForm input[name=quizIdx]").val();
+            var bannerSeq = $("#bannerForm input[name=bannerSeq]").val();
+            if (quizIdx == "") {
+                alert("퀴즈 정보가 없습니다. 임시 저장 후 배너를 저장하세요.");
+            } else {
+                $("#bannerForm input[name=quizIdx]").val(quizIdx);
+                // ajax
+                $("#bannerForm").ajaxForm({
+                    type: 'post',
+                    enctype: 'multipart/form-data',
+                    url: "/admin/banner/upsertQuizBanner.json",
+                    dataType: 'json',
+                    beforeSubmit: function () {},
+                    success: function (result) {
+                        console.log(result);
+                        if (result.success) {
+                            $("#bannerForm input[name=bannerSeq]").val(result.quizBannerVO.bannerSeq);
+                            if ($("#deleteQuizBannerLinkBtn").css("display") == "none") {
+                                $("#deleteQuizBannerLinkBtn").show();
+                            }
+                            alert('배너 저장 완료');
+                        } else {
+                            alert('배너 저장 실패');
+                        }
+                    },
+                    error: function (e) {
+                        console.log("ERROR : ", e);
+                    }
+                }).submit();
+            }
+        }
+
+        // 퀴즈 배너 링크 삭제
+        function deleteQuizBannerLink() {
+            var quizIdx = $("#quizForm input[name=quizIdx]").val();
+            var bannerSeq = $("#bannerForm input[name=bannerSeq]").val();
+            if (quizIdx == "") {
+                alert("퀴즈 정보가 없습니다.");
+            } else if (bannerSeq == "") {
+                alert("배너 정보가 없습니다.");
+            } else {
+                var data = {
+                    'bannerSeq': bannerSeq,
+                    'quizIdx': quizIdx
+                };
+                console.log(data);
+
+                if (confirm("선택하신 퀴즈의 연결을 삭제하시겠습니까?")) {
+                    $.ajax({
+                        url: '/admin/banner/deleteQuizBannerLink.json',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: data,
+                        success: function (result) {
+                            console.log(result);
+                            if (result.success) {
+                                // 								location.reload();
+                                //init
+                                initThumbUpload();
+                                $("#bannerForm input[name=bannerSeq]").val("");
+                                $("#bannerForm input[name=bannerTitle]").val("");
+                                $("#bannerForm input[name=bannerLink]").val("");
+                                $("#bannerForm input[type=radio]").prop("checked", false).checkboxradio("refresh");
+                                $("#bannerForm input[type=radio][value='_blank']").prop("checked", true).checkboxradio("refresh");
+                                $("#bannerStartDate").val("");
+                                $("#bannerEndDate").val("");
+                                $(".due-wrap").hide();
+                                $("#thumbPreview").attr('src', '');
+                                $("#deleteQuizBannerLinkBtn").hide();
+                                alert('배너 연결 삭제 완료');
+                            } else {
+                                alert('배너 연결 삭제 실패');
+                            }
+                        }
+                    });
+                }
+            }
+        }
+
+        /* 동적 바인딩 */
+        // 학교급 선택시 초등은 차시 선택창 보이고 중고등은 숨김
+        $(document).on("change", "input[type=radio][name=schoolType]", function () {
+            var schoolType = $(this).val();
+            // 			console.log("schoolType: " + schoolType);
+
+            // li.active 모두 제거
+            $(".qfilter li.active").removeClass("active");
+
+
+            // 선택 텍스트 표시 대상
+            var $targetText = $(".btn-qfilter div.option-preview");
+            var $targetInfo = $(".btn-qfilter em");
+            var seletedText = "";
+            var infoText = "";
+
+            if (schoolType == "EM") { // 초등
+                infoText = "학기, 과목, 단원, 차시를 선택하세요.";
+                $targetInfo.text(infoText);
+                $targetText.text(seletedText);
+
+                $(".qfilter ul").show();
+                $(".qfilter ul#curriculumCd").hide();
+            } else if (schoolType == "MD") { // 중등
+                infoText = "교과(군)을 선택하세요.";
+                $targetInfo.text(infoText);
+                $targetText.text(seletedText);
+
+                $(".qfilter ul").hide();
+                $(".qfilter ul#curriculumCd").show();
+                $(".qfilter li.hi").hide();
+                $(".qfilter li.md").show();
+            } else if (schoolType == "HI") { //  고등
+                infoText = "교과(군), 과목을 선택하세요.";
+                $targetInfo.text(infoText);
+                $targetText.text(seletedText);
+
+                $(".qfilter ul").hide();
+                $(".qfilter ul#curriculumCd").show();
+                $(".qfilter li.md").hide();
+                $(".qfilter li.hi").show();
+            }
+
+            // 선택창(qfilter)에 보임에 따라 선택 텍스트창(option-preview) show/hide
+            if ($(".qfilter").css("display") == "block") {
+                $(".option-preview").show();
+            } else {
+                $(".option-preview").hide();
+            }
+        });
+
+        // 질문 종류 선택시
+        $(document).on("change", "input[type=radio][name=questionCd]", function () {
+            var $targetRow = $(this).parents(".questionRow");
+            var rowNo = $(this).parents(".questionRow").data("row-no");
+            var questionCd = $(this).val();
+            var orgQuestionCd = $(this).parents(".questionRow").data("question-cd");
+            var questionIdx = $(this).parents(".questionRow").data("question-idx");
+            var questionCdNm = $(this).parent().text();
+            if (typeof questionIdx == "undefined") {
+                questionIdx = "";
+            }
+
+            if ($targetRow.hasClass("make-add")) { // 문제 초기 선택
+                $(this).closest('.make-write').removeClass('make-add');
+                // param: $targetRow, setLimitTime
+                // 질문 입력 row 폼 가져오기 ajax. writeForm
+                getQuestionWriteRowFormAjax($targetRow, true);
+            } else { // 유형 변경
+                // 질문 입력 답변 폼 가져오기 ajax. writeAnswerForm
+                // 				getQuestionWriteAnswerFormAjax($targetRow);
+                if (questionIdx != "" && questionCd == orgQuestionCd) { // 원래 데이터
+                    getQuestionWriteRowFormAjax($targetRow, false);
+                } else { // 답변 빈 폼
+                    getQuestionWriteAnswerTempFormAjax($targetRow, true);
+                }
+                // 				getQuestionWriteAnswerTempFormAjax($targetRow);
+                // 				getQuestionWriteRowFormAjax($targetRow, false);
+            }
+        });
+
+
+        // 질문 완료 저장
+        $(document).on("click", ".saveQuestionBtn", function (e) {
+            // 			console.log("isAjaxing: " + isAjaxing);
+            if (isAjaxing) {
+                return;
+            }
+
+            // 질문 rowNo 다시 넘버링
+            reorderingQuestionRow(false);
+
+            var $targetRow = $(this).parents(".questionRow");
+            // 			var rowNo = $targetRow.attr("data-row-no");
+            // 			console.log("rowNo: " + rowNo);
+
+            // 질문&답변 저장
+            saveQuestion($targetRow);
+            // 			console.log("saveQuestion@@@@@@@@@@@@@@@@@@@@@@@@@");
+        });
+
+        // 질문 추가 버튼
+        // 		$(document).on("click", ".addQuestionBtn", addQuestionRow);
+
+        // 질문 수정
+        $(document).on("click", ".editQuestionRowBtn", function () {
+            // 질문 rowNo 다시 넘버링
+            reorderingQuestionRow(false);
+
+            var $targetRow = $(this).parents(".questionRow");
+            var questionIdx = $targetRow.find("input[name=questionIdx]").val();
+            // 			console.log("editQuestionRowBtn");
+
+            // 질문 입력 row 폼 가져오기 ajax. writeForm
+            getQuestionWriteRowFormAjax($targetRow, false);
+        });
+
+        // 질문 삭제
+        $(document).on("click", ".deleteQuestionRowBtn", function () {
+            // 질문 rowNo 다시 넘버링
+            reorderingQuestionRow(false);
+
+            var $targetRow = $(this).parents(".questionRow");
+            var rowNo = $targetRow.attr("data-row-no");
+            var questionIdx = $targetRow.find("input[name=questionIdx]").val();
+            // 			console.log($targetRow);
+            // 			console.log("rowNo: " + rowNo);
+            // 			console.log("questionIdx: " + questionIdx);
+
+            var questionRowCount = $("#questionAllDiv").find("input[name=questionIdx][value!='']").length;
+            if (questionIdx != '' && questionRowCount == 1) {
+                // 				alert("마지막 문제는 삭제할 수 없습니다.");
+                var msgHtml = '';
+                msgHtml += '<div class="popup-cont pop-alt">';
+                msgHtml += '	<p class="txt">마지막 문제는<br/> 삭제할 수 없습니다.</p>';
+                msgHtml += '	<div class="btn-pop-bottom">';
+                msgHtml += '		<a href="javascript:msgLayerClose();" class="btn-sm spot"><span>확인</span></a>';
+                msgHtml += '	</div>';
+                msgHtml += '</div>';
+                $(msgHtml).appendTo('body');
+                return;
+            } else {
+                var isExistNext; // 다음 row 존재 여부
+                if ($targetRow.next(".questionRow").length > 0) { // 다음 row 있음
+                    isExistNext = true;
+                } else {
+                    isExistNext = false;
+                }
+
+                if (confirm(rowNo + "번 질문을 삭제하시겠습니까?")) {
+                    var questionIdx = $targetRow.find("input[name=questionIdx]").val();
+                    if (questionIdx == "") { // remove Row
+                        $targetRow.remove();
+                    } else { // delete DB
+                        // 질문&답변 삭제 ajax
+                        deleteQuestionAndAnswerAjax(questionIdx);
+                    }
+
+                    // 질문 row 수 체크
+                    if ($("#questionAllDiv .questionRow").length == 0 || !isExistNext) { // 전체 row가 없거나 마지막 row였을 경우 새로 row 추가
+                        // 질문 row 추가
+                        var questionRowCnt = $("#questionAllDiv .questionRow").length;
+                        if (questionRowCnt < maxQuestionRow) {
+                            addQuestionRow();
+                        }
+                    }
+                }
+            }
+
+        });
+
+        ////////// 질문, 해설 미디어 //////////
+        // questionMediaBtn 질문 미디어 버튼 클릭
+        $(document).on("click", ".questionMediaBtn", function (e) {
+            quetionsMediaBtnClickAction($(this), "QUESTION");
+        });
+        // 		$(document).on("click", "label.questionMediaBtn", function(e){
+        // 			console.log("label.questionMediaBtn");
+        // 		});
+
+        // explanationMediaBtn 해설 미디어 버튼 클릭
+        $(document).on("click", ".explanationMediaBtn", function () {
+            quetionsMediaBtnClickAction($(this), "EXPLANATION"); // 질문 미디어 클릭과 공통, category 값으로 구분
+        });
+
+        // 질문/해설 미디어 파일 선택시
+        $(document).on("change", ".questionForm input[type=file].mediaImageFile", function () {
+            var fileVal = $(this).val();
+            if (fileVal != "") {
+                //		    	console.log(fileVal);
+                var fileValSplit = fileVal.split(".");
+                var fileExt = fileValSplit[fileValSplit.length - 1].toLowerCase();
+                //		    	console.log(fileExt);
+
+                if (fileExt == "jpg" || fileExt == "jpeg" || fileExt == "bmp" || fileExt == "png") {
+                    var mediaCd = "UPIMG";
+                    var mediaCategory = $(this).data("media-category");
+                    // 					var form = $(this).parents(".questionForm")[0];
+                    // 				    var formData = new FormData(form);
+                    var addedMediaLength;
+                    var $targetMediaArea;
+                    var $targetInputImageFile;
+                    if (mediaCategory == "QUESTION") {
+                        $targetMediaArea = $(this).parents(".questionRow").find(".media-list.questionMedia");
+                        $targetInputImageFile = $(this).parents(".questionRow").find("input[name=questionImageFile]");
+                    } else if (mediaCategory == "EXPLANATION") {
+                        $targetMediaArea = $(this).parents(".questionRow").find(".media-list.explanationMedia");
+                        $targetInputImageFile = $(this).parents(".questionRow").find("input[name=explanationImageFile]");
+                    }
+                    addedMediaLength = $targetMediaArea.find("li").length;
+                    //					console.log($targetMediaArea);
+                    //					console.log("addedMediaLength: " + addedMediaLength);
+
+                    $(this).parents(".questionForm").ajaxForm({
+                        type: 'post',
+                        enctype: 'multipart/form-data',
+                        url: "/user/content/insertQuizTempFile.json",
+                        dataType: 'json',
+                        beforeSubmit: function () {
+                            loadingProgressOn();
+                        },
+                        success: function (result) {
+                            loadingProgressOff();
+                            console.log(result);
+                            if (result.tempFile != null) {
+                                var imgUrl = result.tempFile.filePath + result.tempFile.newFileName;
+                                if ((location.hostname.indexOf("localhost") > -1 || location.hostname.indexOf("10.0.1.") > -1 || location.hostname.indexOf("192.168.10.") > -1) &&
+                                    navigator.userAgent.toLowerCase().indexOf("chrome") > -1) {
+                                    imgUrl = 'http://localhost:8887/datafiles/quiz/' + result.tempFile.newFileName;
+                                }
+                                var sHTML = '';
+                                if (mediaCategory == "QUESTION") {
+                                    sHTML += '	<li class="row mediaRow questionMediaRow" data-media-row-no="' + (addedMediaLength + 1) + '" data-media-cd="' + mediaCd +
+                                        '" data-media-category="QUESTION">';
+                                    sHTML += '		<input type="hidden" class="mediaSortNum" name="questionMediaSortNumArray" value="' + (addedMediaLength + 1) + '">';
+                                    sHTML += '		<input type="hidden" class="mediaCd" name="questionMediaCdArray" value="' + mediaCd + '">';
+                                    sHTML += '		<input type="hidden" class="contentNo" name="questionContentNoArray" value="">';
+                                    sHTML += '		<input type="hidden" class="contentTypeCd" name="questionContentTypeCdArray" value="">';
+                                    sHTML += '		<input type="hidden" class="youtubeId" name="questionYoutubeIdArray" value="">';
+                                    sHTML += '		<input type="hidden" class="linkUrl" name="questionLinkUrlArray" value="">';
+                                    sHTML += '		<input type="hidden" class="thumbUrl" name="questionThumbUrlArray" value="">';
+                                    sHTML += '		<input type="hidden" class="mediaTitle" name="questionMediaTitleArray" value="">';
+                                    sHTML += '		<input type="hidden" class="tempFileSeq" name="questionTempFileSeqArray" value="' + result.tempFile.tempFileSeq + '">';
+                                } else if (mediaCategory == "EXPLANATION") {
+                                    sHTML += '	<li class="row mediaRow explanationMediaRow" data-media-row-no="' + (addedMediaLength + 1) + '" data-media-cd="' + mediaCd +
+                                        '" data-media-category="EXPLANATION">';
+                                    sHTML += '		<input type="hidden" class="mediaSortNum" name="explanationMediaSortNumArray" value="' + (addedMediaLength + 1) + '">';
+                                    sHTML += '		<input type="hidden" class="mediaCd" name="explanationMediaCdArray" value="' + mediaCd + '">';
+                                    sHTML += '		<input type="hidden" class="contentNo" name="explanationContentNoArray" value="">';
+                                    sHTML += '		<input type="hidden" class="contentTypeCd" name="explanationContentTypeCdArray" value="">';
+                                    sHTML += '		<input type="hidden" class="youtubeId" name="explanationYoutubeIdArray" value="">';
+                                    sHTML += '		<input type="hidden" class="linkUrl" name="explanationLinkUrlArray" value="">';
+                                    sHTML += '		<input type="hidden" class="thumbUrl" name="explanationThumbUrlArray" value="">';
+                                    sHTML += '		<input type="hidden" class="mediaTitle" name="explanationMediaTitleArray" value="">';
+                                    sHTML += '		<input type="hidden" class="tempFileSeq" name="explanationTempFileSeqArray" value="' + result.tempFile.tempFileSeq + '">';
+                                }
+                                sHTML += '			<div>';
+                                sHTML += '				<figure>';
+                                sHTML += '					<img src="' + imgUrl + '" />';
+                                sHTML += '				</figure>';
+                                sHTML += '				<span>&nbsp;</span>';
+                                sHTML += '			</div>';
+                                sHTML += '			<div class="media-fnc">';
+                                sHTML += '				<button type="button" class="btn-del deleteQuestionMediaBtn"></button>';
+                                sHTML += '			</div>';
+                                sHTML += '		</li>';
+
+                                $targetMediaArea.append(sHTML);
+
+                                // input file 값 초기화
+                                console.log($targetInputImageFile);
+                                $targetInputImageFile.val("");
+                            }
+                        },
+                        error: function (e) {
+                            console.log("ERROR : ", e);
+                            loadingProgressOff();
+                        }
+                    }).submit();
+
+                } else {
+                    // 		    		alert("이미지 파일만 사용하실 수 있습니다.");
+                    var msg = "이미지 파일만 사용하실 수 있습니다.";
+                    msgLayerOpen(msg);
+                }
+            }
+        });
+
+        // 질문 미디어 삭제
+        $(document).on("click", ".deleteQuestionMediaBtn", function () {
+
+            $targetRow = $(this).parents("li.mediaRow");
+            var questionIdx = $(this).parents(".questionRow").find("input[name=questionIdx]").val();
+            var questionMediaSeq = $targetRow.data("question-media-seq");
+            var mediaCd = $targetRow.data("media-cd");
+            var tempFileSeq = $targetRow.find("input.tempFileSeq").val();
+
+            if (typeof questionMediaSeq != "undefined" && questionMediaSeq != "") { // 저장된 질문 미디어 삭제
+                if (confirm("해당 미디어를 삭제하시겠습니까?")) {
+                    var data = {
+                        'questionIdx': questionIdx,
+                        'questionMediaSeq': questionMediaSeq,
+                        'mediaCd': mediaCd
+                    };
+                    $.ajax({
+                        url: '/user/content/deleteQuestionMedia.json',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: data,
+                        success: function (result) {
+                            // 	 						console.log(result);
+                            if (result.success) {
+                                // 미디어 rowNo 다시 넘버링
+                                reorderingMediaRow($targetRow);
+                            }
+                        },
+                        error: function (e) {
+                            console.log("ERROR : ", e);
+                        },
+                        beforeSend: function () {
+                            loadingProgressOn();
+                        },
+                        complete: function () {
+                            loadingProgressOff();
+                        }
+                    });
+                }
+            } else if (mediaCd == "UPIMG" && tempFileSeq != "") { // 이미지 임시파일 삭제
+                // 임시파일 삭제
+                console.log("임시파일 삭제");
+
+                var data = {
+                    'tempFileSeq': tempFileSeq
+                };
+                $.ajax({
+                    url: '/user/content/deleteTempFile.json',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: data,
+                    success: function (result) {
+                        // 						console.log(result);
+                        if (result.success) {
+                            // 미디어 rowNo 다시 넘버링
+                            reorderingMediaRow($targetRow);
+                        }
+                    },
+                    error: function (e) {
+                        console.log("ERROR : ", e);
+                    },
+                    beforeSend: function () {
+                        loadingProgressOn();
+                    },
+                    complete: function () {
+                        loadingProgressOff();
+                    }
+                });
+            } else {
+                // 미디어 rowNo 다시 넘버링
+                reorderingMediaRow($targetRow);
+            }
+        });
+
+        ////////// 답변 미디어 //////////
+        // 답변 이미지 파일 선택시
+        $(document).on("change", ".questionForm input[type=file][name=answerMediaFile]", function () {
+            $targetInputImageFile = $(this);
+            $targetAnswerLi = $(this).parents("li");
+            console.log($targetAnswerLi);
+            var fileVal = $(this).val();
+            console.log(fileVal);
+            if (fileVal != "") {
+                //		    	console.log(fileVal);
+                var fileValSplit = fileVal.split(".");
+                var fileExt = fileValSplit[fileValSplit.length - 1].toLowerCase();
+                //		    	console.log(fileExt);
+
+                if (fileExt == "jpg" || fileExt == "jpeg" || fileExt == "bmp" || fileExt == "png") {
+                    var $targetMediaArea = $targetAnswerLi.find(".item-thumb img");
+                    console.log($targetMediaArea);
+
+                    $(this).parents(".questionForm").ajaxForm({
+                        type: 'post',
+                        enctype: 'multipart/form-data',
+                        url: "/user/content/insertQuizTempFile.json",
+                        dataType: 'json',
+                        beforeSubmit: function () {
+                            loadingProgressOn();
+                        },
+                        success: function (result) {
+                            loadingProgressOff();
+                            console.log(result);
+                            if (result.tempFile != null) {
+                                var imgUrl = result.tempFile.filePath + result.tempFile.newFileName;
+                                var tempFileSeq = result.tempFile.tempFileSeq;
+                                // 				            	console.log(imgUrl);
+                                // 				            	console.log(tempFileSeq);
+                                $targetAnswerLi.find("input[name='answerTempFileSeqArray']").val(tempFileSeq);
+                                $targetAnswerLi.find("input[name='answerTitleArray']").hide();
+                                $targetAnswerLi.find("img").attr("src", imgUrl);
+                                $targetAnswerLi.find("img").attr("alt", result.orginFileName);
+                                $targetAnswerLi.find(".item-msg").html("<span>이미지 업로드</span>");
+                                $targetAnswerLi.find(".item-msg > span").fadeOut(4000);
+                                $targetAnswerLi.find(".deleteAnswerMediaBtn").show();
+                                $targetAnswerLi.find(".item-thumb").show();
+
+                                // input file 값 초기화
+                                // 				            	console.log($targetInputImageFile);
+                                $targetInputImageFile.val("");
+                            }
+                        },
+                        error: function (e) {
+                            console.log("ERROR : ", e);
+                            loadingProgressOff();
+                        }
+                    }).submit();
+
+                } else {
+                    // 		    		alert("이미지 파일만 사용하실 수 있습니다.");
+                    var msg = "이미지 파일만 사용하실 수 있습니다.";
+                    msgLayerOpen(msg);
+                }
+            }
+        });
+
+        // 답변 이미지 삭제
+        /* $(document).on("click", ".deleteAnswerMediaBtn", function(){
+			var answerSeq = $(this).parents("li").find("input[name=answerSeqArray]").val();
+	    	console.log(answerSeq);
+	    }); */
+
+        // 답변 이미지 삭제. 실제 삭제 안함. 화면에서 정보만 제거
+        $(document).on("click", ".deleteAnswerMediaBtn", function () {
+            $targetAnswerLi = $(this).parents("li");
+            var answerSeq = $targetAnswerLi.find("input[name=answerSeqArray]").val();
+            var answerMediaSeq = $targetAnswerLi.find("input[name=answerMediaSeqArray]").val();
+            var tempFileSeq = $targetAnswerLi.find("#quizForm input[name=answerTempFileSeqArray]").val();
+            var answerValue = $targetAnswerLi.find("input[name=answerValueArray]").val();
+
+            $targetAnswerLi.find("input[name='answerMediaSeqArray']").val("");
+            $targetAnswerLi.find("input[name='answerTempFileSeqArray']").val("");
+            if (answerValue > 2) {
+                $targetAnswerLi.find("input[name='answerTitleArray']").attr("placeholder", "보기를 입력하세요.(선택)");
+            }
+            $targetAnswerLi.find("input[name='answerTitleArray']").show();
+            $targetAnswerLi.find("img").attr("src", "");
+            $targetAnswerLi.find("img").attr("alt", "");
+            $targetAnswerLi.find(".item-msg").text("");
+            $targetAnswerLi.find(".deleteAnswerMediaBtn").hide();
+            $targetAnswerLi.find(".item-thumb").hide();
+
+            /* // 저장된 파일 삭제
+	    	if(answerSeq != "" && answerMediaSeq != ""){
+	    		var data = {
+	   				'answerSeq' : answerSeq,
+	   				'answerMediaSeq' : answerMediaSeq
+	   			};
+
+	   			$.ajax({
+	   				url : '/user/content/deleteAnswerMedia.json',
+	   				type : 'POST',
+	   				dataType : 'json',
+	   				data : data,
+	   				success : function(result) {
+	    				console.log(result);
+	    				if(result.success){
+		    				$targetAnswerLi.find("input[name='answerMediaSeqArray']").val("");
+		    				$targetAnswerLi.find("input[name='answerTempFileSeqArray']").val("");
+		    				if(answerValue > 2){
+		    					$targetAnswerLi.find("input[name='answerTitleArray']").attr("placeholder", "보기를 입력하세요.(선택)");
+		    				}
+			            	$targetAnswerLi.find("input[name='answerTitleArray']").show();
+			            	$targetAnswerLi.find("img").attr("src","");
+			            	$targetAnswerLi.find("img").attr("alt", "");
+			            	$targetAnswerLi.find(".item-msg").text("");
+			            	$targetAnswerLi.find(".deleteAnswerMediaBtn").hide();
+			            	$targetAnswerLi.find(".item-thumb").hide();
+						}
+	   				},
+					error: function(e){
+						console.log("ERROR : ", e);
+					},
+					beforeSend: function() {
+			        	loadingProgressOn();
+			        },
+			        complete: function() {
+			        	loadingProgressOff();
+			        }
+	   			});
+	    	} else if(tempFileSeq != ""){ // 임시 파일 삭제
+	    		var data = {
+       				'tempFileSeq' : tempFileSeq
+       			};
+
+       			$.ajax({
+       				url : '/user/content/deleteTempFile.json',
+       				type : 'POST',
+       				dataType : 'json',
+       				data : data,
+       				success : function(result) {
+        				console.log(result);
+        				$targetAnswerLi.find("input[name='answerMediaSeqArray']").val("");
+	    				$targetAnswerLi.find("input[name='answerTempFileSeqArray']").val("");
+	    				if(answerValue > 2){
+	    					$targetAnswerLi.find("input[name='answerTitleArray']").attr("placeholder", "보기를 입력하세요.(선택)");
+	    				}
+		            	$targetAnswerLi.find("input[name='answerTitleArray']").show();
+		            	$targetAnswerLi.find("img").attr("src","");
+		            	$targetAnswerLi.find("img").attr("alt", "");
+		            	$targetAnswerLi.find(".item-msg").text("");
+		            	$targetAnswerLi.find(".deleteAnswerMediaBtn").hide();
+		            	$targetAnswerLi.find(".item-thumb").hide();
+       				},
+    				error: function(e){
+    					console.log("ERROR : ", e);
+    				},
+    				beforeSend: function() {
+    		        	loadingProgressOn();
+    		        },
+    		        complete: function() {
+    		        	loadingProgressOff();
+    		        }
+       			});
+	    	} */
+        });
+
+        // 제목 줄바꿈 처리. 엔터 막음
+        $(document).on("keyup", "textarea[name$=Title]", function (e) {
+            // 			console.log(e.keyCode);
+            if (e.keyCode == 13) {
+                e.preventDefault();
+                var titleText = $(this).val();
+                titleText = titleText.replace(/(\r\n|\n|\n\n)/gi, '');
+                $(this).val(titleText);
+            }
+        });
+
+        // 입력 텍스트 길이 체크
+        $(document).on("keypress keyup change", "[data-max-byte]", function (e) {
+            var attrName = $(this).attr("name");
+            var title = $(this).attr("title");
+            var maxByte = $(this).data("max-byte");
+            var inputByte = calByte.getByteLength($(this).val())
+            var cutText = calByte.cutByteByLength($(this).val(), maxByte);
+            //	 		console.log("maxByte: " + maxByte);
+            //	 		console.log("inputByte: " + inputByte);
+            //	 		console.log("cutText: " + cutText);
+
+            if (inputByte > maxByte) {
+                // 메시지 출력
+                var msg = '';
+                if (typeof title != 'undefined' && title != '') {
+                    msg += title + '은(는) ';
+                }
+                msg += maxByte + ' byte까지 입력 가능합니다.<br/>초과된 부분은 삭제됩니다.';
+
+                // 				alert(msg);
+                msgLayerOpen(msg);
+
+                // 자른 텍스트값으로 변경
+                $(this).val(cutText);
+
+                // 질문 제목 높이 조절
+                if (attrName == "questionTitle") {
+                    $(this).css('height', 'auto');
+                    $(this).height(this.scrollHeight);
+                }
+            }
+        });
+
+        // questionRow view type에서 의견 받기 변경
+        $(document).on("change", ".make-view input[type='radio'][name='feedbackYn']", function (e) {
+            console.log($(this));
+            console.log(data);
+
+            var feedbackYn = $(this).val();
+            var questionIdx = $(this).parents(".questionRow").data("question-idx");
+            var data = {
+                'feedbackYn': feedbackYn,
+                'questionIdx': questionIdx
+            };
+            // 			console.log(data);
+            $.ajax({
+                url: '/user/content/updateQuestionFeedbackYn.json',
+                type: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (result) {
+                    console.log(result);
+                },
+                complete: function () {}
+            });
+        });
+
+
+        /* functions */
+        // 이전 문제 참조하여 제한시간 설정
+        function setQuestionLimitTime($targetRow) {
+            // 			console.log($targetRow);
+            // 이전 row가 있으면 제한 시간값 가져와서 설정
+            // 			console.log('prev row cnt: ' + $targetRow.prevAll(".questionRow").length);
+            var prevRowCnt = $targetRow.prevAll(".questionRow").length;
+            if (prevRowCnt > 0) {
+                var $prevRow = $(".questionRow[data-row-no=" + prevRowCnt + "]");
+                // 				console.log($prevRow);
+                var prevLimitTime = 0;
+                // 				console.log('select length: ' + $prevRow.find("select[name=limitTime]").length);
+                if ($prevRow.find("select[name=limitTime]").length == 1) { // select
+                    prevLimitTime = $prevRow.find("select[name=limitTime] option:selected").val();
+                } else {
+                    prevLimitTime = $prevRow.find("input[name=limitTime]:checked").val();
+                }
+                console.log("prevLimitTime: " + prevLimitTime);
+                if (typeof prevLimitTime == "undefined") {
+                    $targetRow.find("input[name=limitTime][value='0']").prop("checked", true).checkboxradio("refresh");
+                } else {
+                    $targetRow.find("input[name=limitTime][value=" + prevLimitTime + "]").prop("checked", true).checkboxradio("refresh");
+                }
+            } else { // 아니면 '없음' 기본 선택
+                // 				console.log($targetRow.find("input[name=limitTime][value='0']"));
+                $targetRow.find("input[name=limitTime][value='0']").prop("checked", true).checkboxradio("refresh");
+            }
+        }
+
+        // 질문 rowNo 다시 넘버링
+        function reorderingQuestionRow(isDB) {
+            console.log("reorderingQuestionRow");
+            $("#questionAllDiv .questionRow").each(function (e) {
+                var rowNo = e + 1;
+                $(this).find("span.qnum").text(rowNo + ".");
+                $(this).find("span.no").text(rowNo);
+                $(this).attr("data-row-no", rowNo);
+            });
+
+            if (isDB) {
+                // 				console.log("update DB");
+                var quizIdx = $("#quizForm input[name=quizIdx]").val();
+                var questionIdxArray = new Array();
+                $("#questionAllDiv .questionRow input[name='questionIdx']").not("[value='']").each(function (e) {
+                    questionIdxArray.push($(this).val());
+                });
+                // 				console.log(questionIdxArray);
+
+                var data = {
+                    'quizIdx': quizIdx,
+                    'questionIdxArray': questionIdxArray
+                };
+                // 	 			console.log(data);
+
+                $.ajax({
+                    url: '/user/content/make/questionReordering.json',
+                    type: 'POST',
+                    dataType: 'html',
+                    data: data,
+                    success: function (result) {
+                        // 						console.log(result);
+                    },
+                    error: function (e) {
+                        console.log("ERROR : ", e);
+                    },
+                    beforeSend: function () {},
+                    complete: function () {}
+                });
+
+            }
+        }
+
+        // 미디어 rowNo 다시 넘버링
+        function reorderingMediaRow($targetRow) {
+            $targetRowParent = $targetRow.parent();
+
+            // 해당 미디어 row 삭제
+            $targetRow.remove();
+            // 미디어 rowNo 다시 넘버링
+            $targetRowParent.find("li.mediaRow").each(function (e) {
+                var mediaRowNo = e + 1;
+                $(this).attr("data-media-row-no", mediaRowNo);
+                $(this).find("span.no").text(mediaRowNo);
+                $(this).find("input.mediaSortNum").val(mediaRowNo);
+            });
+        }
+
+        // 차시창 선택 확인
+        function selectChasiConfirm() {
+            // 			console.log("selectChasiConfirm()");
+        }
+
+        // 차시창 선택 취소
+        function selectChasiCancel() {
+            // 선택값 초기화
+            $(".qfilter-list ul>li.active").removeClass("active");
+            // 			console.log(lastChasiDesc);
+            // 차시 선택 텍스트 표시 대상
+            var $targetText = $(".btn-qfilter strong");
+            var $targetInfo = $(".btn-qfilter span");
+            if (lastChasiDesc == "") {
+                $targetText.text("");
+                $targetInfo.text("학년, 학기, 과목, 단원, 차시를 선택하세요.");
+            } else {
+                $targetText.text(lastChasiDesc);
+                $targetInfo.text("");
+            }
+        }
+
+        // 화면 초기화
+        function initPage(viewType) {
+            console.log("viewType: " + viewType);
+            console.log("memberSchoolType: " + memberSchoolType);
+            console.log("quizSchoolType: " + quizSchoolType);
+
+            // 차시 선택 텍스트 표시 대상
+            var $targetText = $(".btn-qfilter div.option-preview");
+            var $targetInfo = $(".btn-qfilter em");
+            var schoolTypeNm = "";
+            if (quizSchoolType == "EM") { // 초등
+                schoolTypeNm = "초등>";
+            } else if (quizSchoolType == "MD") { // 중등
+                schoolTypeNm = "중등>"
+            } else if (quizSchoolType == "HI") { // 고등
+                schoolTypeNm = "고등>"
+            }
+
+            if (quizSchoolType == "EM") {
+                $(".qfilter ul").show();
+                $(".qfilter ul#curriculumCd").hide();
+
+                // 차시 선택창 일부 hide
+                $("#unit02Seq").hide();
+                $("#unit03Seq").hide();
+                $("#unit04Seq").hide();
+
+                if (lastChasiDesc == "") {
+                    $targetText.text("");
+                    $targetInfo.text("학년, 학기, 과목, 단원, 차시를 선택하세요.");
+                } else {
+                    $targetText.text(schoolTypeNm + lastChasiDesc);
+                    $targetInfo.text("");
+                }
+
+                // 				if(viewType != 'EDIT_SCRAPE'){
+                // 차시창 활성화/비활성화
+                // 학년
+                var gradeCd = "";
+                if (gradeCd != "") {
+                    $("#gradeCd li[data-val=" + gradeCd + "]").addClass("active");
+                }
+
+                // 학기
+                var termCd = "";
+                if (termCd != "") {
+                    $("#termCd li[data-val=" + termCd + "]").addClass("active");
+                }
+
+                // 과목
+                var subjectList = "";
+                var subjectCd = "";
+                if (subjectList == "") {} else {
+                    if (subjectCd != "") {
+                        $("#subjectCd").find("li[data-val='" + subjectCd + "']").addClass("active");
+                    }
+                }
+
+                // 출판사
+                var publisherList = "";
+                var publisherCd = "";
+                if (publisherList == "") {} else {
+                    if (publisherCd != "") {
+                        $("#publisherCd").find("li[data-val='" + publisherCd + "']").addClass("active");
+                    }
+                }
+
+                // 대단원 & 차시
+                var chasiList = "";
+                var unit01Seq = "";
+                var unit02Seq = "";
+                var unit03Seq = "";
+                var chasiPlanSeq = "";
+                // 			console.log(unit01Seq);
+                // 대단원
+                if (chasiList == "") {} else {
+                    if (unit01Seq != "") {
+                        $("#unit01Seq").find("li[data-val='" + unit01Seq + "']").addClass("active");
+                    }
+                }
+                // 중단원
+                if (chasiList == "") {
+                    $("#unit02Seq").hide();
+                } else {
+                    if (unit02Seq != "") {
+                        $("#unit02Seq").show();
+                        $("#unit02Seq").find("li[data-val='" + unit02Seq + "']").addClass("active");
+                    }
+                }
+                // 소단원
+                if (chasiList == "") {
+                    $("#unit03Seq").hide();
+                } else {
+                    if (unit03Seq != "") {
+                        $("#unit03Seq").show();
+                        $("#unit03Seq").find("li[data-val='" + unit03Seq + "']").addClass("active");
+                    }
+                }
+                // 차시
+                if (chasiList == "") {
+                    $("#unit04Seq").hide();
+                } else {
+                    if (chasiPlanSeq != "") {
+                        $("#unit04Seq").show();
+                        $("#unit04Seq li").hide();
+                        $("#unit04Seq li[data-unit-01-seq='" + unit01Seq + "']").show();
+                        $("#unit04Seq").find("li[data-val='" + chasiPlanSeq + "']").addClass("active");
+                    }
+                }
+                // 				}
+
+            } else if (quizSchoolType == "MD") { // 중등
+                $(".qfilter ul").hide();
+                $(".qfilter ul#curriculumCd").show();
+
+                $(".qfilter li.hi").hide();
+                $(".qfilter li.md").show();
+
+                var curriculumName = "";
+                if (curriculumName == "") {
+                    $targetText.text("");
+                    $targetInfo.text("교과(군) 선택하세요.");
+                } else {
+                    $targetText.text(schoolTypeNm + curriculumName);
+                    $targetInfo.text("");
+                }
+
+                // 교과군
+                var curriculumList = "";
+                var curriculumCd = "";
+                console.log("curriculumCd: " + curriculumCd);
+                if (curriculumList == "") {
+                    $("#subjectCd").hide();
+                } else {
+                    if (curriculumCd != "") {
+                        $("#curriculumCd").find("li.md[data-val='" + curriculumCd + "']").addClass("active");
+                    }
+                }
+
+            } else if (quizSchoolType == "HI") { // 고등
+                $(".qfilter ul").hide();
+                $(".qfilter ul#curriculumCd").show();
+
+                $(".qfilter li.md").hide();
+                $(".qfilter li.hi").show();
+
+                // 교과군
+                var curriculumList = "";
+                var curriculumCd = "";
+                console.log("curriculumCd: " + curriculumCd);
+                if (curriculumList == "") {
+                    $("#subjectCd").hide();
+                } else {
+                    if (curriculumCd != "") {
+                        $("#curriculumCd").find("li.hi[data-val='" + curriculumCd + "']").addClass("active");
+                    }
+                }
+
+                // 과목
+                var subjectList = "";
+                var subjectCd = "";
+                console.log("subjectCd: " + subjectCd);
+                if (subjectList == "") {} else {
+                    if (subjectCd != "") {
+                        $("#subjectCd").find("li[data-val='" + subjectCd + "']").addClass("active");
+                        $("#subjectCd").show();
+                    }
+                }
+
+                var subjectDesc = "";
+                var curriculumName = "";
+                if (curriculumName == "") {
+                    $targetText.text("");
+                    if (subjectList == "") {
+                        $targetInfo.text("교과(군)을 선택하세요.");
+                    } else {
+                        $targetInfo.text("교과(군), 과목을 선택하세요.");
+                    }
+                } else if (subjectDesc == "") {
+                    $targetText.text(schoolTypeNm + curriculumName);
+                    $targetInfo.text("과목을 선택하세요.");
+                    if (subjectList == "") {
+                        $targetInfo.text("");
+                    } else {
+                        $targetInfo.text("과목을 선택하세요.");
+                    }
+                } else {
+                    $targetText.text(schoolTypeNm + subjectDesc);
+                    $targetInfo.text("");
+                }
+            } else { // 퀴즈 학교 정보 없으면 회원  정보에 따라 학교급 선택
+
+                if (memberSchoolType == "MD") {
+                    $("input[type='radio'][name='schoolType'][value='MD']").click();
+                } else if (memberSchoolType == "HI") {
+                    $("input[type='radio'][name='schoolType'][value='HI']").click();
+                }
+            }
+
+            // 선택된 차시 영역이 있으면(선택된 차시 영역의 텍스트) show
+            if ($(".btn-qfilter div.option-preview").text().length > 0) {
+                $(".btn-qfilter div.option-preview").show();
+            }
+
+            // 질문 답변 row 추가
+            var questionList = "";
+            if (questionList == "") {
+                addQuestionRow();
+            }
+
+        }
+
+        // 질문 답변 row 추가
+        function addQuestionRow() {
+            var emptyQuestionRowCount = $("#questionAllDiv").find("input[name=questionIdx][value='']").length;
+            // 			console.log("emptyQuestionRowCount: " + emptyQuestionRowCount);
+
+            if (emptyQuestionRowCount == 0) {
+                // 질문 영역
+                var $questionRowForm = $("#questionRowTypeForm").clone().html();
+                // 		 		console.log($questionRowForm);
+                //$("#questionAllDiv").append($questionRowForm); // 추가
+
+                var rowNo = $("#questionAllDiv").find(".questionRow").length; //추가 후 전체 갯수가 rowNo
+                console.log(rowNo);
+                $targetRow = $("#questionAllDiv").find(".questionRow:last");
+                $targetRow.find("span.qnum").text(rowNo + "."); // text row no
+                $targetRow.find("span.no").text(rowNo); // text row no
+                $targetRow.attr("data-row-no", rowNo); // data row no
+                $targetRow.find("input[type=checkbox], input[type=radio]").checkboxradio(); // jquery ui
+                //textarea 자동 높이 조절
+                $targetRow.find("textarea[name=explanation]").css('height', 'auto');
+                $('.textarea-auto').on('keyup', 'textarea[name=explanation]', function (e) {
+                    //$(this).css('height', 'auto');
+                    $(this).height(this.scrollHeight);
+                    //console.log(this.scrollHeight);
+                });
+                // 질문 유형 선택
+                /* var questionCd =  $targetRow.find("input[type=radio][name=questionCd]:checked").val();
+                if(typeof questionCd == "undefined"){
+                	$targetRow.find("input[type=radio][name=questionCd]:first").click();
+                } */
+            }
+
+        }
+
+        // 콘텐츠 저장하기
+        function saveQuizContent() {
+            var quizObj = saveQuizContentAjax("Y");
+        }
+
+        // 콘텐츠 임시 저장
+        function tempQuizContent() {
+            var quizObj = saveQuizContentAjax("N");
+        }
+
+        // 콘텐츠 저장 ajax
+        function saveQuizContentAjax(completeYn) {
+            var schoolType = $("#quizForm input[type=radio][name=schoolType]:checked").val();
+            var sharedType = $("#quizForm input[type=radio][name=sharedType]:checked").val();
+            var quizObj; // return value
+            $("#quizForm input[name=completeYn]").val(completeYn);
+
+            var questionLength = $("#questionAllDiv input[name=questionIdx][value!='']").length;
+            // 		    console.log("questionLength: " + questionLength);
+
+            if ($("#quizTitle").val() == "") {
+                // 		    	alert("제목을 입력하세요.");
+                var msg = "제목을 입력하세요.";
+                msgLayerOpen(msg);
+                $("#quizTitle").focus();
+                return;
+            } else if (schoolType == "EM" && $("#gradeCd li.active").data("val") == null) {
+                // 		    	alert("학년을 선택하세요.");
+                var msg = "학년을 선택하세요.";
+                msgLayerOpen(msg);
+                $("#gradeCd").focus();
+                return;
+            } else if (schoolType != "EM" && $("#curriculumCd li.active").data("val") == null) {
+                // 		    	alert("교과군을 선택하세요.");
+                var msg = "교과군을 선택하세요.";
+                msgLayerOpen(msg);
+                $("#curriculumCd").focus();
+                return;
+            } else if (completeYn == "Y" && questionLength < 1) {
+                // 		    	alert("1문제 이상 만들어야 저장됩니다.");
+                var msg = "1문제 이상 만들어야 저장됩니다.";
+                msgLayerOpen(msg);
+                return;
+            } else {
+                // 아이스크림 미디어 체크
+                var iscreamMediaCnt = $(".mediaRow[data-media-cd='ISIMG']").length + $(".mediaRow[data-media-cd='ISMOV']").length;
+                $("#quizForm input[name=iscreamMediaCnt]").val(iscreamMediaCnt);
+                if ((sharedType == "A" || sharedType == "T") && iscreamMediaCnt > 0) { // 전체 공개, 교사공개에 아이스크림 미디어가 있으면 아이스크림 공개로 변경
+                    // 					alert("아이스크림 미디어를 사용한 콘텐츠가 포함되어 아이스크림 공개로 전환됩니다.");
+                    var msg = "아이스크림 미디어를 사용한 콘텐츠가 포함되어<br/>아이스크림 공개로 전환됩니다.";
+                    msgLayerOpen(msg);
+                    $("#quizForm input[type=radio][name=sharedType]").prop("checked", false).checkboxradio("refresh");
+                    $("#quizForm input[type=radio][name=sharedType][value='I']").prop("checked", true).checkboxradio("refresh");
+                }
+
+                var form = $("#quizForm")[0];
+                var formData = new FormData(form);
+
+                // form에 정보 추가
+                formData.append("ownerYn", "Y"); // 내 퀴즈 - ownerYn
+                if ($("#quizImageFile").val() != "") {
+                    formData.append("mediaCd", "UPIMG"); // mediaCd
+                }
+                if ($("#gradeCd li.active").data("val") != null) {
+                    var gradeCd = $("#gradeCd li.active").data("val");
+                    formData.append("gradeCd", gradeCd); // gradeCd
+                }
+                if ($("#termCd li.active").data("val") != null) {
+                    var termCd = $("#termCd li.active").data("val");
+                    formData.append("termCd", termCd); // termCd
+                }
+                if ($("#curriculumCd li.active").data("val") != null) {
+                    var curriculumCd = $("#curriculumCd li.active").data("val");
+                    formData.append("curriculumCd", curriculumCd); // curriculumCd
+                }
+                if ($("#subjectCd li.active").data("val") != null) {
+                    var subjectCd = $("#subjectCd li.active").data("val");
+                    formData.append("subjectCd", subjectCd); // subjectCd
+                }
+                if ($("#publisherCd li.active").data("val") != null) {
+                    var publisherCd = $("#publisherCd li.active").data("val");
+                    formData.append("publisherCd", publisherCd); // publisherCd
+
+                    var lessonPlanSeq = $("#publisherCd li.active").data("lesson-plan-seq");
+                    if (typeof lessonPlanSeq != "undefined") {
+                        formData.append("lessonPlanSeq", lessonPlanSeq); // lessonPlanSeq
+                    }
+                    var highPlanSeq = $("#publisherCd li.active").data("high-plan-seq");
+                    if (typeof highPlanSeq != "undefined") {
+                        formData.append("highPlanSeq", highPlanSeq); // highPlanSeq
+                    }
+                    var yearCd = $("#publisherCd li.active").data("year-cd");
+                    if (typeof yearCd != "undefined") {
+                        formData.append("yearCd", yearCd); // yearCd
+                    }
+                }
+                if ($("#unit01Seq li.active").data("val") != null) {
+                    var unit01Seq = $("#unit01Seq li.active").data("val");
+                    formData.append("unit01Seq", unit01Seq); // unit01Seq
+                }
+                if ($("#unit02Seq li.active").data("val") != null) {
+                    var unit02Seq = $("#unit02Seq li.active").data("val");
+                    formData.append("unit02Seq", unit02Seq); // unit02Seq
+                }
+                if ($("#unit03Seq li.active").data("val") != null) {
+                    var unit03Seq = $("#unit03Seq li.active").data("val");
+                    formData.append("unit03Seq", unit03Seq); // unit03Seq
+                }
+                if ($("#unit04Seq li.active").data("val") != null) {
+                    var chasiPlanSeq = $("#unit04Seq li.active").data("val");
+                    formData.append("chasiPlanSeq", chasiPlanSeq); // chasiPlanSeq
+                }
+
+                // 태그
+                var tags = "";
+                $("#quizForm #quizTagsDiv .tag-editor-tag").each(function () {
+                    var tag = $(this).text();
+                    if (tags != "") {
+                        tags += ",";
+                    }
+                    tags += tag;
+                });
+                formData.append("tags", tags);
+                console.log("tags", tags);
+
+                // 숨김 태그
+                var hiddenTags = "";
+                $("#quizForm #hiddenTagsDiv .tag-editor-tag").each(function () {
+                    var tag = $(this).text();
+                    if (hiddenTags != "") {
+                        hiddenTags += ",";
+                    }
+                    hiddenTags += tag;
+                });
+                formData.append("hiddenTags", hiddenTags);
+                console.log("hiddenTags", hiddenTags);
+
+                // 기존 공개 범위 추가 sharedYn
+                if (sharedType == "N") {
+                    formData.append("sharedYn", "N");
+                } else {
+                    formData.append("sharedYn", "Y");
+                }
+
+
+                $.ajax({
+                    type: 'POST',
+                    enctype: 'multipart/form-data',
+                    url: "/user/content/insertQuizContent.json",
+                    data: formData,
+                    dataType: 'json',
+                    async: false,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    success: function (result) {
+                        console.log(result);
+                        if (result.success) {
+                            quizObj = result.resultMap;
+                            // 	            	console.log(quizObj);
+                            // quizIdx 값 설정
+                            if ($("#quizForm input[name=quizIdx]").val() == "") {
+                                $("#quizForm input[name=quizIdx]").val(result.resultMap.quizIdx);
+                            }
+
+                            // quizMediaSeq 값 있으면 설정
+                            if (typeof result.resultMap.quizIdx != "undefined") {
+                                $("#quizForm input[name=quizMediaSeq]").val(result.resultMap.quizMediaSeq);
+                            }
+
+                            // 저장 완료 여부
+                            if (result.resultMap.completeYn == "Y") { // 완료
+                                // 				            	alert("퀴즈 콘텐츠 완료");
+                                // 				            	location.href = "/user/content/quizUserHome.do"; // 퀴즈 홈
+                                // 				            	location.href = "/user/content/quizUserMyQuiz.do"; // 내 띵커벨
+                                var lastUrl = '';
+                                var returnPageNo = '';
+                                // 								alert(lastUrl);
+                                if (lastUrl == '/user/storage/myQuizStorage.do') {
+                                    location.href = "/user/storage/myQuizStorage.do?currentPageNo=" + returnPageNo; // 내 띵커벨
+                                    // 								} else if (lastUrl == "/user/content/quizUserHome.do") {
+                                    // 									location.href = lastUrl;
+                                } else if (viewType == "EDIT_SCRAPE") {
+                                    location.href = "/user/storage/myQuizStorage.do"; // 내 띵커벨
+                                } else {
+                                    // 									$("#searchForm").submit();
+                                    goLibraryDetail(result.resultMap.quizIdx);
+                                }
+                            } else { // 임시 저장
+                                // 				            	$.toast("퀴즈 콘텐츠 임시 저장");
+                                // 				            	alert("퀴즈 콘텐츠 임시 저장");
+                                // 				            	var msgHtml = '<div class="popup-cont pop-alt"><p class="txt">콘텐츠 임시 저장</p></div>';
+                                var msgHtml = '<div class="alert"><div class="msg">콘텐츠 임시 저장</div></div>';
+                                $(msgHtml).appendTo('body').fadeOut(2000).delay(2000).queue(function () {
+                                    $(this).remove();
+                                });
+                            }
+
+                            // 퀴즈/토론 선택 비활성화
+                            $("#quizCategory").prop("disabled", true);
+                        }
+                        success = result.success;
+                    },
+                    error: function (e) {
+                        console.log("ERROR : ", e);
+                    },
+                    beforeSend: function () {
+                        loadingProgressOn();
+                    },
+                    complete: function () {
+                        loadingProgressOff();
+                    }
+                });
+            }
+
+            return quizObj;
+        }
+
+        // 콘텐츠 초기화
+        function initQuizContent() {
+            //	 		console.log("초기화");
+            initPage();
+
+            // input 초기화
+            $("#quizTitle").val("");
+            $("#quizImageFile").val("");
+            // 			$("#tags").val("");
+            // 			$("input[type=radio][name=sharedYn]:eq(0)").prop("checked", true);
+        }
+
+        // 질문&답변 저장
+        function saveQuestion($targetRow) {
+            var rowNo = $targetRow.attr("data-row-no");
+            console.log("rowNo: " + rowNo);
+            console.log($targetRow);
+            var quizIdx = $("#quizForm input[name=quizIdx]").val();
+
+            var questionCd = $targetRow.find("input[type=radio][name=questionCd]:checked").val();
+            // 			if(typeof questionCd == "undefined"){
+            // 			}
+
+            // 질문 타이틀 체크
+            if ($targetRow.find("[name=questionTitle]").val() == "") {
+                // 				validation = false;
+                $targetRow.find("p.msg-error.questionTitle").show();
+                $targetRow.find("[name=questionTitle]").focus();
+                return false;
+            } else {
+                $targetRow.find("p.msg-error.questionTitle").hide();
+            }
+
+            // 빈칸형 빈칸내용 체크
+            if ($targetRow.find("[name=questionDesc]").val() == "") {
+                var msg = "빈칸 내용을 입력하세요.";
+                msgLayerOpen(msg);
+                $targetRow.find("[name=questionDesc]").focus();
+                return false;
+            }
+
+            // 답변의 입력 값이 필수인 경우 Q1, D1, D2, D3, D6
+            if ($targetRow.find("input[name=answerTitleArray].required").length > 0) {
+                var titleCheck = true;
+                $targetRow.find("input[name=answerTitleArray].required").each(function () {
+                    // 		    		console.log($(this));
+                    // 		    		console.log($(this).val());
+                    // 		    		console.log($(this).parents("li").find("input[name='answerTempFileSeqArray']").val());
+                    // 		    		console.log($(this).parents("li").find("input[name='answerMediaSeqArray']").val());
+                    if ($(this).val() == "" &&
+                        $(this).parents("li").find("input[name='answerTempFileSeqArray']").val() == "" &&
+                        $(this).parents("li").find("input[name='answerMediaSeqArray']").val() == ""
+                    ) {
+                        // 		    			alert("보기를 입력하세요.");
+                        var msg = "보기를 입력하세요.";
+                        msgLayerOpen(msg);
+                        $(this).focus();
+                        titleCheck = false;
+                        return false;
+                    }
+                });
+                if (!titleCheck) {
+                    return false;
+                }
+            }
+
+            /* // 선택형 타입에서 3번 입력값 체크 Q1, D6
+		 	if(questionCd == "Q1" || questionCd == "D6"){
+				var $targetAnswerTitle3 = $targetRow.find("input[name=answerTitleArray]:eq(2)");
+				var $targetAnswerTitle4 = $targetRow.find("input[name=answerTitleArray]:eq(3)");
+				if($targetAnswerTitle3.val() == "" && $targetAnswerTitle4.val() != ""){
+// 					 alert("보기를 입력하세요.");
+					var msg = "보기를 입력하세요.";
+		    		msgLayerOpen(msg);
+					$targetAnswerTitle3.focus();
+					return false;
+				}
+		 	} */
+
+            // Q1:선택형, Q2:OX
+            if (questionCd == "Q1" || questionCd == "Q2") {
+                // 정답 체크 필수
+                if ($targetRow.find("input[name=rightAnswerCheck]:checked").length == 0) {
+                    // 					alert("정답을 체크하세요.");
+                    var msg = "정답을 체크하세요.";
+                    msgLayerOpen(msg);
+                    $targetRow.find("p.msg-error.rightAnswerCheck").show();
+                    return false;
+                } else if (questionCd == "Q2" && $targetRow.find("input[name=rightAnswerCheck]:checked").length > 1) {
+                    console.log(questionCd);
+                    console.log($targetRow.find("input[name=rightAnswerCheck]:checked").length);
+                    // 정답 1개만으로 변경. #31820
+                    // 					alert("정답은 하나만 선택할 수 있습니다.");
+                    var msg = "정답은 하나만 선택할 수 있습니다.";
+                    msgLayerOpen(msg);
+                    return false;
+                } else {
+                    $targetRow.find("p.msg-error.rightAnswerCheck").hide();
+                }
+
+                if (questionCd == "Q1") {
+                    /*
+					var rightAnswerTitleCheck = true;
+					// 체크된 정답 항목의 text가 없을 경우 입력 요청
+					$targetRow.find("input[name=rightAnswerCheck]:checked").each(function(){
+						var $targetInputTitle =  $targetRow.find("input[name=rightAnswerCheck]:checked").parents("li").find("input[name=answerTitleArray]");
+// 						var $targetTempFileSeq =  $targetRow.find("input[name=rightAnswerCheck]:checked").parents("li").find("input[name=answerTitleArray]");
+						var answerTitle = $targetInputTitle.val();
+						console.log("answerTitle: " + answerTitle);
+						if(answerTitle == ""){
+//	 						alert("정답 항목의 보기를 입력하세요.");
+							var msg = "정답 항목의 보기를 입력하세요.";
+				    		msgLayerOpen(msg);
+							$targetInputTitle.focus();
+							rightAnswerTitleCheck = false;
+							return false;
+						}
+
+			    	});
+					if(!rightAnswerTitleCheck){
+						return false;
+					} */
+
+                    // 체크된 정답 항목의 text가 없을 경우 입력 요청
+                    var $targetInputTitle = $targetRow.find("input[name=rightAnswerCheck]:checked").parents("li").find("input[name=answerTitleArray]");
+                    var answerTitleVal = $targetInputTitle.val();
+                    var tempFileSeqVal = $targetRow.find("input[name=rightAnswerCheck]:checked").parents("li").find("input[name=answerTempFileSeqArray]").val();
+                    var mediaSeqVal = $targetRow.find("input[name=rightAnswerCheck]:checked").parents("li").find("input[name=answerMediaSeqArray]").val();
+                    // 					console.log("answerTitle: " + answerTitleVal);
+                    // 					console.log("tempFileSeqVal: " + tempFileSeqVal);
+                    // 					console.log("mediaSeqVal: " + mediaSeqVal);
+                    if (answerTitleVal == "" && tempFileSeqVal == "" && mediaSeqVal == "") {
+                        // 						alert("정답 항목의 보기를 입력하세요.");
+                        var msg = "정답 항목의 보기를 입력하세요.";
+                        msgLayerOpen(msg);
+                        $targetInputTitle.focus();
+                        return false;
+                    }
+                }
+            }
+
+            // Q3:단답형, Q5:빈칸형
+            if (questionCd == "Q3" || questionCd == "Q5") {
+                // 정답값이 1개 이상 필수
+                if ($targetRow.find(".answer-list .tag-editor-tag").length == 0) {
+                    // 					validation = false;
+                    // 					alert("단답형의 정답을 1개 이상 입력하세요.");
+                    var msg = "정답을 1개 이상 입력하세요.";
+                    msgLayerOpen(msg);
+                    $targetRow.find("input[name=answerValueQ3]").focus();
+                    return false;
+                }
+            }
+
+            // Q4:서술형
+            if (questionCd == "Q4") {
+                // 정답값이 1개 이상 필수
+                if ($targetRow.find("textarea[name=answerValueArray]").val() == "") {
+                    // 					alert("예시 답안을 입력하세요.");
+                    var msg = "예시 답안을 입력하세요.";
+                    msgLayerOpen(msg);
+                    $targetRow.find("textarea[name=answerValueArray]").focus();
+                    return false;
+                }
+            }
+
+            //	 		console.log("quizIdx: " + quizIdx);
+            // quizIdx 확인
+            if (quizIdx == "") {
+                // 없으면 퀴즈 콘텐츠 먼저 임시 저장
+                var quizObj = saveQuizContentAjax("N");
+                console.log(quizObj);
+                console.log(typeof quizObj);
+                quizIdx = quizObj.quizIdx;
+                $("#quizForm input[name=quizIdx]").val(quizIdx);
+            }
+
+            // 질문&답변 저장
+            saveQuestionAndAnswerAjax($targetRow);
+
+            // 다음 row 존재 여부 확인
+            if ($targetRow.next(".questionRow").length == 0) { // 없으면 추가
+                // 질문 답변 row 추가
+                var questionRowCnt = $("#questionAllDiv .questionRow").length;
+                if (questionRowCnt < maxQuestionRow) {
+                    addQuestionRow();
+                }
+            }
+        }
+
+        // 질문&답변 저장 ajax
+        function saveQuestionAndAnswerAjax($targetRow) {
+            var quizIdx = $("#quizForm input[name=quizIdx]").val();
+            var sharedType = $("#quizForm input[type=radio][name=sharedType]:checked").val();
+            var questionIdx = $targetRow.find("input[name=questionIdx]").val();
+            var questionCd = $targetRow.find("input[name=questionCd]:checked").val();
+
+            // 아이스크림 미디어 체크
+            var iscreamMediaCnt = $targetRow.find(".mediaRow[data-media-cd='ISIMG']").length + $targetRow.find(".mediaRow[data-media-cd='ISMOV']").length;
+            if ((sharedType == "A" || sharedType == "T") && iscreamMediaCnt > 0) { // 전체 공개, 교사공개에 아이스크림 미디어가 있으면 아이스크림 공개로 변경
+                // 				alert("아이스크림 미디어를 사용한 콘텐츠가 포함되어 아이스크림 공개로 전환됩니다.");
+                var msg = "아이스크림 미디어를 사용한 콘텐츠가 포함되어<br/>아이스크림 공개로 전환됩니다.";
+                msgLayerOpen(msg);
+
+                var data = {
+                    'sharedType': 'I',
+                    'quizIdx': quizIdx
+                };
+                // 	 			console.log(data);
+
+                $.ajax({
+                    url: '/user/content/updateSharedType.json',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: data,
+                    success: function (result) {
+                        console.log(result);
+                        if (result.success) {
+                            $("#quizForm input[type=radio][name=sharedType]").prop("checked", false).checkboxradio("refresh");
+                            $("#quizForm input[type=radio][name=sharedType][value='I']").prop("checked", true).checkboxradio("refresh");
+                        }
+                    }
+                });
+            }
+
+
+            // 			console.log("questionCd: " + questionCd);
+            var form = $targetRow.find("form.questionForm")[0];
+            var formData = new FormData(form);
+
+            // form에 정보 추가
+            // 		    formData.append("sortNum", rowNo); // sortNum -> insert시 사용안함. serviceImpl에서 다시 조회
+            formData.append("quizIdx", $("#quizForm input[name=quizIdx]").val()); // quizIdx
+            formData.append("regPageCd", $("#quizForm input[name=regPageCd]").val()); // regPageCd: FRONT
+            var quizCategory = $("#quizForm input[name=quizCategory]").val(); // quizCategory
+            formData.append("quizCategory", quizCategory);
+            var orgQuestionCd = $targetRow.data("question-cd");
+            formData.append("orgQuestionCd", orgQuestionCd);
+
+            // rightAnswer: question 테이블에서 사용. 정답만 comma로 합쳐서 전달
+            // rightAnswerArray: answer 테이블에서 사용. Y or N
+            var rightAnswer = "";
+            // 퀴즈 정답 값 전달
+            if (quizCategory == "QUIZ") {
+                // 정답 체크가 있는 경우 Q1, Q2
+                if (questionCd == "Q1" || questionCd == "Q2") {
+                    $targetRow.find("input[name=rightAnswerCheck]").each(function () {
+                        if ($(this).is(":checked")) { // 정답 checked
+                            formData.append("rightAnswerArray", "Y");
+                            if (rightAnswer != "") {
+                                rightAnswer += ",";
+                            }
+                            rightAnswer += $(this).parents("li").find("input[name=answerValueArray]").val();
+                        } else {
+                            formData.append("rightAnswerArray", "N");
+                        }
+                    });
+                    if (typeof rightAnswer != "undefined") {
+                        formData.append("rightAnswer", rightAnswer);
+                    }
+                } else if (questionCd == "Q3" || questionCd == "Q5") { // 모두 정답인 경우 Q3, Q5
+                    // 정답
+                    $targetRow.find(".tag-editor-tag").each(function () {
+                        var answer = $(this).text();
+                        if (rightAnswer != "") {
+                            rightAnswer += ",";
+                        }
+                        rightAnswer += answer;
+                        formData.append("answerSeqArray", "");
+                        formData.append("answerValueArray", answer);
+                        formData.append("answerTitleArray", "");
+                        // 				    	formData.append("rightAnswerArray", "Y");
+                    });
+                    formData.append("rightAnswer", rightAnswer);
+
+                }
+            }
+
+            // 질문 미디어, 해설미디어에 필요한 값(contentNo or fileInfo)이 없으면 해당 row 삭제
+            $targetRow.find("li.mediaRow").each(function (e) {
+                var questionMediaSeq = $(this).data("question-media-seq");
+                var contentNo = "";
+                if ($(this).find("input.contentNo").length > 0) { // input이 있을시. insert
+                    contentNo = $(this).find("input.contentNo").val();
+                } else if ($(this).data("content-no") != "") { // data가 있을시. update
+                    contentNo = $(this).data("content-no");
+                }
+                var youtubeId = "";
+                if ($(this).find("input.youtubeId").length > 0) { // input이 있을시. insert
+                    youtubeId = $(this).find("input.youtubeId").val();
+                } else if ($(this).data("youtube-id") != "") { // data가 있을시. update
+                    youtubeId = $(this).data("youtube-id");
+                }
+                var fileVal = $(this).find("input.mediaImageFile").val();
+
+                // questionMediaSeq, contentNo, youtubeId, fileVal 모두 없을 때 미디어 row 삭제
+                if ((typeof questionMediaSeq == "undefined" || questionMediaSeq == "") &&
+                    (typeof contentNo == "undefined" || contentNo == "") &&
+                    (typeof youtubeId == "undefined" || youtubeId == "") &&
+                    (typeof fileVal == "undefined" || fileVal == "")) {
+
+                    $targetRowParent = $(this).parent();
+                    // 해당 미디어 row 삭제
+                    $(this).remove();
+                    // 미디어 rowNo 다시 넘버링
+                    $targetRowParent.find("li.mediaRow").each(function (e) {
+                        var mediaRowNo = e + 1;
+                        $(this).find("span.no").text(mediaRowNo);
+                        $(this).find("input.mediaSortNum").val(mediaRowNo);
+                    });
+                }
+            });
+            // 		    console.log(formData.serializeArray());
+            // 		    console.log(formData.values());
+            $.ajax({
+                type: 'POST',
+                enctype: 'multipart/form-data',
+                url: "/user/content/insertQuestionAndAnswer.json",
+                data: formData,
+                dataType: 'json',
+                async: false,
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function (result) {
+                    console.log(result);
+                    if (result.success) {
+                        // questionIdx 설정
+                        if (questionIdx == "") {
+                            questionIdx = result.resultMap.questionIdx;
+                            $targetRow.find("input[name=questionIdx]").val(questionIdx);
+                        }
+                        console.log(questionIdx);
+
+                        // 완료
+                        var rowNo = $targetRow.attr("data-row-no");
+                        console.log(rowNo + "번 질문 저장");
+
+                        // 질문 저장된 상태 폼 가져오기 ajax. viewForm
+                        getQuestionViewRowFormAjax(questionIdx);
+                        // 	            		getQuestionViewRowFormAjax($targetRow);
+                    }
+                },
+                error: function (e) {
+                    console.log("ERROR : ", e);
+                },
+                beforeSend: function () {
+                    loadingProgressOn();
+                    isAjaxing = true;
+                },
+                complete: function () {
+                    loadingProgressOff();
+                    setTimeout(function () {
+                        isAjaxing = false;
+                    }, 3000); // 중복 방지 타임아웃
+                }
+            });
+
+        }
+
+
+
+        // 질문 저장된 상태 폼 가져오기 ajax. viewForm
+        function getQuestionViewRowFormAjax(questionIdx) {
+            // 		function getQuestionViewRowFormAjax($targetRow, questionIdx){
+            var $targetRow = $("#questionAllDiv").find("input[name=questionIdx][value='" + questionIdx + "']").parents(".questionRow");
+
+            var rowNo = $targetRow.data("row-no");
+            // 			var questionIdx = $targetRow.find("input[name=questionIdx]").val(questionIdx);
+
+            var data = {
+                'rowNo': rowNo,
+                'questionIdx': questionIdx
+            };
+            // 			console.log(data);
+
+            $.ajax({
+                url: '/user/content/make/resultForm/questionViewRowForm.json',
+                type: 'POST',
+                dataType: 'html',
+                data: data,
+                success: function (result) {
+                    // 					console.log(result);
+                    $targetRow.replaceWith(result);
+
+                    // sortable refresh
+                    $(".sortable").sortable("refresh");
+                },
+                error: function (e) {
+                    console.log("ERROR : ", e);
+                },
+                beforeSend: function () {
+                    loadingProgressOn();
+                },
+                complete: function () {
+                    loadingProgressOff();
+                }
+            });
+        }
+
+        // 질문 입력 row 폼 가져오기 ajax. writeForm
+        function getQuestionWriteRowFormAjax($targetRow, isSetTime) {
+            // 			var $targetRow = $("#questionAllDiv").find("input[name=questionIdx][value='"+questionIdx+"']").parents(".questionRow");
+            var rowNo = $targetRow.attr("data-row-no");
+            var questionIdx = $targetRow.find("input[name=questionIdx]").val();
+            // 			var questionCd = $targetRow.find("input[name=questionCd]").val();
+            var questionCd;
+            // 질문 유형 questionCd
+            if ($targetRow.find("input[type=radio][name=questionCd]:checked").length > 0) { // 초기 입력시 radio로 선택
+                questionCd = $targetRow.find("input[type=radio][name=questionCd]:checked").val();
+            } else { // 수정시 input hidden
+                questionCd = $targetRow.find("input[name=questionCd]").val();
+            }
+            var quizCategory = $("#quizForm input[name=quizCategory]").val();
+
+            var data = {
+                'rowNo': rowNo,
+                'questionIdx': questionIdx,
+                'questionCd': questionCd,
+                'quizCategory': quizCategory
+            };
+            // 			console.log(data);
+
+            $.ajax({
+                url: '/user/content/make/resultForm/questionWriteRowForm.json',
+                type: 'POST',
+                dataType: 'html',
+                data: data,
+                success: function (result) {
+                    // 					console.log(result);
+                    $targetRow.replaceWith(result);
+                    // 					console.log("isSetTime:" + isSetTime);
+                    var $newTargetRow = $("#questionAllDiv .questionRow[data-row-no=" + rowNo + "]");
+                    if (isSetTime) {
+                        setQuestionLimitTime($newTargetRow);
+                    }
+                },
+                error: function (e) {
+                    console.log("ERROR : ", e);
+                },
+                beforeSend: function () {
+                    loadingProgressOn();
+                },
+                complete: function () {
+                    loadingProgressOff();
+                }
+            });
+        }
+
+        // 질문 입력 답변 폼 가져오기 ajax. writeAnswerForm
+        function getQuestionWriteAnswerFormAjax($targetRow, isSetTime) {
+            var rowNo = $targetRow.attr("data-row-no");
+            var questionIdx = $targetRow.find("input[name=questionIdx]").val();
+            var questionCd;
+            // 질문 유형 questionCd
+            if ($targetRow.find("input[type=radio][name=questionCd]:checked").length > 0) { // 초기 입력시 radio로 선택
+                questionCd = $targetRow.find("input[type=radio][name=questionCd]:checked").val();
+            } else { // 수정시 input hidden
+                questionCd = $targetRow.find("input[name=questionCd]").val();
+            }
+            console.log("getQuestionWriteAnswerFormAjax questionCd: " + questionCd);
+
+            var quizCategory = $("#quizForm input[name=quizCategory]").val();
+
+            var data = {
+                'rowNo': rowNo,
+                'questionIdx': questionIdx,
+                'questionCd': questionCd,
+                'quizCategory': quizCategory
+            };
+            console.log(data);
+
+            $.ajax({
+                url: '/user/content/make/resultForm/questionWriteAnswerForm.json',
+                type: 'POST',
+                dataType: 'html',
+                data: data,
+                success: function (result) {
+                    console.log(result);
+                    // 					$targetRow.find("ul.answer-list").html(result);
+                    $targetRow.find(".answerTimeFeedbackDiv").html(result);
+                    if (isSetTime) {
+                        setQuestionLimitTime($targetRow);
+                    }
+                },
+                error: function (e) {
+                    console.log("ERROR : ", e);
+                },
+                beforeSend: function () {
+                    loadingProgressOn();
+                },
+                complete: function () {
+                    loadingProgressOff();
+                }
+            });
+        }
+
+        // 질문 입력 답변 빈 폼
+        function getQuestionWriteAnswerTempFormAjax($targetRow, isSetTime) {
+            var rowNo = $targetRow.attr("data-row-no");
+            var questionIdx = $targetRow.find("input[name=questionIdx]").val();
+            var questionCd;
+            // 질문 유형 questionCd
+            /* if($targetRow.find("input[type=radio][name=questionCd]:checked").length > 0){ // 초기 입력시 radio로 선택
+            	questionCd = $targetRow.find("input[type=radio][name=questionCd]:checked").val();
+            } else { // 수정시 input hidden
+            	questionCd = $targetRow.find("input[name=questionCd]").val();
+            } */
+            questionCd = $targetRow.find("input[type=radio][name=questionCd]:checked").val();
+
+            var quizCategory = $("#quizForm input[name=quizCategory]").val();
+
+            var data = {
+                'rowNo': rowNo,
+                'questionIdx': questionIdx,
+                'questionCd': questionCd,
+                'quizCategory': quizCategory
+            };
+            console.log(data);
+
+            $.ajax({
+                url: '/user/content/make/resultForm/questionWriteAnswerTempForm.json',
+                type: 'POST',
+                dataType: 'html',
+                data: data,
+                success: function (result) {
+                    console.log(result);
+                    // 					$targetRow.find("ul.answer-list").html(result);
+                    $targetRow.find(".answerTimeFeedbackDiv").html(result);
+                    if (isSetTime) {
+                        setQuestionLimitTime($targetRow);
+                    }
+                },
+                error: function (e) {
+                    console.log("ERROR : ", e);
+                },
+                beforeSend: function () {
+                    loadingProgressOn();
+                },
+                complete: function () {
+                    loadingProgressOff();
+                }
+            });
+        }
+
+        // 질문&답변 삭제 ajax
+        function deleteQuestionAndAnswerAjax(questionIdx) {
+            var $targetRow = $("#questionAllDiv").find("input[name=questionIdx][value='" + questionIdx + "']").parents(".questionRow");
+
+            var form = $targetRow.find("form.questionForm")[0];
+            var formData = new FormData(form);
+
+            var quizIdx = $("#quizForm input[name=quizIdx]").val();
+            formData.append("quizIdx", quizIdx);
+
+            $.ajax({
+                type: 'POST',
+                url: "/user/content/deleteQuestionAndAnswer.json",
+                data: formData,
+                dataType: 'json',
+                async: false,
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function (result) {
+                    //	 	            console.log(result);
+                    if (result.success) {
+                        $targetRow.remove();
+                        reorderingQuestionRow();
+                    }
+                },
+                error: function (e) {
+                    console.log("ERROR : ", e);
+                },
+                beforeSend: function () {
+                    loadingProgressOn();
+                },
+                complete: function () {
+                    loadingProgressOff();
+                }
+            });
+        }
+
+        // 썸네일 에러시(존재x) 실행
+        function errorThumb(obj, type) {
+            type = type.toUpperCase();
+            if (type == "MOD") {
+                $(obj).attr("src", "/asset/serviceFront/images/curriculum/thumbnail_f.png");
+            } else if (type == "TXT" || type == "DOC") {
+                $(obj).attr("src", "/asset/serviceFront/images/curriculum/thumbnail_d.png");
+            } else if (type == "LINK") {
+                $(obj).attr("src", "/asset/serviceFront/images/curriculum/thumbnail_l.png");
+            } else {
+                $(obj).attr("src", "/asset/serviceFront/images/temp/thumbnail_default.png");
+            }
+        }
+
+        ////////////////////미디어 : start  ////////////////////
+
+        // 질문 미디어 버튼 클릭시 액션. questionMediaBtn, explanationMediaBtn 공통
+        function quetionsMediaBtnClickAction($target, mediaCategory) {
+            var mediaCd = $target.data("media-cd");
+            var $targetRow = $target.parents(".questionRow"); // 대상 질문 div
+
+            var $targetSearchDiv; // 미디어 search 영역
+            var $targetAddedMediaDiv; // 미디어 view 영역
+            if (mediaCategory == "QUESTION") {
+                $targetSearchDiv = $targetRow.find(".media-sch.questionMedia"); // 질문 미디어 검색 영역
+                $targetAddedMediaDiv = $targetRow.find(".media-list.questionMedia"); // 질문 미디어 view 영역
+            } else if (mediaCategory == "EXPLANATION") {
+                $targetSearchDiv = $targetRow.find(".media-sch.explanationMedia"); // 해설 미디어 검색 영역
+                $targetAddedMediaDiv = $targetRow.find(".media-list.explanationMedia"); // 질문 미디어 view 영역
+            }
+            var addedMediaLength = $targetAddedMediaDiv.find("li").length;
+            //			console.log("addedMediaLength: " + addedMediaLength);
+
+            if (addedMediaLength >= maxMediaLength) {
+                // 				alert("미디어는 최대 " + maxMediaLength + "개 등록 가능합니다.");
+                var msg = "미디어는 최대 " + maxMediaLength + "개 등록 가능합니다.";
+                msgLayerOpen(msg);
+                if ($targetSearchDiv.css("display") != "none") {
+                    $targetSearchDiv.hide();
+                }
+            } else {
+                // show & hide
+                if ($targetSearchDiv.css("display") != "none" && $targetSearchDiv.find("input[name=mediaCd]").val() == mediaCd) {
+                    $targetSearchDiv.hide();
+                } else if (mediaCd == "UPIMG") {
+                    $target.siblings("input.mediaImageFile").click();
+                    $targetSearchDiv.hide();
+                } else {
+                    // 검색 초기화
+                    $targetSearchDiv.find("input[name=searchWord]").val(""); // 검색어
+                    // placeholder
+                    var placeholder = "검색어 입력 후 엔터";
+                    if (mediaCd == "YOUTB") {
+                        placeholder = "검색어나 URL 입력 후 엔터";
+                    }
+                    $targetSearchDiv.find("input[name=searchWord]").attr("placeholder", placeholder);
+                    // 안내문구
+                    var msgText = $target.text();
+                    if (mediaCd == "ISIMG") {
+                        msgText += "<br/>아이스크림 이미지를 사용한 띵커벨은";
+                        msgText += " 아이스크림 유료 회원만 사용할 수 있습니다.";
+                    } else if (mediaCd == "ISMOV") {
+                        msgText += "<br/>아이스크림 영상을 사용한 띵커벨은";
+                        msgText += " 아이스크림 유료 회원만 사용할 수 있습니다.";
+                    }
+                    $targetSearchDiv.find("p.msg").html(msgText);
+                    $targetSearchDiv.find(".media-sch-cont").html("");
+
+                    $targetSearchDiv.show();
+                    $targetSearchDiv.find("input[name=mediaCd]").val(mediaCd);
+                    $targetSearchDiv.find("input[name=searchWord]").focus();
+                }
+            }
+
+        }
+
+        // 미디어 검색 input 엔터키 입력
+        $(document).on("keypress", ".media-sch input[name=searchWord]", function () {
+            if (event.which == 13) {
+                event.preventDefault();
+                // 검색 아이스크림미디어, 유튜브 분기
+                // 				var rowNo = $(this).parents(".questionRow").data("row-no");
+                // 				var mediaCategory = $(this).siblings("input[name=mediaCategory]").val();
+                // 				var mediaCd = $(this).siblings("input[name=mediaCd]").val();
+                var $targetSearchDiv = $(this).parents("div.media-sch"); // 대상 검색 div
+                var searchWord = $(this).val();
+                divideSearchMedia($targetSearchDiv);
+            }
+        });
+
+        // 검색 이전 버튼
+        $(document).on("click", ".media-sch .searchPrevBtn", function () {
+            var $targetSearchDiv = $(this).parents("div.media-sch"); // / 미디어 search 영역
+            // 검색 아이스크림미디어, 유튜브 분기
+            divideSearchMedia($targetSearchDiv, "PREV");
+        });
+
+        // 검색 다음 버튼
+        $(document).on("click", ".media-sch .searchNextBtn", function () {
+            var $targetSearchDiv = $(this).parents("div.media-sch"); // / 미디어 search 영역
+            // 검색 아이스크림미디어, 유튜브 분기
+            divideSearchMedia($targetSearchDiv, "NEXT");
+        });
+
+        // 검색 아이스크림미디어, 유튜브 분기
+        function divideSearchMedia($targetSearchDiv, pageBtn) {
+            // 			console.log($targetSearchDiv);
+
+            var mediaCd = $targetSearchDiv.find("input[name=mediaCd]").val();
+
+            if (mediaCd == "ISIMG" || mediaCd == "ISMOV") { // 아이스크림 미디어 검색
+                searchIscreamMedia($targetSearchDiv, pageBtn);
+            } else if (mediaCd == "YOUTB") { // 유튜브 검색
+                makeRequestYoutube($targetSearchDiv, pageBtn);
+            }
+        }
+
+        // 아이스크림 미디어 검색
+        function searchIscreamMedia($targetSearchDiv, pageBtn) {
+            var mediaCd = $targetSearchDiv.find("input[name=mediaCd]").val();
+            var searchWord = $targetSearchDiv.find("input[name=searchWord]").val();
+            // 검색 대상 텍스트 정보
+            var mediaCdText = "";
+            switch (mediaCd) {
+                case "ISIMG":
+                    mediaCdText = "아이스크림 이미지";
+                    break;
+                case "ISMOV":
+                    mediaCdText = "아이스크림 동영상";
+                    break;
+                case "YOUTB":
+                    mediaCdText = "유튜브";
+                    break;
+                default:
+                    break;
+            }
+
+            // 이전/다음 버튼 설정
+            var currentPageNo = $targetSearchDiv.find("input[name=currentPageNo]").val();
+            if (pageBtn == "PREV") {
+                currentPageNo = parseInt(currentPageNo) - 1;
+            } else if (pageBtn == "NEXT") {
+                currentPageNo = parseInt(currentPageNo) + 1;
+                // 	 		} else if(typeof currentPageNo == "undefined" || currentPageNo == ""){
+                // 	 			currentPageNo = 1;
+            } else {
+                currentPageNo = 1;
+            }
+
+            if (searchWord == "") {
+                // 				alert("검색어를 입력하세요.");
+                var msg = "검색어를 입력하세요.";
+                msgLayerOpen(msg);
+                $targetSearchDiv.find("input[name=searchWord]").focus();
+            } else {
+                var data = {
+                    'mediaCd': mediaCd,
+                    'searchWord': searchWord,
+                    'pageUnit': mediaSearchPageUnit,
+                    'currentPageNo': currentPageNo,
+                    'regPageCd': "FRONT"
+                };
+                // 		 		console.log(data);
+
+                $.ajax({
+                    url: '/user/content/selectIscreamMediaList.json',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: data,
+                    success: function (result) {
+                        // 						console.log(result);
+                        // 카운트 표시
+                        $targetSearchDiv.find("p.msg").text(mediaCdText + " 검색 결과 " + numberWithCommas(result.resultCount) + "개");
+
+                        setIscreamMediaSearchResult($targetSearchDiv, result);
+                    },
+                    error: function (e) {
+                        console.log("ERROR : ", e);
+                    },
+                    beforeSend: function () {
+                        loadingProgressOn();
+                    },
+                    complete: function () {
+                        loadingProgressOff();
+                    }
+                });
+            }
+
+        }
+
+        // 아이스크림 미디어 검색 결과
+        function setIscreamMediaSearchResult($targetSearchDiv, result) {
+            iscreamResultList = result.resultList;
+            // 	 		console.log(iscreamResultList);
+            var rowNo = $targetSearchDiv.parents(".questionRow").data("row-no");
+            var mediaCategory = $targetSearchDiv.find("input[name=mediaCategory]").val();
+            var sHTML = '';
+            sHTML += '<ul class="media-list">';
+            for (var i = 0; i < iscreamResultList.length; i++) {
+                sHTML += '<li class="mediaResultRow">';
+                if (iscreamResultList[i].contentTypeCd == "MOV" || iscreamResultList[i].contentTypeCd == "MOD") {
+                    sHTML += '    <a class="video" href="javascript:;" onclick="javascript:playIscreamMediaMultiView(\'' + iscreamResultList[i].contentNo + '\',\'' + iscreamResultList[i]
+                        .contentTypeCd + '\',\'' + iscreamResultList[i].servicePath + '\',\'' + iscreamResultList[i].objectNameReplace + '\');" >';
+                    sHTML += '        <figure>';
+                    sHTML += '            <img src="' + serviceImgUrl + iscreamResultList[i].thumbPath + '" onerror="javascript:errorThumb(this,\'' + iscreamResultList[i].contentTypeCd + '\');" />';
+                    sHTML += '        </figure>';
+                    sHTML += '        <span>' + iscreamResultList[i].objectNameKor + '</span>';
+                    sHTML += '    </a>';
+                    sHTML += '    <div class="media-fnc">';
+                    sHTML += '        <button type="button" class="btn-add-youtube" onclick="javascript:clickIscreamMediaSearchResult(' + rowNo + ',\'' + mediaCategory + '\',' + i + ');"></button>';
+                    sHTML += '    </div>';
+                } else {
+                    sHTML += '    <a href="javascript:;" onclick="javascript:clickIscreamMediaSearchResult(' + rowNo + ',\'' + mediaCategory + '\',' + i + ');">';
+                    sHTML += '        <figure>';
+                    sHTML += '            <img src="' + serviceImgUrl + iscreamResultList[i].thumbPath + '" onerror="javascript:errorThumb(this,\'' + iscreamResultList[i].contentTypeCd + '\');" />';
+                    sHTML += '        </figure>';
+                    sHTML += '        <span>' + iscreamResultList[i].objectNameKor + '</span>';
+                    sHTML += '    </a>';
+                }
+                sHTML += '</li>';
+            }
+            sHTML += '</ul>';
+
+            // 이전, 다음 버튼 설정
+            var currentPageNo = result.paginationInfo.currentPageNo;
+            $targetSearchDiv.find("input[name=currentPageNo]").val(currentPageNo);
+            if (currentPageNo > result.paginationInfo.firstPageNo) {
+                sHTML += '<a href="javascript:;" class="btn-prev searchPrevBtn">이전</a>';
+            }
+            if (currentPageNo < result.paginationInfo.lastPageNo) {
+                sHTML += '<a href="javascript:;" class="btn-next searchNextBtn">다음</a>';
+            }
+
+            // 페이지 표시
+            if (result.resultCount > 0) {
+                sHTML += '<span class="paging">' + currentPageNo + '/' + numberWithCommas(result.paginationInfo.totalPageCount) + '</span>';
+            } else {
+                sHTML += '<span class="paging"></span>';
+            }
+
+            $targetSearchDiv.find(".media-sch-cont").html(sHTML);
+        }
+
+        // 아이스크림 미디어 검색 결과에서 미디어 클릭시
+        function clickIscreamMediaSearchResult(rowNo, mediaCategory, index) {
+            console.log("rowNo: " + rowNo);
+            console.log("mediaCategory: " + mediaCategory);
+            mediaData = iscreamResultList[index]; // iscraem 미디어 결과 전역
+
+            var $targetRow = $("#questionAllDiv .questionRow[data-row-no=" + rowNo + "]");
+            var $targetSearchDiv; // 미디어 search 영역
+            var $targetAddedMediaDiv; // 미디어 view 영역
+            if (mediaCategory == "QUESTION") {
+                $targetSearchDiv = $targetRow.find(".media-sch.questionMedia"); // 질문 미디어 검색 영역
+                $targetAddedMediaDiv = $targetRow.find(".media-list.questionMedia"); // 질문 미디어 view 영역
+            } else if (mediaCategory == "EXPLANATION") {
+                $targetSearchDiv = $targetRow.find(".media-sch.explanationMedia"); // 해설 미디어 검색 영역
+                $targetAddedMediaDiv = $targetRow.find(".media-list.explanationMedia"); // 질문 미디어 view 영역
+            }
+            var addedMediaLength = $targetAddedMediaDiv.find("li").length;
+            // 			console.log("addedMediaLength: " + addedMediaLength);
+            var mediaCd = $targetSearchDiv.find("input[name=mediaCd]").val();
+
+            $targetSearchDiv.hide(); // 검색 영역 숨김
+            // 			$targetSearchDiv.find("input[name=searchWord]").val(""); // 검색어 초기화
+
+            // 질문,해설 미디어 row 추가 - 아이스크림 미디어
+            var sHTML = '';
+            if (mediaCategory == "QUESTION") {
+                sHTML += '<li class="row mediaRow questionMediaRow" data-media-row-no="' + (addedMediaLength + 1) + '" data-media-cd="' + mediaCd + '">';
+                sHTML += '				<input type="hidden" class="mediaSortNum" name="questionMediaSortNumArray" value="' + (addedMediaLength + 1) + '">';
+                sHTML += '				<input type="hidden" class="mediaCd" name="questionMediaCdArray" value="' + mediaCd + '">';
+                sHTML += '				<input type="hidden" class="contentNo" name="questionContentNoArray" value="' + mediaData.contentNo + '">';
+                sHTML += '				<input type="hidden" class="contentTypeCd" name="questionContentTypeCdArray" value="' + mediaData.contentTypeCd + '">';
+                sHTML += '				<input type="hidden" class="youtubeId" name="questionYoutubeIdArray" value="">';
+                sHTML += '				<input type="hidden" class="linkUrl" name="questionLinkUrlArray" value="' + mediaData.servicePath + '">';
+                sHTML += '				<input type="hidden" class="thumbUrl" name="questionThumbUrlArray" value="' + mediaData.thumbPath + '">';
+                sHTML += '				<input type="hidden" class="mediaTitle" name="questionMediaTitleArray" value="' + mediaData.objectNameKor + '">';
+                sHTML += '				<input type="hidden" class="tempFileSeq" name="questionTempFileSeqArray" value="">';
+            } else if (mediaCategory == "EXPLANATION") {
+                sHTML += '<li class="row mediaRow explanationMediaRow" data-media-row-no="' + (addedMediaLength + 1) + '" data-media-cd="' + mediaCd + '">';
+                sHTML += '				<input type="hidden" class="mediaSortNum" name="explanationMediaSortNumArray" value="' + (addedMediaLength + 1) + '">';
+                sHTML += '				<input type="hidden" class="mediaCd" name="explanationMediaCdArray" value="' + mediaCd + '">';
+                sHTML += '				<input type="hidden" class="contentNo" name="explanationContentNoArray" value="' + mediaData.contentNo + '">';
+                sHTML += '				<input type="hidden" class="contentTypeCd" name="explanationContentTypeCdArray" value="' + mediaData.contentTypeCd + '">';
+                sHTML += '				<input type="hidden" class="youtubeId" name="explanationYoutubeIdArray" value="">';
+                sHTML += '				<input type="hidden" class="linkUrl" name="explanationLinkUrlArray" value="' + mediaData.servicePath + '">';
+                sHTML += '				<input type="hidden" class="thumbUrl" name="explanationThumbUrlArray" value="' + mediaData.thumbPath + '">';
+                sHTML += '				<input type="hidden" class="mediaTitle" name="explanationMediaTitleArray" value="' + mediaData.objectNameKor + '">';
+                sHTML += '				<input type="hidden" class="tempFileSeq" name="explanationTempFileSeqArray" value="">';
+            }
+            if (mediaData.contentTypeCd == "MOV" || mediaData.contentTypeCd == "MOD") {
+                sHTML += '  	<div class="video" onclick="javascript:playIscreamMediaMultiView(\'' + mediaData.contentNo + '\',\'' + mediaData.contentTypeCd + '\',\'' + mediaData.servicePath +
+                    '\',\'' + mediaData.objectNameReplace + '\');">';
+                sHTML += '      	<figure>';
+                sHTML += '            	<img src="' + serviceImgUrl + mediaData.thumbPath + '" onerror="javascript:errorThumb(this,\'' + mediaData.contentTypeCd + '\');" />';
+                sHTML += '      	</figure>';
+                sHTML += '      	<span>' + mediaData.objectNameKor + '</span>';
+                sHTML += ' 		</div>';
+            } else {
+                sHTML += '  	<div>';
+                sHTML += '      	<figure>';
+                sHTML += '          	<img src="' + serviceImgUrl + mediaData.thumbPath + '" onerror="javascript:errorThumb(this,\'' + mediaData.contentTypeCd + '\');" />';
+                sHTML += '      	</figure>';
+                sHTML += '      	<span>' + mediaData.objectNameKor + '</span>';
+                sHTML += ' 		</div>';
+            }
+            sHTML += '		<div class="media-fnc">';
+            sHTML += '			<button type="button" class="btn-del deleteQuestionMediaBtn"></button>';
+            sHTML += '		</div>';
+            sHTML += '	</li>';
+
+            $targetAddedMediaDiv.append(sHTML);
+        }
+        //////////////////// 미디어 : END  ////////////////////
+
+        ///////////////////       유튜브: START     ////////////////////
+        // 		var apiKey = 'AIzaSyA2o349B9fLn27ovZEWaG50ng88WGJzCWQ';
+        var apiKey = 'AIzaSyAfOOK0N14f0gq9PH2skdssuX6SrsAA9ag'; // jamie0park
+        var apiKey2 = 'AIzaSyByVQbVzdNXGNZ05FeG9oRMw6RmWiBB9C8'; // redsco.com
+        var currentApiKey = apiKey;
+        // 	function handleClientLoad() {
+        // 	    gapi.load('client', initClientApi);
+        // 	}
+        /* onload */
+        $(function () {
+            gapi.load('client', initClientGoogleApi);
+        });
+
+        function initClientGoogleApi() {
+            gapi.client.init({
+                apiKey: currentApiKey,
+            }).then(function () {});
+        }
+
+        function makeRequestYoutube($targetSearchDiv, pageBtn) {
+
+            $targetSearchYoutubeDiv = $targetSearchDiv;
+            gapi.client.setApiKey(currentApiKey);
+
+            var mediaCd = $targetSearchDiv.find("input[name=mediaCd]").val();
+            var searchWord = $targetSearchDiv.find("input[name=searchWord]").val();
+            var mediaCdText = "유튜브";
+            var pageToken;
+            if (pageBtn == "PREV") {
+                pageToken = $targetSearchDiv.find("input[name=prevPageToken]").val();
+            } else if (pageBtn == "NEXT") {
+                pageToken = $targetSearchDiv.find("input[name=nextPageToken]").val();
+            }
+
+            if (searchWord == "") {
+                // 				alert("검색어를 입력하세요.");
+                var msg = "검색어를 입력하세요.";
+                msgLayerOpen(msg);
+                $targetSearchDiv.find("input[name=searchWord]").focus();
+            } else {
+                // loading progress on
+                loadingProgressOn();
+
+                var youtubeUrlRegExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+                var matches = searchWord.match(youtubeUrlRegExp);
+                console.log(matches);
+                // 				console.log(matches[7]);
+
+                if (matches) { // 유튜브 url 체크 먼저
+                    var youtubeId = matches[7].replace(/^[\-]/, '');
+                    // 					alert(youtubeId);
+                    var params = {
+                        'part': 'id',
+                        'q': youtubeId
+                    };
+                } else {
+                    var params = {
+                        'part': 'snippet',
+                        'q': searchWord.replace(/^[\-]/, ''),
+                        'maxResults': mediaSearchPageUnit,
+                        'type': 'video',
+                        'order': 'viewCount'
+                    };
+                }
+
+
+                if (typeof pageToken != "undefined" || pageToken != "") {
+                    params['pageToken'] = pageToken;
+                }
+
+                var restRequest = gapi.client.request({
+                    'path': '/youtube/v3/search',
+                    'params': params
+                });
+
+                // 				console.log("restRequest");
+                // 				console.log(restRequest);
+
+                restRequest.execute(writeResponseYoutube);
+
+            }
+        }
+
+        function writeResponseYoutube(resp) {
+            console.log(resp);
+            // loading progress on
+            loadingProgressOn();
+
+            $targetSearchDiv = $targetSearchYoutubeDiv;
+            // 			console.log($targetSearchDiv);
+            // 			console.log(resp);
+
+            var rowNo = $targetSearchDiv.parents(".questionRow").data("row-no");
+            var mediaCategory = $targetSearchDiv.find("input[name=mediaCategory]").val();
+            var mediaCd = $targetSearchDiv.find("input[name=mediaCd]").val();
+
+            // 			var $targetAddedMediaDiv;
+
+            var responseText = "";
+
+            if (resp.error && resp.error.errors[0].debugInfo == 'QuotaState: BLOCKED') {
+                responseText = "Invalid API key provided. Please replace the 'apiKey' value with your own.";
+                alert(responseText);
+            } else if (resp.error && resp.error.errors[0].reason == "quotaExceeded") {
+                console.log("요청 한도 초과");
+                currentApiKey = apiKey2;
+                gapi.load('client', initClientGoogleApi);
+                divideSearchMedia($targetSearchDiv); // 다시 검색
+            } else if (resp.error) {
+                alert(resp.error.message);
+            } else {
+                var idText = "";
+                for (var i = 0; i < resp.items.length; i++) {
+                    idText += resp.items[i].id.videoId + ',';
+                }
+                // 				console.log("idText: " + idText);
+
+                var restRequest1 = gapi.client.request({
+                    'path': '/youtube/v3/videos',
+                    'params': {
+                        'part': 'id,snippet,contentDetails',
+                        'id': idText
+                    }
+                });
+                // 				console.log("restRequest1");
+                // 				console.log(restRequest1);
+
+                restRequest1.execute(function (e) {
+                    console.log(e);
+                    youtubeResultList = e.items;
+                    // 					console.log(youtubeResultList);
+
+                    var sHTML = '';
+                    sHTML += '<ul class="media-list">';
+                    for (var i = 0; i < youtubeResultList.length; i++) {
+                        sHTML += '<li class="mediaResultRow">';
+                        sHTML += '    <a class="video" href="javascript:;" onclick="javascript:playYoutubeMedia(\'' + youtubeResultList[i].id + '\',\'' + youtubeResultList[i].snippet.title +
+                            '\');" >';
+                        sHTML += '        <figure>';
+                        sHTML += '            <img src="' + youtubeResultList[i].snippet.thumbnails.default.url + '" />';
+                        sHTML += '        </figure>';
+                        sHTML += '        <span>' + youtubeResultList[i].snippet.title + '</span>';
+                        sHTML += '    </a>';
+                        sHTML += '    <div class="media-fnc">';
+                        sHTML += '        <button type="button" class="btn-add-youtube" onclick="javascript:clickYoutubeSearchResult(' + rowNo + ',\'' + mediaCategory + '\',' + i +
+                            ');"></button>';
+                        sHTML += '    </div>';
+                        sHTML += '</li>';
+                    }
+                    sHTML += '</ul>';
+
+                    // 					console.log(resp.prevPageToken);
+                    // 					console.log(typeof resp.prevPageToken);
+                    // 					console.log($targetSearchDiv);
+                    // 이전, 다음 버튼 설정
+                    if (typeof resp.prevPageToken != "undefined") {
+                        $targetSearchDiv.find("input[name=prevPageToken]").val(resp.prevPageToken); // prevPageToken
+                        sHTML += '<a href="javascript:;" class="btn-prev searchPrevBtn">이전</a>';
+                    }
+                    if (typeof resp.nextPageToken != "undefined") {
+                        $targetSearchDiv.find("input[name=nextPageToken]").val(resp.nextPageToken); // nextPageToken
+                        sHTML += '<a href="javascript:;" class="btn-next searchNextBtn">다음</a>';
+                    }
+
+                    // 					sHTML +='<span class="paging">' + currentPageNo + '/' + result.resultCount + '</span>';
+
+                    $targetSearchDiv.find(".media-sch-cont").html(sHTML);
+
+                    // 카운트 표시
+                    $targetSearchDiv.find("p.msg").text("유튜브 검색 결과");
+                    // 					$targetSearchDiv.find("p.msg").text("유튜브 검색 결과 " + numberWithCommas(youtubeResultList.length) + "개");
+                });
+            }
+
+            // loading progress off
+            loadingProgressOff();
+        }
+
+        // 모달 유튜브 검색 결과에서 미디어 클릭시
+        function clickYoutubeSearchResult(rowNo, mediaCategory, index) {
+            var youtubeData = youtubeResultList[index];
+            // 		console.log(youtubeData);
+
+            var $targetRow = $("#questionAllDiv .questionRow[data-row-no=" + rowNo + "]");
+            var $targetSearchDiv; // 미디어 search 영역
+            var $targetAddedMediaDiv; // 미디어 view 영역
+            if (mediaCategory == "QUESTION") {
+                $targetSearchDiv = $targetRow.find(".media-sch.questionMedia"); // 질문 미디어 검색 영역
+                $targetAddedMediaDiv = $targetRow.find(".media-list.questionMedia"); // 질문 미디어 view 영역
+            } else if (mediaCategory == "EXPLANATION") {
+                $targetSearchDiv = $targetRow.find(".media-sch.explanationMedia"); // 해설 미디어 검색 영역
+                $targetAddedMediaDiv = $targetRow.find(".media-list.explanationMedia"); // 질문 미디어 view 영역
+            }
+            var addedMediaLength = $targetAddedMediaDiv.find("li").length;
+            // 			console.log("addedMediaLength: " + addedMediaLength);
+            var mediaCd = $targetSearchDiv.find("input[name=mediaCd]").val();
+
+            var duplicationMediaLength = $targetAddedMediaDiv.find("li[data-youtube-id='" + youtubeData.id + "']").length;
+            console.log("duplicationMediaLength: " + duplicationMediaLength);
+            if (duplicationMediaLength > 0) {
+                alert("이미 추가한 영상입니다.");
+                return;
+            }
+
+            $targetSearchDiv.hide(); // 검색 영역 숨김
+            // 			$targetSearchDiv.find("input[name=searchWord]").val(""); // 검색어 초기화
+
+            // 질문,해설 미디어 row 추가 - 유튜브
+            var sHTML = '';
+            if (mediaCategory == "QUESTION") {
+                sHTML += '<li class="row mediaRow questionMediaRow" data-media-row-no="' + (addedMediaLength + 1) + '" data-media-cd="' + mediaCd + '" data-youtube-id="' + youtubeData.id + '">';
+            } else if (mediaCategory == "EXPLANATION") {
+                sHTML += '<li class="row mediaRow explanationMediaRow" data-media-row-no="' + (addedMediaLength + 1) + '" data-media-cd="' + mediaCd + '" data-youtube-id="' + youtubeData.id + '">';
+            }
+            if (mediaCategory == "QUESTION") {
+                sHTML += '				<input type="hidden" class="mediaSortNum" name="questionMediaSortNumArray" value="' + (addedMediaLength + 1) + '">';
+                sHTML += '				<input type="hidden" class="mediaCd" name="questionMediaCdArray" value="' + mediaCd + '">';
+                sHTML += '				<input type="hidden" class="contentNo" name="questionContentNoArray" value="">';
+                sHTML += '				<input type="hidden" class="contentTypeCd" name="questionContentTypeCdArray" value="">';
+                sHTML += '				<input type="hidden" class="youtubeId" name="questionYoutubeIdArray" value="' + youtubeData.id + '">';
+                // 				sHTML += '				<input type="hidden" class="linkUrl" name="questionLinkUrlArray" value="http://www.youtube.com/embed/' + youtubeData.id + '">';
+                sHTML += '				<input type="hidden" class="linkUrl" name="questionLinkUrlArray" value="https://www.youtube.com/embed/' + youtubeData.id + '">';
+                sHTML += '				<input type="hidden" class="thumbUrl" name="questionThumbUrlArray" value="' + youtubeData.snippet.thumbnails["default"].url + '">';
+                sHTML += '				<input type="hidden" class="mediaTitle" name="questionMediaTitleArray" value="' + youtubeData.snippet.title + '">';
+                sHTML += '				<input type="hidden" class="tempFileSeq" name="questionTempFileSeqArray" value="">';
+            } else if (mediaCategory == "EXPLANATION") {
+                sHTML += '				<input type="hidden" class="mediaSortNum" name="explanationMediaSortNumArray" value="' + (addedMediaLength + 1) + '">';
+                sHTML += '				<input type="hidden" class="mediaCd" name="explanationMediaCdArray" value="' + mediaCd + '">';
+                sHTML += '				<input type="hidden" class="contentNo" name="explanationContentNoArray" value="">';
+                sHTML += '				<input type="hidden" class="contentTypeCd" name="explanationContentTypeCdArray" value="">';
+                sHTML += '				<input type="hidden" class="youtubeId" name="explanationYoutubeIdArray" value="' + youtubeData.id + '">';
+                // 				sHTML += '				<input type="hidden" class="linkUrl" name="explanationLinkUrlArray" value="http://www.youtube.com/embed/' + youtubeData.id + '">';
+                sHTML += '				<input type="hidden" class="linkUrl" name="explanationLinkUrlArray" value="https://www.youtube.com/embed/' + youtubeData.id + '">';
+                sHTML += '				<input type="hidden" class="thumbUrl" name="explanationThumbUrlArray" value="' + youtubeData.snippet.thumbnails["default"].url + '">';
+                sHTML += '				<input type="hidden" class="mediaTitle" name="explanationMediaTitleArray" value="' + youtubeData.snippet.title + '">';
+                sHTML += '				<input type="hidden" class="tempFileSeq" name="explanationTempFileSeqArray" value="">';
+            }
+            sHTML += '  	<div class="video" onclick="javascript:playYoutubeMedia(\'' + youtubeData.id + '\',\'' + youtubeData.snippet.title + '\');">';
+            sHTML += '      	<figure>';
+            sHTML += '            	<img src="' + youtubeData.snippet.thumbnails["default"].url + '" />';
+            sHTML += '      	</figure>';
+            sHTML += '      	<span>' + youtubeData.snippet.title + '</span>';
+            sHTML += ' 		</div>';
+            sHTML += '		<div class="media-fnc">';
+            sHTML += '			<button type="button" class="btn-del deleteQuestionMediaBtn"></button>';
+            sHTML += '		</div>';
+            sHTML += '	</li>';
+
+            $targetAddedMediaDiv.append(sHTML);
+
+        }
+        ///////////////////       유튜브: END       ////////////////////
+
+        // 홈으로
+        function goQuizHome() {
+            isWriting = false;
+
+            if ($("#quizTitle").val() != "" ||
+                $("#gradeCd li.active").data("val") != null ||
+                $("#quizForm input[name=userTags]").val() != "" ||
+                $("#quizForm input[name=tempFileSeq]").val() != "" ||
+                $(".questionRow").length > 2) {
+                isWriting = true;
+            }
+
+            if (isWriting) {
+                if (confirm("작성 중인 내용이 있습니다. 저장하지 않고 돌아가시겠습니까?")) {
+                    // 					location.href = "/user/content/quizUserHome.do";
+                    location.href = "/user/library/quizUserLibraryList.do";
+                }
+            } else {
+                // 				location.href = "/user/content/quizUserHome.do";
+                location.href = "/user/library/quizUserLibraryList.do";
+            }
+        }
+
+        // 빈칸형 입력 미리보기
+        /* function makeBlankBox(obj, output){
+        	var str = $(obj).val(),
+        		strLeng = $(obj).val().length,
+        		strResult ='';
+
+        	var maxLeng = 15;
+
+        	for(var i=0;i<strLeng;i++){
+
+        		if(maxLeng <= i) {
+        			var msg = "문제는" + maxLeng +"byte 까지 입력가능합니다.<br />초과된 부분은 삭제됩니다.";
+        			msgLayerOpen(msg);
+        			break;
+        		}
+        		if(str.charAt(i) == ' ') { strResult += '<span class="space"></span>'; }
+        		else if(str.charAt(i) == '*') { strResult += '<span class="char spot"></span>'; }
+        		else { strResult += '<span class="char">' + str.charAt(i) + '</span>'; }
+
+        	}
+        	if (maxLeng < strLeng) {
+        		$(obj).val(str.substr(0, maxLeng));
+        	}
+        	$(output).html(strResult);
+        } */
+        function makeBlankBox(obj) {
+            var $targetRow = $(obj).parents(".questionRow");
+            var $targetPreview = $targetRow.find(".blank-preview-area");
+            var str = $(obj).val(),
+                strLeng = $(obj).val().length,
+                strResult = '';
+
+            var maxLeng = 15;
+
+            for (var i = 0; i < strLeng; i++) {
+
+                if (maxLeng <= i) {
+                    var msg = "빈칸 내용은 공백 포함 최대 " + maxLeng + "자까지 입력 가능합니다.<br />초과된 부분은 삭제됩니다.";
+                    msgLayerOpen(msg);
+                    break;
+                }
+                if (str.charAt(i) == ' ') {
+                    strResult += '<span class="space"></span>';
+                } else if (str.charAt(i) == '*') {
+                    strResult += '<span class="char spot"></span>';
+                } else {
+                    strResult += '<span class="char">' + str.charAt(i) + '</span>';
+                }
+
+            }
+            if (maxLeng < strLeng) {
+                $(obj).val(str.substr(0, maxLeng));
+            }
+            $targetPreview.html(strResult);
+        }
+    </script>
+</head>
+
+<body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WTJ5V3G" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <div class="accessibility">
+        <a href="#skipToContents">콘텐츠 바로가기</a>
+    </div>
+    <div class="make">
+        <header class="make-header">
+            <h1>띵커벨 에디터</h1>
+            <!-- <div class="make-header-fnc">
+				<button id="saveQuizBtn">완료</button>
+				<button id="tempQuizBtn">임시저장</button>
+				<button class="btn-close">에디터 닫기</button>
+			</div>  -->
+            <div class="make-header-fnc">
+                <!-- 만들기 -->
+                <button type="button" id="saveQuizBtn">완료</button>
+                <button type="button" id="tempQuizBtn">임시 저장</button>
+                <button type="button" class="btn-close" onclick="javascript:goQuizHome();">홈으로</button>
+            </div>
+        </header>
+
+        <div class="make-body">
+            <a href="#none" id="skipToContents" name="skipToContents">start conents</a>
+            <div class="contents sortable">
+
+                <!-- 퀴즈 정보 입력 -->
+                <section class="make-writeinfo">
+                    <form id="quizForm">
+                        <input type="hidden" name="formType" value="QUIZ" />
+                        <input type="hidden" name="quizIdx" value="">
+                        <input type="hidden" name="ownerId" value="">
+                        <input type="hidden" name="quizCategory" value="QUIZ">
+                        <input type="hidden" name="regPageCd" value="FRONT">
+                        <input type="hidden" name="completeYn">
+                        <input type="hidden" name="quizMediaSeq" value="">
+                        <input type="hidden" name="tempFileSeq">
+                        <input type="hidden" name="viewType" value="">
+                        <input type="hidden" name="iscreamMediaCnt" value="">
+
+                        <h2 class="hidden">문제 정보 입력</h2>
+                        <div class="profilebox">
+                            <label for="profileImage">
+                                <img src="/asset/images/make/noimage.png" alt="클릭하여 대표이미지를 등록하세요." class="img-default quizImage" />
+                                <!-- <span>클릭하여 대표이미지를 등록하세요.</span> -->
+                                <button type="button" class="btn-del" id="deleteQuizImageBtn">대표이미지 삭제</button>
+                            </label>
+                            <input type="file" id="profileImage" name="quizImageFile" class="upload-hidden">
+                        </div>
+
+                        <fieldset>
+                            <legend>제목, 공개 권한</legend>
+                            <ul>
+                                <li class="textarea-auto"><textarea name="quizTitle" id="quizTitle" cols="30" rows="1" placeholder="제목을 입력하세요." data-max-byte="100"></textarea></li>
+                                <li>
+                                    <h2><i class="bullet"></i>공개 범위</h2>
+                                    <label><input type="radio" name="sharedType" value="A" checked="checked" /> 전체공개</label>
+                                    <label><input type="radio" name="sharedType" value=""> 교사공개
+                                        <i class="tooltip">
+                                            <span>
+                                                툴팁 내용
+                                            </span>
+                                        </i>
+                                    </label>
+                                    <label><input type="radio" name="sharedType" value=""> 아이스크림공개
+                                        <i class="tooltip">
+                                            <span>
+                                                툴팁 내용
+                                            </span>
+                                        </i>
+                                    </label>
+                                    <label><input type="radio" name="sharedType" value="N" /> 비공개</label>
+                                </li>
+                            </ul>
+                        </fieldset>
+
+                        <div class="writeinfo-etc">
+                            <!-- 수정 권한 -->
+                            <div>
+                                <h2><i class="bullet"></i>수정 권한</h2>
+                                <label><input type="radio" name="editableYn" value="Y" checked="checked" /> 수정 가능</label>
+                                <label><input type="radio" name="editableYn" value="N" /> 수정 불가</label>
+                            </div>
+                            <!-- 학교급 -->
+                            <div>
+                                <h2><i class="bullet"></i>학교급</h2>
+                                <label><input type="radio" name="schoolType" value="EM" checked="checked" /> 초등</label>
+                                <label><input type="radio" name="schoolType" value="MD" /> 중등</label>
+                                <label><input type="radio" name="schoolType" value="HI" /> 고등</label>
+                            </div>
+
+                            <!-- 차시선택창 -->
+                            <a href="#none" class="btn-qfilter">
+                                <em>학년, 학기, 과목, 단원, 차시를 선택하세요.</em>
+                                <div class="option-preview"></div>
+                            </a>
+                            <section class="qfilter">
+                                <div class="qfilter-list" id="selectChasiDiv">
+                                    <ul id="curriculumCd" style="display:none;">
+                                        <li class="md" data-val="KOR"><a href="#none">국어</a></li>
+                                        <li class="md" data-val="MOR"><a href="#none">도덕</a></li>
+                                        <li class="md" data-val="SOC"><a href="#none">사회,역사</a></li>
+                                        <li class="md" data-val="MAT"><a href="#none">수학</a></li>
+                                        <li class="md" data-val="SCI"><a href="#none">과학</a></li>
+                                        <li class="md" data-val="ENG"><a href="#none">영어</a></li>
+                                        <li class="md" data-val="ART"><a href="#none">예체능</a></li>
+                                        <li class="md" data-val="ETC"><a href="#none">기타</a></li>
+
+                                        <li class="hi" data-val="KOR"><a href="#none">국어</a></li>
+                                        <li class="hi" data-val="SOC"><a href="#none">사회탐구</a></li>
+                                        <li class="hi" data-val="SCI"><a href="#none">과학탐구</a></li>
+                                        <li class="hi" data-val="MAT"><a href="#none">수학</a></li>
+                                        <li class="hi" data-val="ENG"><a href="#none">영어</a></li>
+                                        <li class="hi" data-val="ART"><a href="#none">예체능</a></li>
+                                        <li class="hi" data-val="SFL"><a href="#none">제2외국어</a></li>
+                                        <li class="hi" data-val="ETC"><a href="#none">기타</a></li>
+                                    </ul>
+
+                                    <ul class="m1" id="gradeCd">
+                                        <li data-val="0"><a href="#none">공통</a></li>
+                                        <li data-val="1"><a href="#none">1학년</a></li>
+                                        <li data-val="2"><a href="#none">2학년</a></li>
+                                        <li data-val="3"><a href="#none">3학년</a></li>
+                                        <li data-val="4"><a href="#none">4학년</a></li>
+                                        <li data-val="5"><a href="#none">5학년</a></li>
+                                        <li data-val="6"><a href="#none">6학년</a></li>
+                                    </ul>
+
+                                    <ul class="m2" id="termCd">
+                                        <!-- <li data-val="0"><a href="#none">공통학기</a></li> -->
+                                        <li data-val="1"><a href="#none">1학기</a></li>
+                                        <li data-val="2"><a href="#none">2학기</a></li>
+                                    </ul>
+                                    <ul class="m3" id="subjectCd">
+                                    </ul>
+                                    <ul class="m4" id="publisherCd">
+                                    </ul>
+                                    <ul class="m5" id="unit01Seq">
+                                    </ul>
+                                    <ul class="m6" id="unit02Seq">
+                                    </ul>
+                                    <ul class="m7" id="unit03Seq">
+                                    </ul>
+                                    <ul class="m8" id="unit04Seq">
+                                    </ul>
+                                </div>
+                                <div class="btn_list">
+                                    <button type="button" class="spot" onclick="javascript:selectChasiConfirm();"><span>확인</span></button>
+                                    <button type="button" onclick="javascript:selectChasiCancel();"><span>취소</span></button>
+                                </div>
+                            </section>
+                        </div>
+
+                        <!-- 퀴즈 태그 -->
+                        <div class="tags-area" id="quizTagsDiv">
+                            <h2><i class="bullet"></i>태그</h2>
+                            <input type="text" placeholder="태그를 입력하세요." id="quizTag" value="" />
+                        </div>
+
+                        <!-- 숨김 태그 -->
+                        <!-- <div class="tags-area" id="hiddenTagsDiv">
+                            <h2><i class="bullet"></i>숨김 태그</h2>
+                            <input type="text" placeholder="숨김 태그" id="hiddenTag" value="" />
+                        </div> -->
+
+                        <!-- 저작권 및 출처 -->
+                        <div class="copyright-area">
+                            <h2>
+                                <i class="bullet"></i>저작권 및 출처
+                                <i class="tooltip">
+                                    <span>
+                                        툴팁 내용
+                                    </span>
+                                </i>
+                            </h2>
+                            <input type="text" placeholder="(선택) 학생화면에는 노출되지 않습니다." class="box-style">
+                        </div>
+                        <!-- 첨부파일 -->
+
+                        <div class="attach-file-area">
+                            <div class="upload-file">
+                                <div class="select-all">
+                                    <a href="" class="checkbox-custom">전체선택</a>
+                                </div>
+                                <div id="myId" class="fallback dropzone">
+                                    <input name="file" type="file" multiple class="hidden">
+                                  </div>
+                            </div>
+
+                            <div class="text-invalid">지원하는 파일형식이 아니에요.</div>
+                            <!-- <div class="text-invalid">최대 12페이지로 구성된 파일만 사용할 수 있어요.</div> -->
+                        </div>
+
+
+                        <link rel="stylesheet" href="/asset/css/dropzone.css">
+                        <script src="/asset/js/dropzone.js"></script>
+                        <script>
+                            var myDropzone = new Dropzone("div#myId", {
+                                url: "/file/post",
+                                dictDefaultMessage: "드래그 앤드롭 또는 클릭하여 파일을 추가하세요. <br>(jpg, png, hwp, word, ppt, pdf, 한쇼만 사용가능)",
+                                acceptedFiles: ".png,.jpg,.hwp,.doc,.ppt,.pdf",
+                                maxFiles: 12,
+                                addRemoveLinks: true,
+                                thumbnailWidth: 140,
+                                thumbnailHeight: 140,
+                                dictRemoveFile: '',
+                            });
+                            //아이템 추가
+                            myDropzone.on("addedfile", function(file) {
+                                console.log('added');
+                                //추가나 삭제된 후 아이템 갯수가 1개 이상일때 show
+                                $('.select-all').show();
+                            });
+                            //아이템 삭제
+                            myDropzone.on("addedfile", function(file) {
+                                console.log('removed');
+                            });
+                            //아이템 선택
+                            $(document).on('click','.dz-filename',function(e){
+                                $(this).closest('.dz-preview').toggleClass('selected');
+
+                                if($('.dz-preview.selected').length > 0){
+                                    $('#btn-start').prop('disabled',false);
+                                }
+                            });
+                            //전체 선택
+                            $(document).on('click','.select-all .checkbox-custom',function(e){
+                                e.preventDefault();
+                                $(this).toggleClass('active');
+                            });
+                        </script>
+
+
+                        <button type="button" class="btn spot" disabled id="btn-start">시작하기</button>
+
+                    </form>
+
+                </section>
+                <!-- // 퀴즈 정보 입력 -->
+
+                <!-- 문제 row 추가 영역 -->
+                <div id="questionAllDiv">
+
+                    <!-- 질문 row result list -->
+                </div>
+
+            </div>
+        </div><!-- //site-body -->
+        <footer class="make-footer">
+            <p class="copyright">COPYRIGHT(C)2018 i-Scream Media CO. LTD ALL RIGHTS RESERVED. </p>
+        </footer>
+
+        <div class="lnk_top">
+            <a href="#top">TOP</a>
+        </div>
+
+    </div>
+
+    <div class="popup-cont pop-alt" id="msgLayer" style="display:none;">
+        <p class="txt" id="msg">팝업 메세지</p>
+        <div class="btn-pop-bottom">
+            <a href="javascript:msgLayerClose();" class="btn-sm spot">
+                <span>확인</span>
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>
+
+
+
+
+<!-- ##################################################  display:none  ################################################## -->
+<!-- 퀴즈 row 기본 form. with 유형 선택 -->
+<div id="questionRowTypeForm" style="display:none;">
+
+    <section class="make-write make-add questionRow" data-question-cd="">
+        <form class="questionForm">
+            <input type="hidden" name="questionIdx" value="" />
+            <div class="fnc-bar">
+                <p><i class="bullet"></i>문제의 유형을 선택하세요.</p>
+                <span class="qnum"></span>
+                <div class="make-fnc">
+                    <fieldset class="select-type">
+                        <legend>유형 선택</legend>
+                        <label><input type="radio" name="questionCd" value="Q2" />OX</label>
+                        <label><input type="radio" name="questionCd" value="Q1" />선택형</label>
+                        <label><input type="radio" name="questionCd" value="Q3" />단답형</label>
+                        <label><input type="radio" name="questionCd" value="Q5" />빈칸형</label>
+                        <label><input type="radio" name="questionCd" value="Q4" />서술형</label>
+                    </fieldset>
+                    <button type="button" class="btn-cancel deleteQuestionRowBtn"></button>
+                </div>
+            </div>
+        </form>
+    </section>
+</div>
+<!-- ##################################################  // display:none  ################################################## -->

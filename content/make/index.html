@@ -1,0 +1,220 @@
+
+<!-- viewer -->
+<!-- memo -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-102824088-17"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-102824088-17');
+</script>
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WTJ5V3G');</script>
+<!-- End Google Tag Manager -->
+<title>띵커벨 ThinkerBell</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="Author" content="hyojeong yang">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <link href="/asset/css/style.make.css" rel="stylesheet" />
+    <!--[if lt IE 9]><script type="text/javascript" src="/asset/js/user/html5.js"></script><![endif]-->
+
+    <script src="/asset/js/jquery-1.12.4.min.js"></script>
+    <script src="/asset/js/jquery-ui.min.js"></script>
+    <script src="/asset/js/jquery.caret.min.js"></script>
+    <script src="/asset/js/jquery.tag-editor.min.js"></script>
+    <script src="/asset/js/common.make.js"></script>
+    <script>
+	 	// 콘텐츠 만들기로 이동 by intro
+		function goMakeContentByIntro(quizCategory){
+			var pathname = window.location.pathname;
+			var urlPrefix =  '';
+			if(pathname.indexOf("/admin/") > -1){ // admin
+				urlPrefix = '/admin/';
+			} else {
+				urlPrefix = '/user/';
+			}
+
+			actionUrl = urlPrefix + "content/make/quizUserMakeContent.do";
+			var $form = $('<form></form>');
+			$form.attr('action', actionUrl);
+			$form.attr('method', 'post');
+			$form.append('<input type="hidden" name="quizCategory" value="' + quizCategory + '">');
+			$form.appendTo('body');
+			$form.submit();
+		}
+    </script>
+</head>
+<body>
+	<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WTJ5V3G" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><div class="accessibility">
+        <a href="#skipToContents">콘텐츠 바로가기</a>
+    </div>
+    <div class="make">
+        <header class="make-header">
+            <h1>띵커벨 에디터</h1>
+            <div class="make-header-fnc">
+            	<button class="btn-close" onclick="javascript:history.back();">에디터 닫기</button>
+            </div>
+        </header>
+        <div class="make-body">
+            <a href="#none" id="skipToContents" name="skipToContents">start conents</a>
+            <div class="contents">
+                <section class="make-mn">
+                    <h2>새로운 <img src="/asset/images/make/logo_ko.png" alt="띵커벨" /> 만들기</h2>
+                    <ul>
+                        <li>
+                            <a href="#none" class="btn-quiz" onclick="javascript:goMakeContentByIntro('QUIZ');"><h3>퀴즈</h3></a>
+                            <div class="make-info-btn">
+                                <a href="#ox">OX</a>
+                                <a href="#multipleChoice">선택형</a><br>
+                                <a href="#shortAnswer">단답형</a>
+                                <a href="#blankQuiz">빈칸형</a>
+                                <a href="#longAnswer">서술형</a>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#" class="btn-discussion"  onclick="javascript:goMakeContentByIntro('DEBATE');"><h3>토의・토론</h3></a>
+                            <div class="make-info-btn">
+                                <a href="#trueFalse">찬성반대</a>
+                                <a href="#trafficLight">신호등</a>
+                                <a href="#valueLine">가치수직선</a>
+                                <a href="#vote"> 투표</a>
+                                <a href="#thinkingBoard">띵킹보드</a>
+                                <a href="#wordCloud">워드클라우드</a>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="form.html" class="btn-worksheet"><h3>워크시트</h3></a>
+                            <div class="make-info-btn">
+                                <a href="#trueFalse">찬성반대</a>
+                                <a href="#trafficLight">신호등</a>
+                                <a href="#valueLine">가치수직선</a>
+                                <a href="#vote"> 투표</a>
+                                <a href="#thinkingBoard">띵킹보드</a>
+                                <a href="#wordCloud">워드클라우드</a>
+                            </div>
+                        </li>
+                    </ul>
+                </section>
+            </div>
+        </div><!-- //site-body -->
+        <footer class="make-footer">
+            <p class="copyright">COPYRIGHT(C)2018 i-Scream Media CO. LTD ALL RIGHTS RESERVED. </p>
+        </footer>
+    </div>
+
+    <aside class="make-info">
+        <!--<button class="btn-info-close">close</button>
+        <h2>띵커벨은</h2>
+        <p>
+            초등교과를 중심으로 하는 실시간 학생참여형 수업도구 서비스로
+            쉽고 편한 학생중심수업 진행을 지원합니다.<br /><br />
+            신개념 수업도구 Project Q를 통해 트렌디한 수업과 함께
+            학생들의 높은 집중력과 능동적인 참여를 이끌어보세요.
+        </p>-->
+        <section>
+            <!-- <h3>퀴즈 만들기는</h3>
+            <p>객관식, 단답형, OX 퀴즈를 만들 수 있습니다.</p> -->
+            <section id="ox">
+                <h4>OX</h4>
+                <p>주어진 문제에 대하여 O와 X, 2가지로만 보기를 설정할 수 있습니다.</p>
+                <figure>
+                    <img src="/asset/images/make/q_explain2_3.jpg" alt="OX" />
+                </figure>
+            </section>
+            <section id="multipleChoice">
+                <h4>선택형</h4>
+                <p>주어진 문제에 대하여 2~5개까지 보기를 설정할 수<br>있으며, 복수정답도 가능합니다.</p>
+                <figure>
+                    <img src="/asset/images/make/q_explain2_1.jpg" alt="선택형" />
+                </figure>
+            </section>
+            <section id="shortAnswer">
+                <h4>단답형</h4>
+                <p>주어진 문제에 대하여 최대 20자(띄어쓰기 포함)까지 정답을 넣을 수 있습니다.<br>[예] ‘기미독립선언문’을 정답으로 설정했다면, ‘기미 독립 선언문’도 정답으로 처리됩니다.</p>
+                <figure>
+                    <img src="/asset/images/make/q_explain2_11.jpg" alt="단답형" />
+                </figure>
+            </section>
+            <section id="blankQuiz">
+                <h4>빈칸형</h4>
+                <p>빈칸 또는 초성 문제를 출제할 수 있습니다.</p>
+                <figure>
+                    <img src="/asset/images/make/q_explain2_12.jpg" alt="빈칸형" />
+                </figure>
+            </section>
+            <section id="longAnswer">
+                <h4>서술형</h4>
+                <p>주어진 문제에 대하여 예시 답안을 제공할 수 있습니다.<br>단, 학생들이 제출한 답안은 결과에 반영되지 않습니다.</p>
+                <figure>
+                    <img src="/asset/images/make/q_explain2_2.jpg" alt="서술형" />
+                </figure>
+            </section>
+        </section>
+        <section>
+            <!--  <h3>토의・토론 만들기에서는</h3>
+            <p>신호등, 가치수직선, 찬성반대, 씽킹보드, P.M.I, 투표를<br /> 만들 수 있습니다.</p> -->
+            <section id="trueFalse">
+                <h4>찬성반대</h4>
+                <p>한 가지 주제를 놓고 찬성과 반대로 자신의 의견을 나타내는 토론입니다.</p>
+                <figure>
+                    <img src="/asset/images/make/q_explain2_6.jpg" alt="찬성반대" />
+                </figure>
+            </section>
+			<section id="trafficLight">
+                <h4>신호등</h4>
+                <p>주제에 대한 자신의 의견을 빨강색(반대), 노란색(중립), 초록색(찬성)으로 표현하는 토론입니다</p>
+                <figure>
+                    <img src="/asset/images/make/q_explain2_4.jpg" alt="신호등" />
+                </figure>
+            </section>
+            <section id="valueLine">
+                <h4>가치수직선</h4>
+                <p>주제에 대한 개인의 의견을 수직선 위에 표현하는 방식의 토론입니다.</p>
+                <figure>
+                    <img src="/asset/images/make/q_explain2_5.jpg" alt="가치수직선" />
+                </figure>
+            </section>
+            <section id="vote">
+                <h4>투표</h4>
+                <p>안건에 대한 의사를 표현하도록 합니다. 중복 투표가 가능합니다.</p>
+                <figure>
+                    <img src="/asset/images/make/q_explain2_9.jpg" alt="투표" />
+                </figure>
+            </section>
+            <section id="thinkingBoard">
+                <h4>띵킹보드</h4>
+                <p>주제에 대한 의견을 자유롭게 받아볼 수 있습니다. 참여자 의견 노출 방식을 선택할 수 있습니다. (공개형, 비공개형)</p>
+                <figure>
+                    <img src="/asset/images/make/q_explain2_7.jpg" alt="씽킹보드" />
+                </figure>
+            </section>
+            <section id="wordCloud">
+                <h4>워드클라우드</h4>
+                <p>주제에 대한 답변을 시각화하여 표현합니다.  참여자가 제출한 의견이 실시간으로 화면에 반영되며, 빈도가 높은 단어는 크게 제시됩니다.</p>
+                <figure>
+                    <img src="/asset/images/make/q_explain2_10.jpg" alt="워드클라우드" />
+                </figure>
+            </section>
+        </section>
+    </aside>
+
+    <div class="loading" style="display:none"></div>
+</body>
+</html>

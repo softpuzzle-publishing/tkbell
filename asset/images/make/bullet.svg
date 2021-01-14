@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="19.957px" height="19.957px" viewBox="0 0 19.957 19.957" enable-background="new 0 0 19.957 19.957" xml:space="preserve">
+<g>
+	<defs>
+		<rect id="SVGID_1_" width="20" height="20"/>
+	</defs>
+	<clipPath id="SVGID_2_">
+		<use xlink:href="#SVGID_1_"  overflow="visible"/>
+	</clipPath>
+	<path clip-path="url(#SVGID_2_)" d="M10,2.004c4.409,0,7.996,3.587,7.996,7.996c0,4.409-3.587,7.996-7.996,7.996
+		c-4.408,0-7.996-3.587-7.996-7.996c0-3.307,2.019-6.151,4.887-7.367C7.847,2.229,8.898,2.004,10,2.004 M10,0C4.478,0,0,4.477,0,10
+		c0,5.523,4.479,10,10,10c5.522,0,10-4.477,10-10C20,4.477,15.522,0,10,0"/>
+	
+		<polyline clip-path="url(#SVGID_2_)" fill="none" stroke="#000000" stroke-width="2.0043" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+		8.64,5.43 13.173,9.963 8.567,14.57 	"/>
+</g>
+</svg>

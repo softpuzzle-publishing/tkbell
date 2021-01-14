@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>띵커벨 PAGELIST</title>
+        <style type="text/css">
+            body{padding:20px;position:relative;}
+            *{margin:0;padding:0;font-size:12px;color:#222;line-height:1.5em;font-family:'NanumGothic';}
+            h1{margin-bottom:20px;font-size:24px;text-align: center;}
+            table{width:100%;border-collapse:collapse;margin: 0 auto;}
+            table th,
+            table td{border:1px solid #bcbfec;padding:4px 10px;word-break: keep-all}
+            table th{background:#4c58c7;color:#fff;padding:10px;font-size:14px;}
+            table td a{color:#6462da;text-decoration:none;}
+            table td a:hover{text-decoration:underline;}
+            table tbody tr:hover{background-color: #fdecec;}
+            .noteTable{display: table;width: 100%;}
+            .noteTable .date{display: table-cell;color: #e04545;width: 40px;}
+            .noteTable .note{display: table-cell;}
+            .center{text-align: center;}
+            .bg{background: #fff5f5;}
+            ul.float{position:absolute;right:20px;top:20px;}
+            ul.float li{list-style:none;border:1px solid #ccc;padding:2px 5px;display:inline-block;}
+            .end{background:#ffffcc;}
+            .ing{background:#f6b1a6;}
+            .list{text-align:center;padding:0 0 20px;}
+            .list a{text-decoration:none;margin:0 10px;}
+            .list a:hover{text-decoration:underline;}
+        </style>
+    </head>
+
+
+    <body>
+        <h1>띵커벨 PAGELIST</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Depth 1</th>
+                    <th>Depth 2</th>
+                    <th>Depth 3</th>
+                    <th>Depth 4</th>
+                    <th>File</th>
+                    <th>pageLink</th>
+                    <th>최초작업일</th>
+                    <th>수정일</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td>만들기</td>
+                    <td>index</td>
+                    <td></td>
+                    <td></td>
+                    <td>/make/</td>
+                    <td><a target="_blank" href="content/make/index.html">index.html</a></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td></td>
+                    <td>워크시트 이미지 필요</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>form</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><a target="_blank" href="content/make/form.html">form.html</a></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>라이브러리</td>
+                    <td>list</td>
+                    <td></td>
+                    <td></td>
+                    <td>/library/</td>
+                    <td><a target="_blank" href="content/library/library_list.html">library_list.html</a></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>detail</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><a target="_blank" href="content/library/library_detail.html">library_detail.html</a></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>보관함</td>
+                    <td>내 자료</td>
+                    <td>list</td>
+                    <td></td>
+                    <td>/storage/</td>
+                    <td><a target="_blank" href="content/storage/my_list.html">my_list.html</a></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td></td>
+                    <td>... 아이콘 클릭시 보기 아이콘 필요</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>detail</td>
+                    <td></td>
+                    <td></td>
+                    <td><a target="_blank" href="content/storage/my_detail.html">my_detail.html</a></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td></td>
+                    <td>
+                        <div class="noteTable">
+                            <div class="date"></div>
+                            <div class="note"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>스크랩 자료</td>
+                    <td>list</td>
+                    <td></td>
+                    <td></td>
+                    <td><a target="_blank" href="content/storage/scrap_list.html">scrap_list.html</a></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td></td>
+                    <td>
+                        <div class="noteTable">
+                            <div class="date"></div>
+                            <div class="note"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>리포트</td>
+                    <td>진행한 띵커벨</td>
+                    <td>list</td>
+                    <td></td>
+                    <td>/report/</td>
+                    <td><a target="_blank" href="content/report/report_list.html">report_list.html</a></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td></td>
+                    <td>
+                        <div class="noteTable">
+                            <div class="date"></div>
+                            <div class="note"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>detail</td>
+                    <td></td>
+                    <td></td>
+                    <td><a target="_blank" href="content/report/report_detail.html">report_detail.html</a></td>
+                    <td class="center"></td>
+                    <td class="center"></td>
+                    <td></td>
+                    <td>
+                        <div class="noteTable">
+                            <div class="date"></div>
+                            <div class="note"></div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>

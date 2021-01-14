@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="ko">
+	<head>
+	  <meta charset="UTF-8">
+	  <meta name="Generator" content="EditPlus®">
+	  <meta name="Author" content="">
+	  <meta name="Keywords" content="">
+	  <meta name="Description" content="">
+	  <title>Project Q</title>
+	  
+	  <script type="text/javascript" src="http://www.i-scream.co.kr/asset/serviceFront/js/jquery-1.9.1.min.js"></script>
+	  <script type="text/javascript" src="http://www.i-scream.co.kr/asset/serviceFront/js/default.js"></script>
+	  <script type="text/javascript" src="../../../js/newCommon.js"></script>
+	  <link rel="stylesheet" href="../../../css/style.css" />
+	  <link rel="stylesheet" href="../../../css/default2.css" />
+	  <link rel="stylesheet" href="../../../css/bbs.css" />
+	  <!-- <link rel="stylesheet" href="http://www.i-scream.co.kr/asset/serviceFront/css/custom.css"> -->
+	</head> 
+<body>
+<header id="header">
+    <div>
+        <div>
+            <ul class="family">
+                <li class="current"><a href="http://www.i-scream.co.kr/" target="_self" onclick="wiseLogCommon.clickDataSend('10');" title="아이스크림">아이스크림</a></li>
+                <li><a href="http://teacher.i-scream.co.kr/" target="_blank" onclick="wiseLogCommon.clickUrlSend('M001');wiseLogCommon.clickDataSend('11');" title="연수원">연수원</a></li>
+                <li><a href="#none" class="asp_move_es_btn" onclick="wiseLogCommon.clickUrlSend('M002');wiseLogCommon.clickDataSend('12');" title="교육쇼핑몰">교육쇼핑몰</a></li>
+                <li><a href="http://life.i-screammall.co.kr/sso/confirm" target="_blank" onclick="wiseLogCommon.clickUrlSend('M003');wiseLogCommon.clickDataSend('13');" title="아이스크림복지몰">아이스크림복지몰</a></li>
+            </ul>
+            <ul class="util">
+                <li><a href="j_spring_security_logout" onclick="wiseLogCommon.clickDataSend('16');">로그아웃</a></li>
+                <li class=""><a href="/user/research/mypage/research_index.do" onclick="wiseLogCommon.clickDataSend('17');">내연구실</a></li>
+                <li class="spot">
+                	<a href="/user/member/pay.do" onclick="wiseLogCommon.clickDataSend('18');"><strong>유료신청</strong></a>
+                </li>
+                <li class=""><a href="/user/custom/iscream_info_01.do" target="_blank" onclick="wiseLogCommon.clickDataSend('19');">고객센터</a></li>
+                <li class="new"><a href="javascript:exePopOpen();">간편접속</a></li>
+            </ul>
+        </div>
+    </div>
+    <div>
+        <h1>
+	       	<a href="/user/main/MainPage.do" target="_self" onclick="iscreamLog.clickLogSequence('63','banner');" alt="로고_기본">
+	       		<img src="http://www.i-scream.co.kr/asset/serviceFront/images/common/logo_beta.png" alt="로고_기본">
+	       	</a>   
+        </h1>        
+        <fieldset>
+            <legend>검색</legend>
+            <form id="mainSearchForm" name="mainSearchForm" method="post">
+           		<input id="searchQuery" name="searchQuery" type="search" title="검색어" class="placeholder" placeholder="검색어를 입력하세요." accesskey="s" value="" onkeyup="emptyChk();" onkeypress="fnSearchGoEnter(event)">
+            <button type="button" onclick="fnSearchGo();"><span class="blind">검색</span></button>
+            </form>
+        </fieldset>
+		<div class="headerBnn">
+	       	<a href="http://www.i-scream.co.kr/user/member/pay.do" target="_self" onclick="iscreamLog.clickLogSequence('372','banner');" alt="연수플러스">
+	       		<img src="http://download.i-scream.co.kr/s_images/banner/main/upload/2017/04/05/170405182638_iscream_header_bn_20170405.png" alt="연수플러스">
+	       	</a>       
+		</div>
+	</div>
+   	 <nav id="SkipToGNB">
+   		<div class="allNav">
+            <input type="checkbox" id="showAllNav" class="showHideSwitch" onclick="wiseLogCommon.clickDataSend('113');"><label for="showAllNav">전체메뉴보기</label>
+        </div>
+        <ul>
+            <!-- <li><a href="#none" title="전체메뉴보기">전체메뉴보기</a></li> -->
+            <li class=""><a href="/user/subject/SubjectChasiList.do" onclick="wiseLogCommon.clickDataSend('114');"><span>교과활동</span></a></li>
+            <li class=""><a href="/user/discretion/index.do" onclick="wiseLogCommon.clickDataSend('115');"><span>창의적 체험활동</span></a></li>
+            <li class=""><a href="/user/rest/RestList.do" onclick="wiseLogCommon.clickDataSend('116');"><span>쉬는 시간</span></a></li>
+            <li class=""><a href="/user/evaluation/evaluationList.do" onclick="wiseLogCommon.clickDataSend('117');"><span>평가자료</span></a></li>
+            <li class=""><a href="/user/reference/Submain.do" data-title="UP! 교실 무용" onclick="wiseLogCommon.clickDataSend('167');"><span>자료실</span></a></li><!-- 20170529 변경 -->
+            <li class=""><a href="/user/blog/ssamBlogMain.do" onclick="wiseLogCommon.clickDataSend('168');"><span>쌤블로그</span></a></li>            
+            <li class=""><a href="" onclick=""><span><i class="ssamtube"><img src="/asset/serviceFront/images/ssamtube/ssamtube.svg" alt="" /></i> 쌤튜브</span></a></li>
+            <li class=""><a href="" onclick=""><span>띵커벨</span></a></li>
+        </ul>
+    </nav>
+	<!-- 위치변경으로 인한 임시 주석 처리(2015.08.17) -->
+</header>
+<div class="subArea">
+
+	<nav id="SkipToLNB">
+		<h2><span>띵커벨</span></h2>
+		<ul>
+			<li><a href="" onclick="">홈</a></li>
+			<li class="current"><a href="" onclick="">띵커벨 보관함</a>
+				<ul>
+					<li><a href="#none">내 자료</a></li>
+					<li class="current"><a href="#none">스크랩</a></li>
+				</ul>
+			</li>
+			<li><a href="" onclick="">통계</a></li>
+			<li><a href="" onclick="">이용안내</a></li>
+		</ul>
+		<ul style="border:0px;">
+			<li>
+				<a href="http://www.i-scream.co.kr/user/discretion/popup/selfRegulatedActivity01.do" target="_blank" onclick="iscreamLog.clickLogSequence('342','banner');" alt="자율활동">
+					<img src="http://download.i-scream.co.kr/s_images/banner/main/upload/2017/03/10/170310170012_LNB_bn_02_170310.png">
+				</a>
+			</li>
+			<li>
+				<a href="/asset/serviceFront/html/subject/math_basic.html" target="_blank" onclick="iscreamLog.clickLogSequence('122','banner');" alt="수학 기초 연산 자료">
+					<img src="http://download.i-scream.co.kr/s_images/banner/main/upload/2016/11/28/161128085900_lnb_bn_math_161123.png">
+				</a>
+			</li>					
+		</ul>
+	</nav>
+	<section id="SkipToContents">
+		<h3  class="currentMenuName"><em>coolside</em>님의 띵커벨 보관함</h3>
+
+		<main>
+			<!-- 
+			<ul class="globalTab">
+				<li><a href="#none" onclick="" class="selected"><span>추천영상</span></a></li>
+				<li><a href="#none" onclick=""><span>인기영상</span></a></li>
+			</ul> -->
+			<div class="btn-right-top">
+				<button type="button" class="btn-qmake"><span>만들기</span></button>
+			</div>
+			<div class="data-table-list">		
+				<div class="form-search">			
+					<p class="total-count">
+						<span>스크랩 10</span>
+					</p>				
+					<fieldset>
+						<legend>검색</legend>
+						<div class="select_box sr1" id="select_box_sr1">
+							<a class="current" href="#"><em>퀴즈·토론 전체</em><span class="icon_btn" ></span></a>
+							<ul class="sel-list">
+								<li>
+									<input type="radio" id="sel_value_1_1" name="search_keyfield" checked value="subject"/>
+									<label for="sel_value_1_1">퀴즈·토론 전체</label>
+								</li>						
+								<li>
+									<input type="radio" id="sel_value_1_2" name="search_keyfield" value="pic_name"/>
+									<label for="sel_value_1_2">퀴즈</label>
+								</li>
+								
+								<li>
+									<input type="radio" id="sel_value_1_3" name="search_keyfield" value="pic_modify_name"/>
+									<label for="sel_value_1_3">토론</label>
+								</li>						
+							</ul>			
+						</div>
+						<div class="select_box sr1" id="select_box_sr2">
+							<a class="current" href="#"><em>학년 전체</em><span class="icon_btn" ></span></a>
+							<ul class="sel-list">
+								<li>
+									<input type="radio" id="sel_value_2_0" name="search_keyfield" checked value="subject"/>
+									<label for="sel_value_2_0">학년 전체</label>
+								</li>	
+								<li>
+									<input type="radio" id="sel_value_2_1" name="search_keyfield" checked value="subject"/>
+									<label for="sel_value_2_1">1학년</label>
+								</li>						
+								<li>
+									<input type="radio" id="sel_value_2_2" name="search_keyfield" value="pic_name"/>
+									<label for="sel_value_2_2">2학년</label>
+								</li>							
+								<li>
+									<input type="radio" id="sel_value_2_3" name="search_keyfield" value="pic_modify_name"/>
+									<label for="sel_value_2_3">3학년</label>
+								</li>		
+								<li>
+									<input type="radio" id="sel_value_2_4" name="search_keyfield" checked value="subject"/>
+									<label for="sel_value_2_4">4학년</label>
+								</li>						
+								<li>
+									<input type="radio" id="sel_value_2_5" name="search_keyfield" value="pic_name"/>
+									<label for="sel_value_2_5">5학년</label>
+								</li>
+								
+								<li>
+									<input type="radio" id="sel_value_2_6" name="search_keyfield" value="pic_modify_name"/>
+									<label for="sel_value_2_6">6학년</label>
+								</li>		
+							</ul>			
+						</div>
+						<div class="select_box sr1" id="select_box_sr3">
+							<a class="current" href="#"><em>학기 전체</em><span class="icon_btn" ></span></a>
+							<ul class="sel-list">
+								<li>
+									<input type="radio" id="sel_value_3_1" name="search_keyfield" checked value="subject"/>
+									<label for="sel_value_3_1">학기 전체</label>
+								</li>						
+								<li>
+									<input type="radio" id="sel_value_1_2" name="search_keyfield" value="pic_name"/>
+									<label for="sel_value_3_2">1학기</label>
+								</li>							
+								<li>
+									<input type="radio" id="sel_value_1_3" name="search_keyfield" value="pic_modify_name"/>
+									<label for="sel_value_3_3">학기</label>
+								</li>						
+							</ul>			
+						</div>
+						<input type="text" name="content_name_kor" id="content_name_kor" title="검색어" value="" onkeydown="javascript:enterKeyEvent(event);">
+						<button type="button" onclick="javascript:fnSearch();">검색</button>					
+					</fieldset>
+				</div>
+
+				<div class="sorting_view">		
+					<div class="view">	
+						<a href="javascript:void(0)" onclick="javascript:sortingList(this)" class="list selected"><span></span>리스트</a>
+						<a href="javascript:void(0)" onclick="javascript:sortingList(this)" class="image"><span></span>이미지</a> 
+						<script>
+							function sortingList(link){
+								if($(link).hasClass('list')) {
+									$(link).closest('.view').find('.image').removeClass('selected');
+									$(link).addClass('selected');
+									$('.quiz-image-box').addClass('quiz-list-box').removeClass('quiz-image-box');
+								}
+								else {
+									$(link).closest('.view').find('.list').removeClass('selected');
+									$(link).addClass('selected');
+									$('.quiz-list-box').addClass('quiz-image-box').removeClass('quiz-list-box');
+								}								
+							}
+						</script>
+					</div>
+					<div class="sort">
+						<a href="#none" class="selected">스크랩 날짜순</a>
+						<a href="#none" class="selected">스크랩 인기순</a>
+					</div>
+				</div>
+
+				<ul class="quiz-list-box">
+					<li>
+						<section>
+							<a href="#none" class="quiz-thumb">							
+								<figure>
+									<img src="../../images/temp/thumb01.jpg" alt="국어 퀴즈 10문제" />
+									<figcaption class="lbl">
+										<span>국어</span>									
+										<span>퀴즈 10문제</span>
+									</figcaption>							
+								</figure>
+							</a>
+							<a href="#none" class="tit">2018년 우리반 골든벨 2018년 우리반 골든벨 2018년 우리반 골든벨 - 상식 퀴즈 결승전</a>
+							<span class="author">
+								<a href="#none">coolside</a> / <time>1주전</time>
+							</span>
+							<div class="tags">
+								<span>#까박샘</span><span>#아이스크림</span><span>#과학</span><span>#퀴즈</span>
+								<span>#까박샘</span><span>#아이스크림</span><span>#과학</span><span>#퀴즈</span>
+							</div>
+							<div class="btn_list">
+								<a href="#none" onclick=""><em>999</em>스크랩</a>
+								<a href="#none" onclick="">미리보기</a>
+								<a href="#none" onclick="" class="spot">시작하기</a>
+							</div>
+						</section>					
+						<div class="chasi">
+							<span>3학년 > 1학기 > [개정 전 교과] > 국어 1-1 ㉮/국어활동 1-1 ㉮ > 2. 재미있는 낱자 > [1-3차시]한글의 자음자를 알고 순서에 맞게 쓰기(국22-29p)</span>
+						</div>
+						<button class="q-del" type="button"><span>삭제</span></button>
+					</li>
+					<li>
+						<section>
+							<a href="#none" class="quiz-thumb">							
+								<figure>
+									<img src="../../images/temp/thumb01.jpg" alt="국어 퀴즈 10문제" />
+									<figcaption class="lbl">
+										<span>국어</span>									
+										<span>퀴즈 10문제</span>
+									</figcaption>							
+								</figure>
+							</a>
+							<a href="#none" class="tit">2018년 우리반 골든벨 2018년 우리반 골든벨 2018년 우리반 골든벨 - 상식 퀴즈 결승전</a>
+							<span class="author">
+								<a href="#none">coolside</a> / <time>1주전</time>
+							</span>
+							<div class="tags">
+								<span>#까박샘</span><span>#아이스크림</span><span>#과학</span><span>#퀴즈</span>
+								<span>#까박샘</span><span>#아이스크림</span><span>#과학</span><span>#퀴즈</span>
+							</div>
+							<div class="btn_list">
+								<a href="#none" onclick=""><em>1k</em>스크랩</a>
+								<a href="#none" onclick="">미리보기</a>
+								<a href="#none" onclick="" class="spot">시작하기</a>
+							</div>
+						</section>					
+						<div class="chasi">
+							<span>3학년 > 1학기 > [개정 전 교과] > 국어 1-1 ㉮/국어활동 1-1 ㉮ > 2. 재미있는 낱자 > [1-3차시]한글의 자음자를 알고 순서에 맞게 쓰기(국22-29p)</span>
+						</div>
+						<button class="q-del" type="button"><span>삭제</span></button>
+					</li>			
+					<li>
+						<section>
+							<a href="#none" class="quiz-thumb">
+								<figure>
+									<img src="../../images/temp/thumb01.jpg" alt="국어 퀴즈 10문제" />
+									<figcaption class="lbl">
+										<span>국어</span>									
+										<span>퀴즈 10문제</span>
+									</figcaption>							
+								</figure>
+							</a>
+							<a href="#none" class="tit">2018년 우리반 골든벨 - 상식 퀴즈 결승전</a>
+							<span class="author">
+								<a href="#none">coolside</a> / <time>1주전</time>
+							</span>
+							<div class="tags">
+								<span>#까박샘</span><span>#아이스크림</span><span>#과학</span><span>#퀴즈</span>
+							</div>
+							<div class="btn_list">
+								<a href="#none" onclick="">공유안함</a>
+								<a href="#none" onclick="">미리보기</a>
+								<a href="#none" onclick="" class="spot">시작하기</a>
+							</div>
+						</section>					
+						<div class="chasi">
+							<span>1학기 > [개정 전 교과] > 국어 1-1 ㉮/국어활동 1-1 ㉮ 국어 1-1 ㉮/국어활동 1-1 ㉮ > 2. 재미있는 낱자 > [1-3차시]한글의 자음자를 알고 순서에 맞게 쓰기(국22-29p)</span>
+						</div>
+						<button class="q-del" type="button"><span>삭제</span></button>
+					</li>
+				</ul>
+
+				<div class="paging_area"> 
+					<!-- / pagination -->
+					<ul class="paging">
+						<span class="number"><strong><a href="#none" javascript:;"="">1</a></strong></span>
+						<span class="number"><a href="#none" onclick="fnPageLink(2); return false;">2</a></span>
+						<span class="number"><a href="#none" onclick="fnPageLink(3); return false;">3</a></span>
+						<span class="number"><a href="#none" onclick="fnPageLink(4); return false;">4</a></span>
+					</ul>
+				</div><!-- / paging_area -->
+			</div>
+		</main>
+	</section>
+</div>
+<footer>
+	<ul>
+		<li><a href="/user/introduce/index.do" onclick="wiseLogCommon.clickDataSend('1620');" title="아이스크림 소개">아이스크림 소개</a></li>
+		<li><a href="/user/introduce/sigong1.do" onclick="wiseLogCommon.clickDataSend('1621');" title="회사소개">회사소개</a></li>
+		<li><a href="/user/custom/agreement.do" title="이용약관" onclick="wiseLogCommon.clickDataSend('1622');">이용약관</a></li>
+		<li class="pp"><a href="/user/custom/self_apply.do" onclick="wiseLogCommon.clickDataSend('1623');" title="개인정보 처리방침">개인정보 처리방침</a></li>
+		<li><a href="/user/custom/suggestion.do" title="광고 및 제휴문의">광고 및 제휴문의</a></li>
+		<li class="pp"><a href="/user/custom/pc_service.do" onclick="wiseLogCommon.clickDataSend('1624');" title="PC원격지원"><strong>PC원격지원</strong></a></li>
+		<li><a href="https://www.facebook.com/iscreamteacher/" onclick="wiseLogCommon.clickDataSend('1625');" title="아이스크림 페이스북 바로가기" target="_blank"><img src="http://download.i-scream.co.kr/s_images/footer/iscream_facebook.png" style="margin-bottom:-1px;"></a></li>
+		<li><a href="http://pf.kakao.com/_xdilMxl" onclick="wiseLogCommon.clickDataSend('1626');" title="아이스크림 플러스친구 바로가기" target="_blank"><img src="http://download.i-scream.co.kr/s_images/footer/iscream_kakaotalk.png" style="margin-bottom:-2px;"></a></li>
+		
+	</ul>
+	<section>
+		<h2>사업자 정보</h2>
+		
+		<div>
+			<article>
+				<h3>SIGONGmedia</h3>
+				<dl><dt>주소</dt><dd><address>경기도 성남시 분당구 판교역로 225-20(삼평동)</address></dd><dt>대표이사</dt><dd>박기석</dd><dt>사업자등록번호</dt><dd>120-86-33565</dd><dt>통신판매업신고번호</dt><dd>2011-경기성남-1785</dd><dt>대표전화</dt><dd>1544-6020</dd><dt>팩스</dt><dd>(02)512-5909</dd><dt>E-mail</dt><dd><a href="mailto:info@sigongmedia.co.kr" title="시공미디어에 이메일 보내기">info@sigongmedia.co.kr</a></dd></dl>
+			</article>
+			<article>
+				<h3>KBS Media</h3>
+				<dl><dt>주소</dt><dd><address>서울시 마포구 매봉산로 45 KBS미디어센터</address></dd><dt>대표자</dt><dd>이선재</dd><dt>사업자등록번호</dt><dd>116-81-40951</dd></dl>
+			</article>
+			<article>
+				
+				<h3>Customer center</h3>
+				<dl><dt>아이스크림</dt><dd>1544-6020</dd><dt>원격교육연수원</dt><dd>1544-3070</dd><dt>교육상품몰</dt><dd>1544-6040</dd><!-- <dt>아이스크림북스</dt><dd>1544-5535</dd> --><dt>복지몰</dt><dd>1544-6040</dd><dt>쌤튜브플러스</dt><dd>1833-9845</dd></dl>
+			</article>
+			<p>COPYRIGHT(C)2016 <strong>SIGONGMEDIA</strong> CO. LTD ALL RIGHTS RESERVED. <a style="color:#fff;display:none" href="http://www.freepik.com"> Selected by freepik</a><font color="white">222.231.26.207</font></p>
+			<article>
+				<h3>아이스크림 인증</h3>
+				<a href="/user/custom/news_view.do?code=news&amp;listURL=%2Fuser%2Fcustom%2Fnews.do&amp;pageIndex=&amp;search_category=&amp;no=24408&amp;currentPageNo=1" class="mark1" title="플립러닝 공식 인증 미션 파트너">플립러닝 공식 인증<br>미션 파트너</a>
+				<a href="/user/custom/notice_view.do?no=8836&amp;code=news&amp;page=6" class="mark2" title="I.M.S Learning Impact 국제이러닝 표준화기구 주최 대상 2010 ">I.M.S Learning Impact<br>국제이러닝 표준화기구<br>주최 대상 2010</a>
+				<a href="/user/custom/notice_view.do?no=6120&amp;code=news&amp;keyfield=comment&amp;keyword=%C1%F6%BD%C4%B0%E6%C1%A6%BA%CE" class="mark3" title="IT 혁신대상 지식경제부 2009">IT 혁신대상<br>지식경제부 2009</a>
+				<a href="/user/custom/news_view.do?code=news&amp;listURL=%2Fuser%2Fcustom%2Fnews.do&amp;pageIndex=&amp;search_category=&amp;no=25737&amp;currentPageNo=1" class="mark4" title="우수 콘텐츠 인증획득
+굿콘텐츠서비스인증">[굿콘텐츠서비스인증]<br>우수 콘텐츠 서비스 인증 획득</a>
+				<a href="javascript:popupWin('http://download.i-scream.co.kr/images_renew/2013/com/digital_bookmark.html', 'digital_mark', '728', '660', '0', '0', 'no', 'no', 'no', 'no', 'yes');" class="mark5" title="전자출판물 인증서 품질인증 2012">전자출판물 인증서<br>품질인증 2012</a>
+			</article>
+		</div>
+	</section>
+	<p><a href="#none" onclick="fnMakeClass();">&nbsp;&nbsp;&nbsp;</a></p>
+</footer>
+<div id="mask"></div>
+
+</body>
+</html>

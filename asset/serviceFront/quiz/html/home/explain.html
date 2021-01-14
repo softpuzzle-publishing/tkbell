@@ -1,0 +1,335 @@
+﻿<!doctype html>
+<html lang="ko">
+	<head>
+	  <meta charset="UTF-8">
+	  <meta name="Generator" content="EditPlus®">
+	  <meta name="Author" content="">
+	  <meta name="Keywords" content="">
+	  <meta name="Description" content="">
+	  <title>Document</title>
+	  
+	  <script type="text/javascript" src="http://www.i-scream.co.kr/asset/serviceFront/js/jquery-1.9.1.min.js"></script>
+	  <script type="text/javascript" src="http://www.i-scream.co.kr/asset/serviceFront/js/default.js"></script>
+	  <script type="text/javascript" src="../../../js/jquery.bxslider.min.js"></script>
+	  <!--<script type="text/javascript" src="../../../js/newCommon.js"></script>-->
+
+	  <link rel="stylesheet" href="../../../css/style.css" />
+	  <link rel="stylesheet" href="../../../css/default2.css" />
+	  <link rel="stylesheet" href="../../../css/bbs.css" />
+	  <!-- <link rel="stylesheet" href="http://www.i-scream.co.kr/asset/serviceFront/css/custom.css"> -->
+
+	  <script type="text/javascript" defer="defer"> /* 메인 카테고리영역 참고 */
+		var getContents = true;
+
+		function fnGetContentsList(target){
+			var category_type =  $(target).data('type');
+			var listSize = 0;
+			
+			if(getContents || (getContents == false && $(target).closest('li').hasClass('active') == false)){
+				/*$.ajax({
+					url : '/user/main/SelectCategoryContentsList.json',
+					async : false,
+					type : 'POST',
+					dataType : 'html',
+					data : {
+						'category_type' : category_type
+						,'categorySequence' : $(target).data('seq')
+					},
+					success : function(data){
+						var e = $(data).find('.quiz-tags-item .quiz-image-box');
+						$(".quiz-tags-item").html(e); 				    
+						getContents = false; 				    
+					}
+				});*/
+			}else{
+				//카테고리 url 미설정
+				/*if($(target).data("href").trim() == ''){
+					return false;
+				}else{
+					location.href = $(target).data("href");
+				}*/
+			}
+		} 
+
+		$(document).ready(function(){
+			var slider = $('#expSlider').bxSlider({
+				pagerCustom: '#expPager'
+			});
+			/* var sliders = new Array();
+			for(var i=1;i<=$('.q-exp-list').length;i++) {
+				sliders[i] = $('#expSlider'+i).bxSlider({
+					pagerCustom: '#expPager'+i
+				});
+			}
+			
+			 이용안내 디자인 변경 2019-04-05 박소미
+			
+			$('.q-explain').hide();
+			
+			$($('.globalTab').find('.selected').data('href')).show();
+			
+			$('.globalTab').find('a').on('click',function(){
+			    $('.globalTab').find('a').removeClass('selected');
+			    $(this).addClass('selected');
+			    $('.q-explain').hide();
+			    $($(this).data('href')).show();
+
+			    var tabNo = $(this).parent("li").index() + 1;
+			    sliders[tabNo].reloadSlider();			});*/
+		});
+	  </script>
+	</head> 
+<body>
+<aside id="SkipToQuick" class="minimal fix"><input type="checkbox" id="quickSwitch" checked="checked" class="showHideSwitch"><label for="quickSwitch">퀵메뉴 토글 스위치</label><section><h2>Quick Pad</h2><div class="userLog" id="SkipToLogin"><a href="/user/research/mypage/member_modify_check.do" class="userThumb"><img id="myPhoto" src="/asset/serviceFront/images/temp/userThumbs.jpg" alt="개발999 선생님"></a><p style="z-index:100;"><strong class="nickname">개발</strong><em class="s">경기시공초등학교</em><span class="userType ustyp_2">관리자</span><button type="button" onclick="wiseLogCommon.clickDataSend('132');location.href='j_spring_security_logout';">로그아웃</button></p><div><a href="/user/research/mypage/message_list.do" onclick="wiseLogCommon.clickDataSend('164');ga('send', 'event', '쪽지', '클릭', '쪽지열람_퀵패드');" title="쪽지">쪽지<strong style="letter-spacing:-1px;"><imagine class="noReadCount">0</imagine></strong></a><a href="/user/research/mypage/member_modify_check.do" onclick="wiseLogCommon.clickDataSend('165');" title="정보수정">정보수정</a></div></div><ul><li class="paid"><a href="/user/member/pay.do" onclick="wiseLogCommon.clickDataSend('135');ga('send', 'event', '유료신청', '클릭', '유료신청-퀵패드');" title="유료신청"><span>유료신청</span></a></li><li class="pod"><a href="#none" title="나만의 상품만들기" onclick="javascript:fnLinkedDiy();"><span>나만의 상품만들기</span></a></li><li class="iBox"><a href="#none" title="자료띵커벨 보관함" onclick="wiseLogCommon.clickDataSend('136');javascript:golibrary();"><span>자료띵커벨 보관함</span></a></li><li class="attention"><a href="javascript:attention();" onclick="wiseLogCommon.clickDataSend('137');" title="주의집중"><span>주의집중</span></a></li><li class="writing"><a href="javascript:fnShowBoard();" onclick="wiseLogCommon.clickDataSend('138');" title="판서"><span>판서</span></a></li><li class="timer"><a href="javascript:fnShowTimer();" onclick="wiseLogCommon.clickDataSend('139');" title="타이머"><span>타이머</span></a></li><li class="notification"><a href="javascript:fnNoticeNoteOpen();" onclick="wiseLogCommon.clickUrlSend('M007');wiseLogCommon.clickDataSend('140');" title="우리반 알림장"><span>우리반 알림장</span></a></li><li class="sms"><a href="#none" title="무료문자" onclick="javascript:goSMS();"><span>무료문자</span></a></li><li class="announcement"><a href="javascript:fnPopHelpOpen();" onclick="wiseLogCommon.clickDataSend('141');" title="발표도우미"><span>발표도우미</span></a></li><li class="colorPen"><a href="javascript:fnPaint();" onclick="wiseLogCommon.clickDataSend('142');" title="색연필"><span>색연필</span></a></li></ul><a href="#" class="totop" title="Top">Top</a><audio id="attention"></audio></section></aside>
+<div id="wrap">
+<header id="header">
+    <div>
+        <div>
+            <ul class="family">
+                <li class="current"><a href="http://www.i-scream.co.kr/" target="_self" onclick="wiseLogCommon.clickDataSend('10');" title="아이스크림">아이스크림</a></li>
+                <li><a href="http://teacher.i-scream.co.kr/" target="_blank" onclick="wiseLogCommon.clickUrlSend('M001');wiseLogCommon.clickDataSend('11');" title="연수원">연수원</a></li>
+                <li><a href="#none" class="asp_move_es_btn" onclick="wiseLogCommon.clickUrlSend('M002');wiseLogCommon.clickDataSend('12');" title="교육쇼핑몰">교육쇼핑몰</a></li>
+                <li><a href="http://life.i-screammall.co.kr/sso/confirm" target="_blank" onclick="wiseLogCommon.clickUrlSend('M003');wiseLogCommon.clickDataSend('13');" title="아이스크림복지몰">아이스크림복지몰</a></li>
+            </ul>
+            <ul class="util">
+                <li><a href="j_spring_security_logout" onclick="wiseLogCommon.clickDataSend('16');">로그아웃</a></li>
+                <li class=""><a href="/user/research/mypage/research_index.do" onclick="wiseLogCommon.clickDataSend('17');">내연구실</a></li>
+                <li class="spot">
+                	<a href="/user/member/pay.do" onclick="wiseLogCommon.clickDataSend('18');"><strong>유료신청</strong></a>
+                </li>
+                <li class=""><a href="/user/custom/iscream_info_01.do" target="_blank" onclick="wiseLogCommon.clickDataSend('19');">고객센터</a></li>
+                <li class="new"><a href="javascript:exePopOpen();">간편접속</a></li>
+            </ul>
+        </div>
+    </div>
+    <div>
+        <h1>
+	       	<a href="/user/main/MainPage.do" target="_self" onclick="iscreamLog.clickLogSequence('63','banner');" alt="로고_기본">
+	       		<img src="http://www.i-scream.co.kr/asset/serviceFront/images/common/logo_beta.png" alt="로고_기본">
+	       	</a>   
+        </h1>        
+        <fieldset>
+            <legend>검색</legend>
+            <form id="mainSearchForm" name="mainSearchForm" method="post">
+           		<input id="searchQuery" name="searchQuery" type="search" title="검색어" class="placeholder" placeholder="검색어를 입력하세요." accesskey="s" value="" onkeyup="emptyChk();" onkeypress="fnSearchGoEnter(event)">
+            <button type="button" onclick="fnSearchGo();"><span class="blind">검색</span></button>
+            </form>
+        </fieldset>
+		<div class="headerBnn">
+	       	<a href="http://www.i-scream.co.kr/user/member/pay.do" target="_self" onclick="iscreamLog.clickLogSequence('372','banner');" alt="연수플러스">
+	       		<img src="http://download.i-scream.co.kr/s_images/banner/main/upload/2017/04/05/170405182638_iscream_header_bn_20170405.png" alt="연수플러스">
+	       	</a>       
+		</div>
+	</div>
+   	 <nav id="SkipToGNB">
+   		<div class="allNav">
+            <input type="checkbox" id="showAllNav" class="showHideSwitch" onclick="wiseLogCommon.clickDataSend('113');"><label for="showAllNav">전체메뉴보기</label>
+        </div>
+        <ul>
+            <!-- <li><a href="#none" title="전체메뉴보기">전체메뉴보기</a></li> -->
+            <li class=""><a href="/user/subject/SubjectChasiList.do" onclick="wiseLogCommon.clickDataSend('114');"><span>교과활동</span></a></li>
+            <li class=""><a href="/user/discretion/index.do" onclick="wiseLogCommon.clickDataSend('115');"><span>창의적 체험활동</span></a></li>
+            <li class=""><a href="/user/rest/RestList.do" onclick="wiseLogCommon.clickDataSend('116');"><span>쉬는 시간</span></a></li>
+            <li class=""><a href="/user/evaluation/evaluationList.do" onclick="wiseLogCommon.clickDataSend('117');"><span>평가자료</span></a></li>
+            <li class=""><a href="/user/reference/Submain.do" data-title="UP! 교실 무용" onclick="wiseLogCommon.clickDataSend('167');"><span>자료실</span></a></li><!-- 20170529 변경 -->
+            <li class=""><a href="/user/blog/ssamBlogMain.do" onclick="wiseLogCommon.clickDataSend('168');"><span>쌤블로그</span></a></li>            
+            <li class=""><a href="" onclick=""><span><i class="ssamtube"><img src="/asset/serviceFront/images/ssamtube/ssamtube.svg" alt="" /></i> 쌤튜브</span></a></li>
+            <li class=""><a href="" onclick=""><span>띵커벨</span></a></li>
+        </ul>
+    </nav>
+	<!-- 위치변경으로 인한 임시 주석 처리(2015.08.17) -->
+</header>
+<div class="subArea">
+
+	<nav id="SkipToLNB">
+		<h2><span>띵커벨</span></h2>
+		<ul>
+			<li><a href="" onclick="">홈</a></li>
+			<li><a href="" onclick="">띵커벨 보관함</a>
+				<ul>
+					<li><a href="#none">내 자료</a></li>
+					<li><a href="#none">스크랩</a></li>
+				</ul>
+			</li>
+			<li><a href="" onclick="">통계</a></li>
+			<li class="current"><a href="" onclick="">이용안내</a></li>
+		</ul>
+		<ul style="border:0px;">
+			<li>
+				<a href="http://www.i-scream.co.kr/user/discretion/popup/selfRegulatedActivity01.do" target="_blank" onclick="iscreamLog.clickLogSequence('342','banner');" alt="자율활동">
+					<img src="http://download.i-scream.co.kr/s_images/banner/main/upload/2017/03/10/170310170012_LNB_bn_02_170310.png">
+				</a>
+			</li>
+			<li>
+				<a href="/asset/serviceFront/html/subject/math_basic.html" target="_blank" onclick="iscreamLog.clickLogSequence('122','banner');" alt="수학 기초 연산 자료">
+					<img src="http://download.i-scream.co.kr/s_images/banner/main/upload/2016/11/28/161128085900_lnb_bn_math_161123.png">
+				</a>
+			</li>					
+		</ul>
+	</nav>
+	<section id="SkipToContents">
+		<h3  class="currentMenuName">이용안내</h3>
+
+		<main>
+			<div class="btn-right-top">
+				<button type="button" class="btn-qmake"><span>만들기</span></button>
+			</div>
+			
+			<hr class="solid"/>
+			
+			<div class="q-explain">
+				<h4><em>띵커벨</em>과 함께하는 <em>Think&amp;Play</em></h4>
+				<p class="q-desc"><b>#실시간 퀴즈 &nbsp; #실시간 토의·토론 &nbsp; #게임같은 수업 &nbsp; #Thinker들 모여라! &nbsp; #Ring the Bell</b></p>
+			
+				<div class="q-exp-vdo">
+					<video controls autoplay title="띵커벨- 선생님의 일상 편" poster="http://download.i-scream.co.kr/data/origin_img/2019/04/24/q_explain1_poster.jpg">	
+						<source src="http://download.i-scream.co.kr/data/origin_img/2019/04/24/190424042404016.mp4" type="video/mp4" size="728" height="410">
+						- 현재 사용하시는 브라우저에서는 동영상이 지원되지 않습니다. 크롬브라우저를 사용하시거나 익스플로러 최신버전으로 업그레이드해주세요. -
+					</video>
+				</div>
+			</div>
+			
+			<div class="q-explain">
+				<h4><em>다양한 유형의 퀴즈, 토의・토론 지원</em></h4>
+				
+				<div class="q-exp-pager" id="expPager">
+					<div>
+						<strong>퀴즈</strong>
+						<a data-slide-index="0" href="">객관식</a>
+						<a data-slide-index="1" href="">단답형</a>
+						<a data-slide-index="2" href="">OX</a>
+					</div>
+					<div>
+						<strong>토의·토론</strong>
+						<a data-slide-index="3" href="">신호등</a>
+						<a data-slide-index="4" href="">가치 수직선 </a>
+						<a data-slide-index="5" href="">찬성반대 </a>
+						<a data-slide-index="6" href="">띵킹보드</a>
+						<a data-slide-index="7" href="">P.M.I.</a>
+						<a data-slide-index="8" href="">투표</a>
+					</div>
+				</div>
+				<ol class="q-exp-list" id="expSlider">
+					<li>
+						<div class="q-exp-photo"><img src="/asset/serviceFront/images/quiz/q_explain2_1.jpg" alt="객관식" width="730" height="420" /></div>
+					</li>
+					<li>
+						<div class="q-exp-photo"><img src="/asset/serviceFront/images/quiz/q_explain2_2.jpg" alt="단답형" width="730" height="420" /></div>
+					</li>
+					<li>
+						<div class="q-exp-photo"><img src="/asset/serviceFront/images/quiz/q_explain2_3.jpg" alt="ox" width="730" height="420" /></div>
+					</li>
+					<li>
+						<div class="q-exp-photo"><img src="/asset/serviceFront/images/quiz/q_explain2_4.jpg" alt="신호등" width="730" height="420" /></div>
+					</li>
+					<li>
+						<div class="q-exp-photo"><img src="/asset/serviceFront/images/quiz/q_explain2_5.jpg" alt="가치수직선" width="730" height="420" /></div>
+					</li>
+					<li>
+						<div class="q-exp-photo"><img src="/asset/serviceFront/images/quiz/q_explain2_6.jpg" alt="찬성반대" width="730" height="420" /></div>
+					</li>
+					<li>
+						<div class="q-exp-photo"><img src="/asset/serviceFront/images/quiz/q_explain2_7.jpg" alt="씽킹보드" width="730" height="420" /></div>
+					</li>
+					<li>
+						<div class="q-exp-photo"><img src="/asset/serviceFront/images/quiz/q_explain2_8.jpg" alt="P.M.I" width="730" height="420" /></div>
+					</li>
+					<li>
+						<div class="q-exp-photo"><img src="/asset/serviceFront/images/quiz/q_explain2_9.jpg" alt="투표" width="730" height="420" /></div>
+					</li>
+				</ol>
+			</div>
+			
+			<div class="q-explain">
+				<h4><em>게임을 하듯 재미있게</em></h4>
+				<p class="q-desc">
+					•&nbsp;모바일 디바이스에 방번호만 입력하면 즐거운 수업 시작!<br />
+					•&nbsp;실시간 랭킹과 점수로 집중력 UP! 참여도 UP!<br />
+					•&nbsp;내 의견도, 친구들 의견도 바로 확인하고 발표하고!
+				</p>
+				<div class="q-exp-photo"><img src="/asset/serviceFront/images/quiz/q_explain3_1.jpg" alt="게임을 하듯 재미있게" width="730" height="420" /></div>
+			</div>			
+			
+			<div class="q-explain">
+				<h4><em>이럴 땐 이런 띵커벨</em></h4>
+				<p class="q-desc">
+					•&nbsp;수업이 끝나면 골든벨, 단원 마무리 퀴즈!<br />
+					•&nbsp;한글날엔 낱말 퀴즈, 삼일절엔 역사 퀴즈!<br />
+					•&nbsp;우리 반 의견을 모을 땐 토의·토론으로!
+				</p>			
+				<div class="q-exp-photo"><img src="/asset/serviceFront/images/quiz/q_explain4_1.jpg" alt="이럴 땐 이런 띵커벨" width="730" height="500" /></div>
+			</div>	
+		
+			<div class="q-explain">
+				<h4><em>띵커벨 튜토리얼</em></h4>				
+				<div class="q-exp-vdo col2">
+					<div>
+						<video controls title="띵커벨 튜토리얼- 플레이편" poster="http://download.i-scream.co.kr/data/origin_img/2019/04/24/q_explain4_1_poster.jpg">	
+							<source src="http://download.i-scream.co.kr/data/origin_img/2019/04/24/190424035236105.mp4" type="video/mp4" size="728" height="410">
+							- 현재 사용하시는 브라우저에서는 동영상이 지원되지 않습니다. 크롬브라우저를 사용하시거나 익스플로러 최신버전으로 업그레이드해주세요. -
+						</video>
+					</div>
+					<div>
+						<video controls title="띵커벨 튜토리얼- 만들기 편" poster="http://download.i-scream.co.kr/data/origin_img/2019/04/24/q_explain4_2_poster.jpg">	
+						<source src="http://download.i-scream.co.kr/data/origin_img/2019/04/24/190424035234839.mp4" type="video/mp4" size="728" height="410">
+						- 현재 사용하시는 브라우저에서는 동영상이 지원되지 않습니다. 크롬브라우저를 사용하시거나 익스플로러 최신버전으로 업그레이드해주세요. -
+						</video>
+					</div>
+				</div>
+			</div>
+
+			<div class="q-btn-cont">
+				<a href="" class="spot">띵커벨 만들기</a>
+				<a href="">가이드 다운로드</a>
+			</div>
+		</main>
+	</section>
+</div>
+
+<footer>
+	<ul>
+		<li><a href="/user/introduce/index.do" onclick="wiseLogCommon.clickDataSend('1620');" title="아이스크림 소개">아이스크림 소개</a></li>
+		<li><a href="/user/introduce/sigong1.do" onclick="wiseLogCommon.clickDataSend('1621');" title="회사소개">회사소개</a></li>
+		<li><a href="/user/custom/agreement.do" title="이용약관" onclick="wiseLogCommon.clickDataSend('1622');">이용약관</a></li>
+		<li class="pp"><a href="/user/custom/self_apply.do" onclick="wiseLogCommon.clickDataSend('1623');" title="개인정보 처리방침">개인정보 처리방침</a></li>
+		<li><a href="/user/custom/suggestion.do" title="광고 및 제휴문의">광고 및 제휴문의</a></li>
+		<li class="pp"><a href="/user/custom/pc_service.do" onclick="wiseLogCommon.clickDataSend('1624');" title="PC원격지원"><strong>PC원격지원</strong></a></li>
+		<li><a href="https://www.facebook.com/iscreamteacher/" onclick="wiseLogCommon.clickDataSend('1625');" title="아이스크림 페이스북 바로가기" target="_blank"><img src="http://download.i-scream.co.kr/s_images/footer/iscream_facebook.png" style="margin-bottom:-1px;"></a></li>
+		<li><a href="http://pf.kakao.com/_xdilMxl" onclick="wiseLogCommon.clickDataSend('1626');" title="아이스크림 플러스친구 바로가기" target="_blank"><img src="http://download.i-scream.co.kr/s_images/footer/iscream_kakaotalk.png" style="margin-bottom:-2px;"></a></li>
+		
+	</ul>
+	<section>
+		<h2>사업자 정보</h2>
+		
+		<div>
+			<article>
+				<h3>SIGONGmedia</h3>
+				<dl><dt>주소</dt><dd><address>경기도 성남시 분당구 판교역로 225-20(삼평동)</address></dd><dt>대표이사</dt><dd>박기석</dd><dt>사업자등록번호</dt><dd>120-86-33565</dd><dt>통신판매업신고번호</dt><dd>2011-경기성남-1785</dd><dt>대표전화</dt><dd>1544-6020</dd><dt>팩스</dt><dd>(02)512-5909</dd><dt>E-mail</dt><dd><a href="mailto:info@sigongmedia.co.kr" title="시공미디어에 이메일 보내기">info@sigongmedia.co.kr</a></dd></dl>
+			</article>
+			<article>
+				<h3>KBS Media</h3>
+				<dl><dt>주소</dt><dd><address>서울시 마포구 매봉산로 45 KBS미디어센터</address></dd><dt>대표자</dt><dd>이선재</dd><dt>사업자등록번호</dt><dd>116-81-40951</dd></dl>
+			</article>
+			<article>
+				
+				<h3>Customer center</h3>
+				<dl><dt>아이스크림</dt><dd>1544-6020</dd><dt>원격교육연수원</dt><dd>1544-3070</dd><dt>교육상품몰</dt><dd>1544-6040</dd><!-- <dt>아이스크림북스</dt><dd>1544-5535</dd> --><dt>복지몰</dt><dd>1544-6040</dd><dt>쌤튜브플러스</dt><dd>1833-9845</dd></dl>
+			</article>
+			<p>COPYRIGHT(C)2016 <strong>SIGONGMEDIA</strong> CO. LTD ALL RIGHTS RESERVED. <a style="color:#fff;display:none" href="http://www.freepik.com"> Selected by freepik</a><font color="white">222.231.26.207</font></p>
+			<article>
+				<h3>아이스크림 인증</h3>
+				<a href="/user/custom/news_view.do?code=news&amp;listURL=%2Fuser%2Fcustom%2Fnews.do&amp;pageIndex=&amp;search_category=&amp;no=24408&amp;currentPageNo=1" class="mark1" title="플립러닝 공식 인증 미션 파트너">플립러닝 공식 인증<br>미션 파트너</a>
+				<a href="/user/custom/notice_view.do?no=8836&amp;code=news&amp;page=6" class="mark2" title="I.M.S Learning Impact 국제이러닝 표준화기구 주최 대상 2010 ">I.M.S Learning Impact<br>국제이러닝 표준화기구<br>주최 대상 2010</a>
+				<a href="/user/custom/notice_view.do?no=6120&amp;code=news&amp;keyfield=comment&amp;keyword=%C1%F6%BD%C4%B0%E6%C1%A6%BA%CE" class="mark3" title="IT 혁신대상 지식경제부 2009">IT 혁신대상<br>지식경제부 2009</a>
+				<a href="/user/custom/news_view.do?code=news&amp;listURL=%2Fuser%2Fcustom%2Fnews.do&amp;pageIndex=&amp;search_category=&amp;no=25737&amp;currentPageNo=1" class="mark4" title="우수 콘텐츠 인증획득
+굿콘텐츠서비스인증">[굿콘텐츠서비스인증]<br>우수 콘텐츠 서비스 인증 획득</a>
+				<a href="javascript:popupWin('http://download.i-scream.co.kr/images_renew/2013/com/digital_bookmark.html', 'digital_mark', '728', '660', '0', '0', 'no', 'no', 'no', 'no', 'yes');" class="mark5" title="전자출판물 인증서 품질인증 2012">전자출판물 인증서<br>품질인증 2012</a>
+			</article>
+		</div>
+	</section>
+	<p><a href="#none" onclick="fnMakeClass();">&nbsp;&nbsp;&nbsp;</a></p>
+</footer>
+<div id="mask"></div>
+</div>
+</body>
+</html>
