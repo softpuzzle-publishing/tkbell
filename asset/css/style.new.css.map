@@ -1,0 +1,10 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "../scss/view/style.new.scss",
+        "../scss/view/_new.scss"
+    ],
+    "names": [],
+    "file": "style.new.css"
+}

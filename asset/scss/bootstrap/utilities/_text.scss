@@ -40,39 +40,6 @@
 .font-weight-bolder  { font-weight: $font-weight-bolder !important; }
 .font-italic         { font-style: italic !important; }
 
-// Contextual colors
-
-.text-white { color: $white !important; }
-
-@each $color, $value in $theme-colors {
-  @include text-emphasis-variant(".text-#{$color}", $value);
-}
-
-.text-body { color: $body-color !important; }
-.text-muted { color: $text-muted !important; }
-
-.text-black-50 { color: rgba($black, .5) !important; }
-.text-white-50 { color: rgba($white, .5) !important; }
-
-// Misc
-
-.text-hide {
-  @include text-hide($ignore-warning: true);
-}
-
-.text-decoration-none { text-decoration: none !important; }
-
-.text-break {
-  word-break: break-word !important; // IE & < Edge 18
-  overflow-wrap: break-word !important;
-}
-
-// Reset
-
-.text-reset { color: inherit !important; }
-
-.text-form{color: #999;font-size: 14px;letter-spacing: -0.025em;margin-top: 1rem;}
-
 .text-underline{text-decoration: underline;
   &:hover{text-decoration: underline;}
 }

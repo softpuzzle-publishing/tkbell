@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="19px" height="3px" viewBox="0 0 19 3" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group 2</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-2" fill="#000000" fill-rule="nonzero">
+            <g id="ic-linecolor">
+                <polygon id="Path" points="0 0 3 0 3 3 0 3"></polygon>
+                <polygon id="Path-Copy" points="8 0 11 0 11 3 8 3"></polygon>
+                <polygon id="Path-Copy-2" points="12 0 15 0 15 3 12 3"></polygon>
+                <polygon id="Path-Copy-3" points="16 0 19 0 19 3 16 3"></polygon>
+            </g>
+            <g id="ic-linecolor" transform="translate(4.000000, 0.000000)">
+                <polygon id="Path" points="0 0 3 0 3 3 0 3"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

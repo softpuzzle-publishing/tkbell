@@ -1,9 +1,11 @@
+
 // Row
 //
 // Rows contain and clear the floats of your columns.
 
 @if $enable-grid-classes {
   .row {
+    box-sizing: border-box;
     @include make-row();
   }
 
@@ -17,6 +19,7 @@
     > [class*="col-"] {
       padding-right: 0;
       padding-left: 0;
+      box-sizing: border-box;
     }
   }
 }

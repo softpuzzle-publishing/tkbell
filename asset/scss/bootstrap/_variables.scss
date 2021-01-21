@@ -231,7 +231,7 @@ $container-max-widths: (
 // Set the number of columns and specify the width of the gutters.
 
 $grid-columns:                12 !default;
-$grid-gutter-width:           30px !default;
+$grid-gutter-width:           10px !default;
 
 
 // Components
@@ -853,10 +853,10 @@ $card-columns-margin:               $card-spacer-y !default;
 
 // Tooltips
 
-$tooltip-font-size:                 $font-size-sm !default;
+$tooltip-font-size:                 .875rem !default;
 $tooltip-max-width:                 200px !default;
 $tooltip-color:                     $white !default;
-$tooltip-bg:                        $black !default;
+$tooltip-bg:                        #666 !default;
 $tooltip-border-radius:             $border-radius !default;
 $tooltip-opacity:                   .9 !default;
 $tooltip-padding-y:                 .25rem !default;

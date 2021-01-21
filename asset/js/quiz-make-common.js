@@ -1,4 +1,4 @@
-/*		
+/*
 	date : 2018-11-06
 	author :  Hyojeong Yang
 	modify :  Hyojeong Yang
@@ -99,15 +99,15 @@ if (jQuery) (function ($) {
                 function infoClose() {
                     $('.make, .make-info, .make-info-btn a').removeClass('active');
                 }
-               
+
                 /*infoMove*/
                 function infoMove(el,idx) {
                     $('.make-info-btn a').removeClass('active');
                     el.addClass('active');
-					
+
 					$('.make-info > section').hide();
 					$('.make-info > section').eq(idx).show(0);
-                    
+
                     var id = el.attr('href'),// target element id
                         $id = $(id),// target element
                         pos = $id.offset().top,
@@ -203,7 +203,7 @@ $(document).ready(function () {
 	    forceLowercase: false,
 	    sortable: false
 	});
-	
+
 	//빈칸형 입력
 	$('.blankanswer-area input').tagEditor({
 	    placeholder: '정답을 입력하세요.(공백 포함 최대 20자까지 가능, 엔터키로 추가 입력 가능)',

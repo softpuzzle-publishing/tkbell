@@ -261,9 +261,9 @@
   display: none;
 }
 
-.dropzone.dz-drag-hover {
+/* .dropzone.dz-drag-hover {
   border-style: solid;
-}
+} */
 
 .dropzone.dz-drag-hover .dz-message {
   opacity: 0.5;
@@ -375,7 +375,7 @@
 }
 
 .dropzone .dz-preview .dz-details .dz-filename {
-  white-space: nowrap;font-size: 15px;color: #bbb;cursor: pointer;
+  white-space: nowrap;font-size: 14px;color: #bbb;cursor: pointer;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -435,7 +435,7 @@
 }
 
 .dropzone .dz-preview .dz-image img {
-  display: block;
+  display: block;margin: 0 auto;
 }
 
 .dropzone .dz-preview.dz-success .dz-success-mark {
