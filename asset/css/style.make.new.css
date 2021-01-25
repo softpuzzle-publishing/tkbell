@@ -14,6 +14,8 @@ input.box-style { display: block; width: 100%; background: #fff; height: 56px; p
 
 .btn.spot:disabled { opacity: .5; cursor: default; }
 
+.btn.radius-0 { border-radius: 0; }
+
 .ui-checkboxradio-label.hdn-txt { font-size: 0 !important; }
 
 .attach-file-area { margin-bottom: 35px; min-height: 166px; border: 1px solid #ddd; border-radius: 5px; background: #f7f7f7; padding: 10px 9px; }
@@ -32,113 +34,157 @@ input.box-style { display: block; width: 100%; background: #fff; height: 56px; p
 
 .editor { height: auto; }
 
-.editor .contents { padding-top: 25px; }
+.editor .contents { padding-top: 25px; width: 992px; }
 
 .tkbell-editor-header { height: 56px; position: relative; }
 
-.tkbell-editor-header .inner { border: 1px solid #ddd; border-radius: 28px; background-color: #fff; width: 1120px; position: fixed; top: 0; top: 96px; z-index: 99; }
+.tkbell-editor-header .question-num { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); margin-top: -1px; font-size: 14px; color: #888; letter-spacing: -0.28px; }
+
+.tkbell-editor-header .question-num span { color: #ff6858; font-weight: 500; }
+
+.tkbell-editor-header .inner { border: 1px solid #ddd; border-radius: 28px; background-color: #fff; width: 992px; position: fixed; top: 0; top: 96px; z-index: 99; }
 
 html.tool-fixed .tkbell-editor-header .inner { box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05); }
+
+.tool i, .tool-sub i { color: #888; }
+
+.tool i[class^=ic], .tool-sub i[class^=ic] { display: block; width: 24px; height: 24px; background-repeat: no-repeat; background-position: 50% 50%; font-size: 17px; color: #888; line-height: 1; vertical-align: top; font-family: "Font Awesome 5 Pro"; -moz-osx-font-smoothing: grayscale; -webkit-font-smoothing: antialiased; text-rendering: auto; font-style: normal; position: relative; box-sizing: border-box; }
+
+.tool i[class^=ic]::before, .tool-sub i[class^=ic]::before { display: inline-block; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+
+.tool i[class$=preview], .tool-sub i[class$=preview] { background-image: url("../images/make/ic-preview.png"); }
+
+.tool i[class$=undo], .tool-sub i[class$=undo] { background-image: url("../images/make/ic-undo.png"); }
+
+.tool i[class$=redo], .tool-sub i[class$=redo] { background-image: url("../images/make/ic-redo.png"); }
+
+.tool i[class$=focus], .tool-sub i[class$=focus] { background-image: url("../images/make/ic-focus.png"); }
+
+.tool i[class$=text], .tool-sub i[class$=text] { background-image: url("../images/make/ic-text.png"); }
+
+.tool i[class$=pen], .tool-sub i[class$=pen] { background-image: url("../images/make/ic-pen.png"); }
+
+.tool i[class$=eraser], .tool-sub i[class$=eraser] { background-image: url("../images/make/ic-eraser.png"); }
+
+.tool i[class$=imgadd], .tool-sub i[class$=imgadd] { background-image: url("../images/make/ic-imgadd.png"); }
+
+.tool i[class$=imgsearch], .tool-sub i[class$=imgsearch] { background-image: url("../images/make/ic-imgsearch.png"); }
+
+.tool i[class$=textbox], .tool-sub i[class$=textbox] { background-image: url("../images/make/ic-textbox.png"); }
+
+.tool i[class$=radiobtn], .tool-sub i[class$=radiobtn] { background-image: url("../images/make/ic-radiobtn.png"); }
+
+.tool i[class$=checkbox], .tool-sub i[class$=checkbox] { background-image: url("../images/make/ic-checkbox.png"); }
+
+.tool i[class$=dropdown], .tool-sub i[class$=dropdown] { background-image: url("../images/make/ic-dropdown.png"); }
+
+.tool i[class$=connetline], .tool-sub i[class$=connetline] { background-image: url("../images/make/ic-connetline.png"); }
+
+.tool i[class$=setting], .tool-sub i[class$=setting] { background-image: url("../images/make/ic-setting.png"); }
+
+.tool i[class$=question], .tool-sub i[class$=question] { background-image: url("../images/make/ic-question.png"); }
+
+.tool i[class$=outline], .tool-sub i[class$=outline] { width: 18px; height: 18px; background-color: #e8e7e8; border: 2px solid #000; border-radius: 2px; }
+
+.tool i[class$=fill], .tool-sub i[class$=fill] { background-image: url("../images/make/ic-fill.png"); width: 18px; height: 18px; border: 2px solid #ddd; border-radius: 2px; }
+
+.tool i[class$=opacity], .tool-sub i[class$=opacity] { background-image: url("../images/make/ic-opacity.png"); }
+
+.tool .active i[class$=text], .tool .show i[class$=text], .tool-sub .active i[class$=text], .tool-sub .show i[class$=text] { background-image: url("../images/make/ic-text-select.png"); }
+
+.tool .active i[class$=pen], .tool .show i[class$=pen], .tool-sub .active i[class$=pen], .tool-sub .show i[class$=pen] { background-image: url("../images/make/ic-pen-select.png"); }
+
+.tool .active i[class$=eraser], .tool .show i[class$=eraser], .tool-sub .active i[class$=eraser], .tool-sub .show i[class$=eraser] { background-image: url("../images/make/ic-eraser-select.png"); }
+
+.tool .active i[class$=imgadd], .tool .show i[class$=imgadd], .tool-sub .active i[class$=imgadd], .tool-sub .show i[class$=imgadd] { background-image: url("../images/make/ic-imgadd-select.png"); }
+
+.tool .active i[class$=imgsearch], .tool .show i[class$=imgsearch], .tool-sub .active i[class$=imgsearch], .tool-sub .show i[class$=imgsearch] { background-image: url("../images/make/ic-imgsearch-select.png"); }
+
+.tool .active i[class$=textbox], .tool .show i[class$=textbox], .tool-sub .active i[class$=textbox], .tool-sub .show i[class$=textbox] { background-image: url("../images/make/ic-textbox-select.png"); }
+
+.tool .active i[class$=radiobtn], .tool .show i[class$=radiobtn], .tool-sub .active i[class$=radiobtn], .tool-sub .show i[class$=radiobtn] { background-image: url("../images/make/ic-radiobtn-select.png"); }
+
+.tool .active i[class$=checkbox], .tool .show i[class$=checkbox], .tool-sub .active i[class$=checkbox], .tool-sub .show i[class$=checkbox] { background-image: url("../images/make/ic-checkbox-select.png"); }
+
+.tool .active i[class$=dropdown], .tool .show i[class$=dropdown], .tool-sub .active i[class$=dropdown], .tool-sub .show i[class$=dropdown] { background-image: url("../images/make/ic-dropdown-select.png"); }
+
+.tool .active i[class$=connetline], .tool .show i[class$=connetline], .tool-sub .active i[class$=connetline], .tool-sub .show i[class$=connetline] { background-image: url("../images/make/ic-connetline-select.png"); }
+
+.tool .active i[class$=setting], .tool .show i[class$=setting], .tool-sub .active i[class$=setting], .tool-sub .show i[class$=setting] { background-image: url("../images/make/ic-setting-select.png"); }
+
+.tool .active i[class$=question], .tool .show i[class$=question], .tool-sub .active i[class$=question], .tool-sub .show i[class$=question] { background-image: url("../images/make/ic-question-select.png"); }
+
+.tool i[class$=line-solid], .tool-sub i[class$=line-solid] { background-image: url("../images/make/ic-line-solid.svg"); }
+
+.tool i[class$=line-dashed], .tool-sub i[class$=line-dashed] { background-image: url("../images/make/ic-line-dashed.svg"); }
+
+.tool i[class$=copy]::before, .tool-sub i[class$=copy]::before { content: ''; }
+
+.tool i[class$=delete]::before, .tool-sub i[class$=delete]::before { content: ''; }
+
+.tool .bar, .tool-sub .bar { display: block; width: 1px; height: 23px; background: #ddd; margin: 0 12px; }
 
 .tool { display: flex; align-items: center; padding: 15px; }
 
 .tool > * { line-height: 1; color: #888; font-size: 14px; display: block; margin: 0 8px; }
 
+.tool > * > a { color: #888; font-weight: 500; }
+
+.tool .show > a { color: #ff6858; }
+
 .tool a { display: inline-block; }
-
-.tool i[class^=ic] { display: block; width: 24px; height: 24px; background-repeat: no-repeat; background-position: 50% 50%; font-size: 18px; color: #888; line-height: 1; vertical-align: top; font-family: "Font Awesome 5 Pro"; -moz-osx-font-smoothing: grayscale; -webkit-font-smoothing: antialiased; text-rendering: auto; font-style: normal; position: relative; box-sizing: border-box; }
-
-.tool i[class^=ic]::before { display: inline-block; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
-
-.tool i[class$=preview] { background-image: url("../images/make/ic-preview.png"); }
-
-.tool i[class$=undo] { background-image: url("../images/make/ic-undo.png"); }
-
-.tool i[class$=redo] { background-image: url("../images/make/ic-redo.png"); }
-
-.tool i[class$=focus] { background-image: url("../images/make/ic-focus.png"); }
-
-.tool i[class$=text] { background-image: url("../images/make/ic-text.png"); }
-
-.tool i[class$=pen] { background-image: url("../images/make/ic-pen.png"); }
-
-.tool i[class$=eraser] { background-image: url("../images/make/ic-eraser.png"); }
-
-.tool i[class$=imgadd] { background-image: url("../images/make/ic-imgadd.png"); }
-
-.tool i[class$=imgsearch] { background-image: url("../images/make/ic-imgsearch.png"); }
-
-.tool i[class$=textbox] { background-image: url("../images/make/ic-textbox.png"); }
-
-.tool i[class$=radiobtn] { background-image: url("../images/make/ic-radiobtn.png"); }
-
-.tool i[class$=checkbox] { background-image: url("../images/make/ic-checkbox.png"); }
-
-.tool i[class$=dropdown] { background-image: url("../images/make/ic-dropdown.png"); }
-
-.tool i[class$=connetline] { background-image: url("../images/make/ic-connetline.png"); }
-
-.tool i[class$=setting] { background-image: url("../images/make/ic-setting.png"); }
-
-.tool i[class$=question] { background-image: url("../images/make/ic-question.png"); }
-
-.tool i[class$=outline] { width: 18px; height: 18px; background-color: #e8e7e8; border: 2px solid #000; border-radius: 2px; }
-
-.tool i[class$=fill] { background-image: url("../images/make/ic-fill.png"); width: 18px; height: 18px; border: 2px solid #ddd; border-radius: 2px; }
-
-.tool i[class$=opacity] { background-image: url("../images/make/ic-opacity.png"); }
-
-.tool i[class$=line-solid] { background-image: url("../images/make/ic-line-solid.svg"); }
-
-.tool i[class$=line-dashed] { background-image: url("../images/make/ic-line-dashed.svg"); }
-
-.tool i[class$=copy]::before { content: ''; }
-
-.tool i[class$=delete]::before { content: ''; }
-
-.tool .bar { display: block; width: 1px; height: 23px; background: #ddd; margin: 0 12px; }
 
 .tool .has-sub { position: relative; }
 
 .tool .has-sub.show .sub-menu { display: block; }
 
-.tool .sub-menu { min-width: 0; padding: 0; border: 0; background-color: transparent; position: absolute; top: 40px; left: -22px; z-index: 1; display: none; }
-
 .tool .tooltip { font-size: 14px; }
 
 .tool .tooltip-inner { padding: 4px 7px; }
 
-.tool .tool-sub { display: flex; align-items: center; padding: 15px; border-radius: 28px; box-shadow: 0px 4px 5px 1px rgba(0, 0, 0, 0.21); background-color: #fafafa; border: 1px solid #ddd; }
+.tool-sub { display: flex; align-items: center; padding: 15px; border-radius: 28px; box-shadow: 0px 4px 5px 1px rgba(0, 0, 0, 0.21); background-color: #fafafa; border: 1px solid #ddd; position: fixed; left: 50%; transform: translate(-50.2%, 0); top: 152px; z-index: 999; }
 
-.tool .tool-sub > * { margin: 0 4px; }
+.tool-sub > * { margin: 0 4px; line-height: 1; font-size: 14px; }
 
-.tool .tool-sub > * > a { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; }
+.tool-sub > * > a { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; }
 
-.tool .tool-sub > * > a.active { background: #ddd; border-radius: 3px; }
+.tool-sub > * > a.active { background: #ddd; border-radius: 3px; }
 
-.tool .tool-sub .bar { margin: 0 12px; }
+.tool-sub .bar { margin: 0 12px; }
 
-.tool .tool-select { position: relative; }
+.tool-sub .fa, .tool-sub .fas, .tool-sub .far, .tool-sub .fal, .tool-sub .fad, .tool-sub .fa { font-size: 18px; }
 
-.tool .tool-select .selected { display: block; padding: 0 26px 0 10px; position: relative; white-space: nowrap; line-height: 24px; width: 100%; text-overflow: ellipsis; overflow: hidden; }
+.tool-sub .fa-arrows { cursor: move; }
 
-.tool .tool-select .selected::before { content: ''; display: block; width: 10px; height: 6px; background: url("../images/make/ic-arrow-down.svg") no-repeat 50% 50%; position: absolute; right: 10px; top: 50%; margin-top: -3px; }
+.tool-select { position: relative; min-width: 24px; }
 
-.tool .tool-select .custom-select { position: absolute; width: 100%; max-height: 300px; background: #fff; margin-top: 6px; display: none; box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2); border-radius: 4px; }
+.tool-select .selected { display: block; padding: 0 26px 0 10px; position: relative; white-space: nowrap; line-height: 24px; width: 100%; text-overflow: ellipsis; overflow: hidden; }
 
-.tool .tool-select ul { padding: 3px 0; }
+.tool-select .selected::before { content: ''; display: block; width: 10px; height: 6px; background: url("../images/make/ic-arrow-down.svg") no-repeat 50% 50%; position: absolute; right: 10px; top: 50%; margin-top: -3px; }
 
-.tool .tool-select li a { display: block; padding: 7px 10px; font-size: 14px; white-space: nowrap; }
+.tool-select .selected i { margin: 0 auto; }
 
-.tool .tool-select .mCSB_scrollTools { width: 4px; }
+.tool-select .custom-select { position: absolute; width: 100%; max-height: 300px; background: #fff; margin-top: 6px; display: none; box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2); border-radius: 4px; }
 
-.tool .tool-select .mCSB_inside > .mCSB_container { margin-right: 26px; }
+.tool-select li a { display: block; padding: 10px 10px; font-size: 14px; white-space: nowrap; transition: all .1s; }
 
-.tool .tool-select .mCS-dark-2.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar { background-color: rgba(0, 0, 0, 0.4); }
+.tool-select li a:hover { background-color: #f4f4f4; }
 
-.tool .text-color { position: relative; padding-bottom: 3px; }
+.tool-select .mCSB_scrollTools { width: 4px; }
 
-.tool .text-color .underline { width: 15px; height: 3px; background: #000; position: absolute; bottom: 0; left: 50%; margin-left: -7.5px; }
+.tool-select .mCSB_inside > .mCSB_container { margin-right: 0; }
+
+.tool-select .mCS-dark-2.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar { background-color: rgba(0, 0, 0, 0.4); }
+
+.tool-select.no-arrow .selected { padding-left: 0; padding-right: 0; }
+
+.tool-select.no-arrow .selected::before { display: none; }
+
+.tool-select.no-arrow .custom-select { margin-left: -10px; }
+
+.t-textcolor { position: relative; padding-bottom: 3px; }
+
+.t-textcolor .underline { width: 15px; height: 3px; background: #000; position: absolute; bottom: 0; left: 50%; margin-left: -7.5px; }
 
 .tkbell-editor-body { border: 1px solid #ddd; background: #fff; border-radius: 5px; margin-top: 10px; overflow: hidden; }
 
@@ -154,7 +200,7 @@ html.tool-fixed .tkbell-editor-header .inner { box-shadow: 0 2px 6px rgba(0, 0, 
 
 .editor-layer.active { z-index: 9999; }
 
-#quickView { position: fixed; background: #FFF; width: 60px; top: 161px; left: 50%; transform: translateX(570px); z-index: 9; text-align: center; border: 1px solid #ddd; font-size: 14px; border-radius: 5px; }
+#quickView { position: fixed; background: #FFF; width: 60px; top: 161px; left: 50%; transform: translateX(505px); z-index: 9; text-align: center; border: 1px solid #ddd; font-size: 14px; border-radius: 5px; }
 
 #quickView .toggler { display: block; font-size: 12px; font-weight: 500; line-height: 30px; color: #888; }
 
@@ -169,16 +215,6 @@ html.tool-fixed .tkbell-editor-header .inner { box-shadow: 0 2px 6px rgba(0, 0, 
 #quickView button:hover { background-color: #ff6858; color: #FFF; }
 
 #quickView .page-navigation.active button { background-color: #ff6858; color: #FFF; }
-
-.scale-controler { position: fixed; z-index: 999; width: 220px; height: 46px; display: flex; bottom: 60px; right: 60px; align-items: center; padding: 10px 15px; border: 1px solid #ddd; background-color: #f5f5f5; border-radius: 50rem; }
-
-.scale-controler button { margin: 0 14px; padding: 0; font-size: 0; }
-
-.scale-controler i { color: #888; font-size: 24px; vertical-align: middle; }
-
-.scale-controler span { font-size: 16px; font-weight: 500; color: #888; }
-
-.scale-controler::after { content: ''; font-family: "Font Awesome 5 Pro"; color: #888; font-size: 22px; cursor: move; margin-left: 10px; }
 
 .img-search { width: 870px; padding: 0 35px; }
 
@@ -262,4 +298,46 @@ html.tool-fixed .tkbell-editor-header .inner { box-shadow: 0 2px 6px rgba(0, 0, 
 .tbl-list table th:last-child, .tbl-list table td:last-child { border-right: 0; }
 
 .tbl-list table tbody tr:hover td { background-color: rgba(0, 0, 0, 0.025); }
+
+.line-connect { position: fixed; left: 50%; top: 220px; z-index: 998; transform: translateX(-50%); width: 900px; border: 1px solid #ddd; border-radius: 5px; background-color: #ffffff; padding: 1rem; box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.07), 0 3px 14px 2px rgba(0, 0, 0, 0.07), 0 5px 5px -3px rgba(0, 0, 0, 0.1); }
+
+.line-connect .item { display: block; min-height: 120px; border: 1px solid #ddd; transition: all .2s; text-align: center; }
+
+.line-connect .item.active { border-color: #ff6858; }
+
+.line-connect .item img { width: 100px; margin-top: 10px; }
+
+.line-connect .custom .tit { margin-bottom: .5rem; }
+
+.line-connect .custom .tit span { font-weight: 500; }
+
+.line-connect .custom .row { margin-left: -2.5px; margin-right: -2.5px; }
+
+.line-connect .custom [class^=col] { padding-left: 2.5px; padding-right: 2.5px; }
+
+.line-connect .custom .btn { width: 100%; margin-top: 0.5rem; border-radius: 5px; }
+
+.box-connect { width: 120px; height: 120px; }
+
+.box-connect .btn-point { display: block; width: 30%; height: 0; padding-bottom: 30%; position: relative; }
+
+.box-connect .btn-point span { position: absolute; left: 0; top: 0; width: 100%; height: 100%; border: 2px solid #777; border-radius: 50%; overflow: hidden; }
+
+.box-connect .btn-point.active span { background-color: #333; border-color: #333; }
+
+.box-connect .group { display: flex; flex-wrap: wrap; align-items: center; height: 100%; padding: 10px; }
+
+.box-connect .group .item { width: 50%; text-align: center; display: flex; align-items: center; justify-content: center; }
+
+.box-connect[data-by^='3x'] .group .item { width: 33.33333%; }
+
+@page { size: A4; }
+
+@media print { body { background: #ffffff; }
+  .editor { transform: translateY(-70px); }
+  .tkbell-editor-header { display: none; }
+  .make-header { display: none; }
+  #quickView { display: none; }
+  .tool-sub { display: none; }
+  .line-connect { display: none; } }
 /*# sourceMappingURL=style.make.new.css.map */

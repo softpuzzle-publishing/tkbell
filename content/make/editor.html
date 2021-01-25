@@ -63,202 +63,98 @@
 
                 <!-- 에디터 : 김하나 추가-->
                 <div class="tkbell-editor">
-                    <div class="tkbell-editor-header top">
+                    <div class="tkbell-editor-header">
                         <div class="inner">
+                            <div class="question-num"><span>12</span>문항 / <span>100</span>점</div>
                             <div class="tool">
-                                <div><a href="#" data-toggle="tooltip" data-placement="top"><i class="ic-preview"><span class="hidden">미리보기</span></i></a></div>
-                                <div><a href="#" data-toggle="tooltip" data-placement="top"><i class="ic-undo"><span class="hidden">이전</span></i></a></div>
-                                <div><a href="#" data-toggle="tooltip" data-placement="top"><i class="ic-redo"><span class="hidden">앞으로</span></i></a></div>
-                                <div class="bar"></div>
-                                <div><a href="#" data-toggle="tooltip" data-placement="top"><i class="ic-focus"><span class="hidden">선택</span></i></a></div>
-                                <div class="has-sub">
-                                    <a href="#" data-toggle="tooltip" data-placement="top"><i class="ic-text"><span class="hidden">텍스트</span></i></a>
-                                    <div class="sub-menu">
-                                        <div class="tool-sub">
-                                            <div>
-                                                <div class="tool-select" style="width:105px;"> <!-- 옵션 선택할때마다 들쑥날쑥 하는거 방지 width 픽스 -->
-                                                    <a href="#none" class="selected">바탕</a>
-                                                    <div class="custom-select">
-                                                        <ul>
-                                                            <li><a href="#" style="font-family: batang;">바탕</a></li>
-                                                            <li><a href="#" style="font-family: Malgun Gothic;">맑은 고딕</a></li>
-                                                            <li><a href="#" style="font-family: gulim;">굴림</a></li>
-                                                            <li><a href="#" style="font-family: Sans-serif;">Sans Serif</a></li>
-                                                            <li><a href="#" style="font-family: serif;">Serif</a></li>
-                                                            <li><a href="#" style="font-family: Tahoma;">Tahoma</a></li>
-                                                            <li><a href="#" style="font-family: Verdana;">Verdana</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div class="tool-select" style="width:60px;">
-                                                    <a href="#none" class="selected">10</a>
-                                                    <div class="custom-select">
-                                                        <ul>
-                                                            <li><a href="#">8</a></li>
-                                                            <li><a href="#">9</a></li>
-                                                            <li><a href="#">10</a></li>
-                                                            <li><a href="#">11</a></li>
-                                                            <li><a href="#">12</a></li>
-                                                            <li><a href="#">13</a></li>
-                                                            <li><a href="#">14</a></li>
-                                                            <li><a href="#">15</a></li>
-                                                            <li><a href="#">16</a></li>
-                                                            <li><a href="#">18</a></li>
-                                                            <li><a href="#">20</a></li>
-                                                            <li><a href="#">24</a></li>
-                                                            <li><a href="#">30</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div><a href="#" style="font-weight: 700;">가</a></div>
-                                            <div><a href="#" style="font-style:italic">나</a></div>
-                                            <div><a href="#" style="text-decoration: underline;" class="active">다</a></div> <!-- 선택됨을 알려줘야 할 경우 .active 추가 -->
-                                            <div><a href="#" style="text-decoration: line-through;">라</a></div>
-                                            <div><a href="#" class="text-color">가<span class="underline" style="background: red;"></span></a></div>
-                                            <div class="bar"></div>
-                                            <div><a href="#"><i class="ic-outline" style="border-color:#4959eb;"><span class="hidden">윤곽선</span></i></a></div>
-                                            <div><a href="#"><i class="ic-fill" style="background: #862376"><span class="hidden">채우기</span></i></a></div>
-                                            <div><a href="#"><i class="ic-opacity"><span class="hidden">투명도</span></i></a></div>
-                                            <div class="bar"></div>
-                                            <div><a href="#"><i class="ic-copy"><span class="hidden">복제</span></i></a></div>
-                                            <div><a href="#"><i class="ic-delete"><span class="hidden">삭제</span></i></a></div>
-                                        </div>
-                                    </div>
+                                <div class="item">
+                                    <a href="#" class="main-tool" data-toggle="tooltip" data-placement="top"><i class="ic-preview"><span class="hidden">미리보기</span></i></a>
                                 </div>
-                                <div class="has-sub">
-                                    <a href="#" data-toggle="tooltip" data-placement="top"><i class="ic-pen"><span class="hidden">선 긋기</span></i></a>
-                                    <div class="sub-menu">
-                                        <div class="tool-sub">
-                                            <div>
-                                                <div class="tool-select" style="width:75px;">
-                                                    <a href="#none" class="selected">None</a>
-                                                    <div class="custom-select">
-                                                        <ul>
-                                                            <li><a href="#">None</a></li>
-                                                            <li><a href="#"><i class="fas fa-long-arrow-alt-left"></i></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div class="tool-select" style="width:75px;">
-                                                    <a href="#none" class="selected">None</a>
-                                                    <div class="custom-select">
-                                                        <ul>
-                                                            <li><a href="#">None</a></li>
-                                                            <li><a href="#"><i class="fas fa-long-arrow-alt-right"></i></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="bar"></div>
-                                            <div><a href="#"><i class="ic-outline" style="border-color:#000;"><span class="hidden">선 색상</span></i></a></div>
-                                            <div class="tool-select" style="width:75px;">
-                                                <a href="#none" class="selected"><i class="ic-line-solid"><span class="hidden">실선</span></i></a>
-                                                <div class="custom-select">
-                                                    <ul>
-                                                        <li><a href="#"><i class="ic-line-solid"><span class="hidden">실선</span></i></a></li>
-                                                        <li><a href="#"><i class="ic-line-dashed"><span class="hidden">점선</span></i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="bar"></div>
-                                            <div><a href="#"><i class="ic-copy"><span class="hidden">복제</span></i></a></div>
-                                            <div><a href="#"><i class="ic-delete"><span class="hidden">삭제</span></i></a></div>
-                                        </div>
-                                    </div>
+                                <div class="item">
+                                    <a href="#" class="main-tool" data-toggle="tooltip" data-placement="top"><i class="ic-undo"><span class="hidden">이전</span></i></a>
                                 </div>
-                                <div class="has-sub">
-                                    <a href="#" data-toggle="tooltip" data-placement="top"><i class="ic-eraser"><span class="hidden">지우개</span></i></a>
-                                    <div class="sub-menu">
-                                        <div class="tool-sub">
-                                            <div><a href="#"><i class="ic-outline"><span class="hidden">채우기</span></i></a></div>
-                                            <div><a href="#"><i class="ic-fill"><span class="hidden">윤곽선</span></i></a></div>
-                                            <div class="bar"></div>
-                                            <div><a href="#"><i class="ic-copy"><span class="hidden">복제</span></i></a></div>
-                                            <div><a href="#"><i class="ic-delete"><span class="hidden">삭제</span></i></a></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div><a href="#" data-toggle="tooltip" data-placement="top"><i class="ic-imgadd"><span class="hidden">이미지 삽입</span></i></a></div>
-                                <div><a href="#" data-toggle="tooltip" data-placement="top"><i class="ic-imgsearch"><span class="hidden">이미지 검색</span></i></a></div>
-                                <div class="bar"></div>
-                                <div class="has-sub">
-                                    <a href="#" data-toggle="tooltip" data-placement="top"><i class="ic-textbox"><span class="hidden">단답형</span></i></a>
-                                    <div class="sub-menu">
-                                        <div class="tool-sub">
-                                            <div>
-                                                <div class="tool-select" style="width:105px;"> <!-- 옵션 선택할때마다 들쑥날쑥 하는거 방지 width 픽스 -->
-                                                    <a href="#none" class="selected">바탕</a>
-                                                    <div class="custom-select">
-                                                        <ul>
-                                                            <li><a href="#" style="font-family: batang;">바탕</a></li>
-                                                            <li><a href="#" style="font-family: Malgun Gothic;">맑은 고딕</a></li>
-                                                            <li><a href="#" style="font-family: gulim;">굴림</a></li>
-                                                            <li><a href="#" style="font-family: Sans-serif;">Sans Serif</a></li>
-                                                            <li><a href="#" style="font-family: serif;">Serif</a></li>
-                                                            <li><a href="#" style="font-family: Tahoma;">Tahoma</a></li>
-                                                            <li><a href="#" style="font-family: Verdana;">Verdana</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div class="tool-select" style="width:60px;">
-                                                    <a href="#none" class="selected">10</a>
-                                                    <div class="custom-select">
-                                                        <ul>
-                                                            <li><a href="#">8</a></li>
-                                                            <li><a href="#">9</a></li>
-                                                            <li><a href="#">10</a></li>
-                                                            <li><a href="#">11</a></li>
-                                                            <li><a href="#">12</a></li>
-                                                            <li><a href="#">13</a></li>
-                                                            <li><a href="#">14</a></li>
-                                                            <li><a href="#">15</a></li>
-                                                            <li><a href="#">16</a></li>
-                                                            <li><a href="#">18</a></li>
-                                                            <li><a href="#">20</a></li>
-                                                            <li><a href="#">24</a></li>
-                                                            <li><a href="#">30</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div><a href="#" class="text-color">가<span class="underline" style="background: #000;"></span></a></div>
-                                            <div class="bar"></div>
-                                            <div><a href="#"><i class="ic-outline" style="border-color:#000;"><span class="hidden">윤곽선</span></i></a></div>
-                                            <div class="bar"></div>
-                                            <div><a href="#"><i class="far fa-cog"><span class="hidden">설정</span></i></a></div>
-                                            <div><a href="#"><i class="ic-copy"><span class="hidden">복제</span></i></a></div>
-                                            <div><a href="#"><i class="ic-delete"><span class="hidden">삭제</span></i></a></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="has-sub">
-                                    <a href="#" data-toggle="tooltip" data-placement="top"><i class="ic-radiobtn"><span class="hidden">단일선택형</span></i></a>
-                                </div>
-                                <div class="has-sub">
-                                    <a href="#" data-toggle="tooltip" data-placement="top"><i class="ic-checkbox"><span class="hidden">복수선택형</span></i></a>
-                                </div>
-                                <div class="has-sub">
-                                    <a href="#" data-toggle="tooltip" data-placement="top"><i class="ic-dropdown"><span class="hidden">드롭다운</span></i></a>
-                                </div>
-                                <div class="has-sub">
-                                    <a href="#" data-toggle="tooltip" data-placement="top"><i class="ic-connetline"><span class="hidden">선 잇기</span></i></a>
-                                </div>
-                                <div class="has-sub">
-                                    <a href="#" data-toggle="tooltip" data-placement="top">O/X</a>
-                                </div>
-                                <div class="has-sub">
-                                    <a href="#" data-toggle="tooltip" data-placement="top">수식</a>
+                                <div class="item">
+                                    <a href="#" class="main-tool" data-toggle="tooltip" data-placement="top"><i class="ic-redo"><span class="hidden">앞으로</span></i></a>
                                 </div>
                                 <div class="bar"></div>
-                                <div><a href="#" data-toggle="tooltip" data-placement="top"><i class="ic-setting"><span class="hidden">설정</span></i></a></div>
-                                <div><a href="#" data-toggle="tooltip" data-placement="top"><i class="ic-question"><span class="hidden">도움말</span></i></a></div>
+                                <div class="item">
+                                    <a href="#" class="main-tool" data-toggle="tooltip" data-placement="top"><i class="ic-focus"><span class="hidden">선택</span></i></a>
+                                </div>
+                                <div class="item">
+                                    <a href="#" class="main-tool" data-toggle="tooltip" data-placement="top"><i class="ic-text"><span class="hidden">텍스트</span></i></a>
+                                </div>
+                                <div class="item">
+                                    <a href="#" class="main-tool" data-toggle="tooltip" data-placement="top"><i class="ic-pen"><span class="hidden">선 긋기</span></i></a>
+                                </div>
+                                <div class="item">
+                                    <a href="#" class="main-tool" data-toggle="tooltip" data-placement="top"><i class="ic-eraser"><span class="hidden">지우개</span></i></a>
+                                </div>
+                                <div class="item">
+                                    <a href="#" class="main-tool" data-toggle="tooltip" data-placement="top"><i class="ic-imgadd"><span class="hidden">이미지 삽입</span></i></a>
+                                </div>
+                                <div class="item">
+                                    <a href="#" class="main-tool" data-toggle="tooltip" data-placement="top"><i class="ic-imgsearch"><span class="hidden">이미지 검색</span></i></a>
+                                </div>
+                                <div class="bar"></div>
+                                <div class="item">
+                                    <a href="#" class="main-tool" data-toggle="tooltip" data-placement="top"><i class="ic-textbox"><span class="hidden">단답형</span></i></a>
+                                </div>
+                                <div class="item">
+                                    <a href="#" class="main-tool" data-toggle="tooltip" data-placement="top"><i class="ic-radiobtn"><span class="hidden">단일선택형</span></i></a>
+                                </div>
+                                <div class="item">
+                                    <a href="#" class="main-tool" data-toggle="tooltip" data-placement="top"><i class="ic-checkbox"><span class="hidden">복수선택형</span></i></a>
+                                </div>
+                                <div class="item">
+                                    <a href="#" class="main-tool" data-toggle="tooltip" data-placement="top"><i class="ic-dropdown"><span class="hidden">드롭다운</span></i></a>
+                                </div>
+                                <div class="item">
+                                    <a href="#" class="main-tool" data-toggle="tooltip" data-placement="top"><i class="ic-connetline"><span class="hidden">선 잇기</span></i></a>
+                                </div>
+                                <div class="item">
+                                    <div class="tool-select no-arrow no-change">
+                                        <a href="#none" class="main-tool selected" data-toggle="tooltip" data-placement="top">O/X</a>
+                                        <div class="custom-select" style="width:115px;">
+                                            <ul>
+                                                <li><a href="#">O/X</a></li>
+                                                <li><a href="#">참/거짓</a></li>
+                                                <li><a href="#">예/아니오</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="tool-select no-arrow no-change">
+                                        <a href="#none" class="main-tool selected" data-toggle="tooltip" data-placement="top">수식</a>
+                                        <div class="custom-select" style="width:115px;">
+                                            <ul>
+                                                <li><a href="#">진/가분수</a></li>
+                                                <li><a href="#">대분수</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bar"></div>
+                                <div class="item">
+                                    <a href="#none" class="main-tool" data-toggle="tooltip" data-placement="top"><i class="ic-setting"><span class="hidden">설정</span></i></a>
+                                </div>
+                                <div class="item">
+                                    <div class="tool-select no-arrow no-change">
+                                        <a href="#none" class="main-tool selected" data-toggle="tooltip" data-placement="top"><i class="ic-question"><span class="hidden">도움말</span></i></a>
+                                        <div class="custom-select" style="width:115px;">
+                                            <ul>
+                                                <li><a href="#">시작하기(기본)</a></li>
+                                                <li><a href="#">단답형</a></li>
+                                                <li><a href="#">단일선택형</a></li>
+                                                <li><a href="#">복수선택형</a></li>
+                                                <li><a href="#">드롭다운</a></li>
+                                                <li><a href="#">선 잇기</a></li>
+                                                <li><a href="#">O/X</a></li>
+                                                <li><a href="#">수학</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -413,7 +309,7 @@
                         <div id="quickView" class="no-print">
                             <a href="javascript:;" class="toggler">이동 <i class="fal fa-angle-up"></i></a>
                             <ul>
-                                <li class="page-navigation" data-page-index="1"><button type="button">1</button></li>
+                                <li class="page-navigation active" data-page-index="1"><button type="button">1</button></li>
                                 <li class="page-navigation" data-page-index="2"><button type="button">2</button></li>
                                 <li class="page-navigation" data-page-index="3"><button type="button">3</button></li>
                                 <li class="page-navigation" data-page-index="4"><button type="button">4</button></li>
@@ -429,108 +325,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="scale-controler">
-                    <button class="btn-plus"><i class="far fa-minus-circle"></i></button>
-                    <span>100%</span>
-                    <button class="btn-plus"><i class="far fa-plus-circle"></i></button>
-                </div>
-
-                <script src="/asset/js/bootstrap.bundle.min.js"></script>
-                <script src="/asset/serviceFront/js/jquery.mCustomScrollbar.concat.min.js"></script>
-                <script>
-                    $(document).ready(function(){
-                        $('[data-toggle="tooltip"]').each(function(){
-                            $(this).attr('title',$(this).find('.hidden').text());
-                        });
-                        $('[data-toggle="tooltip"]').tooltip();
-
-                        $('.custom-select').mCustomScrollbar({
-                            theme:"dark-2"
-                        });
-
-                        $('.scale-controler').draggable({
-                            cursor: "move",
-                            cursorAt: { top: 46, left: 180 }
-                        });
-
-                        $(window).scroll(function(e){
-                            if($(window).scrollTop() > 80){
-                                $('html').addClass('tool-fixed');
-                            }else{
-                                $('html').removeClass('tool-fixed');
-                            }
-                        });
-
-                        // 페이지 이동 네비게이션 클릭시 페이지 이동
-                        $("li.page-navigation").click(function() {
-                            var index = $(this).index();
-                            var top = $(".editor-layer").eq(index).offset().top - 161;
-                            $("html, body").animate({ scrollTop : top }, 400);
-                        });
-
-                        // 페이지 이동 네비게이션 접기 / 펼치기
-                        $("#quickView .toggler").click(function(){
-                            $(this).closest("#quickView").find("ul").slideToggle();
-                            $(this).find("i").toggleClass("fa-rotate-180");
-                        });
-
-                        // 윈도우 스크롤시 스크롤에 해당하는 페이지 표시
-                        $(window).scroll(function(){
-                            var scrollTop = $(window).scrollTop();
-                            var page = Math.ceil(scrollTop / 1163);
-                            if(page == 0){
-                                page = 1;
-                            }
-
-                            if(!$("li.page-navigation").eq(page-1).hasClass("active")){
-                                $(".page-navigation.active").removeClass("active");
-                                $("li.page-navigation").eq(page-1).addClass("active");
-                            }
-                        });
-
-                        //서브툴 토글
-                        $('.tool > div > a').on('click',function(e){
-                            $(this).parent().siblings().removeClass('show');
-                            if($(this).parent().hasClass('has-sub')){
-                                e.preventDefault();
-                                if($(this).parent().hasClass('show')){
-                                    $(this).parent().removeClass('show');
-                                }else{
-                                    $(this).parent().addClass('show');
-                                }
-                            }
-                        });
-
-                        //커스텀 셀렉트 오픈
-                        $('.tool-select .selected').on('click',function(e){
-                            e.preventDefault();
-                            if($(this).siblings('.custom-select').is(':visible')){
-                                $(this).siblings('.custom-select').hide();
-                                return false;
-                            }
-                            $('.custom-select').hide();
-                            $(this).siblings('.custom-select').show();
-                        });
-                        //아이템 선택
-                        $('.tool-select li a').on('click',function(e){
-                            e.preventDefault();
-                            $(this).closest('.tool-select').find('.selected').empty();
-                            $(this).closest('.tool-select').find('.selected').append($(this).html());
-                            $(this).closest('.custom-select').hide();
-                        });
-                        //바깥 클릭
-                        $(document).click(function(e) {
-                            if(!$('.tool').has(e.target).length){
-                                if($('.custom-select').is(':visible')){
-                                    $(".custom-select").hide();
-                                }
-                                else{
-                                    $(".has-sub.show").removeClass('show');
-                                }
-                            }
-                        });
-                    });
-                </script>
                 <!-- // 에디터 : 김하나 추가 -->
 
             </div>
@@ -554,8 +348,208 @@
         </div>
     </div>
 
+    <!-- 선택된 박스에 대한 툴 -->
+    <div class="tool-sub">
+        <div>
+            <div class="tool-select">
+                <a href="#none" class="selected">바탕</a>
+                <div class="custom-select" style="width:105px;">
+                    <ul>
+                        <li><a href="#" style="font-family: batang;">바탕</a></li>
+                        <li><a href="#" style="font-family: Malgun Gothic;">맑은 고딕</a></li>
+                        <li><a href="#" style="font-family: gulim;">굴림</a></li>
+                        <li><a href="#" style="font-family: Sans-serif;">Sans Serif</a></li>
+                        <li><a href="#" style="font-family: serif;">Serif</a></li>
+                        <li><a href="#" style="font-family: Tahoma;">Tahoma</a></li>
+                        <li><a href="#" style="font-family: Verdana;">Verdana</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="tool-select">
+                <a href="#none" class="selected">10</a>
+                <div class="custom-select" style="width:60px;">
+                    <ul>
+                        <li><a href="#">8</a></li>
+                        <li><a href="#">9</a></li>
+                        <li><a href="#">10</a></li>
+                        <li><a href="#">11</a></li>
+                        <li><a href="#">12</a></li>
+                        <li><a href="#">13</a></li>
+                        <li><a href="#">14</a></li>
+                        <li><a href="#">15</a></li>
+                        <li><a href="#">16</a></li>
+                        <li><a href="#">18</a></li>
+                        <li><a href="#">20</a></li>
+                        <li><a href="#">24</a></li>
+                        <li><a href="#">30</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div><a href="#" style="font-weight: 700;">가</a></div>
+        <div><a href="#" style="font-style:italic">나</a></div>
+        <div><a href="#" style="text-decoration: underline;" class="active">다</a></div> <!-- 선택됨을 알려줘야 할 경우 .active 추가 -->
+        <div><a href="#" style="text-decoration: line-through;">라</a></div>
+        <div><a href="#" class="t-textcolor">가<span class="underline" style="background: red;"></span></a></div>
+        <div class="bar"></div>
+        <div class="tool-select no-arrow">
+            <a href="#none" class="selected text-center">None</a>
+            <div class="custom-select" style="width:55px;">
+                <ul>
+                    <li><a href="#" class="text-center">None</a></li>
+                    <li><a href="#" class="text-center"><i class="fas fa-long-arrow-alt-left"></i></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="tool-select no-arrow">
+            <a href="#none" class="selected text-center">None</a>
+            <div class="custom-select" style="width:55px;">
+                <ul>
+                    <li><a href="#" class="text-center">None</a></li>
+                    <li><a href="#" class="text-center"><i class="fas fa-long-arrow-alt-right"></i></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="bar"></div>
+        <div><a href="#"><i class="ic-outline" style="border-color:#000;"><span class="hidden">선 색상</span></i></a></div>
+        <div class="tool-select no-arrow">
+            <a href="#none" class="selected"><i class="ic-line-solid"><span class="hidden">실선</span></i></a>
+            <div class="custom-select" style="width:45px;">
+                <ul>
+                    <li><a href="#"><i class="ic-line-solid"><span class="hidden">실선</span></i></a></li>
+                    <li><a href="#"><i class="ic-line-dashed"><span class="hidden">점선</span></i></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="bar"></div>
+        <div><a href="#"><i class="ic-outline" style="border-color:#4959eb;"><span class="hidden">윤곽선</span></i></a></div>
+        <div><a href="#"><i class="ic-fill" style="background: #862376"><span class="hidden">채우기</span></i></a></div>
+        <div><a href="#"><i class="ic-opacity"><span class="hidden">투명도</span></i></a></div>
+        <div class="bar"></div>
+        <div><a href="#"><i class="far fa-cog"><span class="hidden">설정</span></i></a></div>
+        <div><a href="#"><i class="ic-copy"><span class="hidden">복제</span></i></a></div>
+        <div><a href="#"><i class="ic-delete"><span class="hidden">삭제</span></i></a></div>
+        <div>
+            <div><i class="far fa-arrows"><span class="hidden">툴 이동</span></i></div>
+        </div>
+    </div>
+
+    <!-- 선 잇기 도구 -->
+    <div class="line-connect">
+        <div class="row">
+            <div class="col">
+                <a href="javascript:;" class="item active"><img src="/asset/images/make/2x2.png" alt=""></a>
+            </div>
+            <div class="col">
+                <a href="javascript:;" class="item"><img src="/asset/images/make/2x3.png" alt=""></a>
+            </div>
+            <div class="col">
+                <a href="javascript:;" class="item"><img src="/asset/images/make/2x4.png" alt=""></a>
+            </div>
+            <div class="col">
+                <a href="javascript:;" class="item"><img src="/asset/images/make/3x2.png" alt=""></a>
+            </div>
+            <div class="col">
+                <a href="javascript:;" class="item"><img src="/asset/images/make/3x3.png" alt=""></a>
+            </div>
+            <div class="col-auto">
+                <div class="custom">
+                    <div class="tit">
+                        <span>직접입력</span>
+                        <a href="#none" data-toggle="tooltip" data-placement="right" title="시작점과 연결할 끝점의 개수를 입력하세요."><i class="fal fa-question-circle"><span class="hidden">도움말</span></i></a>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <select name="" id="">
+                                <option value="">2</option>
+                                <option value="">3</option>
+                                <option value="">4</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <select name="" id="">
+                                <option value="">2</option>
+                                <option value="">3</option>
+                                <option value="">4</option>
+                            </select>
+                        </div>
+                        <div class="col-auto">
+                            <select name="" id="">
+                                <option value="">선택</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="button" class="btn spot4">생성</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 선 잇기 박스 -->
+    <div class="box-connect" data-type="2x2" style="position: absolute;left: 950px;top: 400px;">
+        <div class="group">
+            <div class="item">
+                <a href="" class="btn-point"><span></span></a>
+            </div>
+            <div class="item">
+                <a href="" class="btn-point active"><span></span></a>
+            </div>
+            <div class="item">
+                <a href="" class="btn-point"><span></span></a>
+            </div>
+            <div class="item">
+                <a href="" class="btn-point"><span></span></a>
+            </div>
+            <div class="item">
+                <a href="" class="btn-point active"><span></span></a>
+            </div>
+            <div class="item">
+                <a href="" class="btn-point"><span></span></a>
+            </div>
+            <div class="item">
+                <a href="" class="btn-point"><span></span></a>
+            </div>
+            <div class="item">
+                <a href="" class="btn-point"><span></span></a>
+            </div>
+        </div>
+    </div>
+    <div class="box-connect" data-by="3x3" style="position: absolute;left: 1100px;top: 400px;width:300px;height: 300px;">
+        <div class="group">
+            <div class="item">
+                <a href="" class="btn-point"><span></span></a>
+            </div>
+            <div class="item">
+                <a href="" class="btn-point"><span></span></a>
+            </div>
+            <div class="item">
+                <a href="" class="btn-point"><span></span></a>
+            </div>
+            <div class="item">
+                <a href="" class="btn-point"><span></span></a>
+            </div>
+            <div class="item">
+                <a href="" class="btn-point"><span></span></a>
+            </div>
+            <div class="item">
+                <a href="" class="btn-point"><span></span></a>
+            </div>
+            <div class="item">
+                <a href="" class="btn-point"><span></span></a>
+            </div>
+            <div class="item">
+                <a href="" class="btn-point"><span></span></a>
+            </div>
+            <div class="item">
+                <a href="" class="btn-point"><span></span></a>
+            </div>
+        </div>
+    </div>
+
     <!-- 이미지 검색 팝업 -->
-    <div id="dialogXXXXX1" title="이미지 검색" style="position: absolute;left: 50px;top: 250px;"> <!-- 확인용(스타일 삭제 해야함) -->
+    <div id="dialogXXXXX1" title="이미지 검색" style="position: absolute;left: 50px;top: 400px;"> <!-- 확인용(스타일 삭제 해야함) -->
         <div class="img-search">
             <div class="search-bar">
                 <div class="row">
@@ -589,7 +583,7 @@
     </div>
 
     <!-- 단답형 옵션 설정 -->
-    <div id="dialogXXXXX2" title="단답형 옵션 설정" style="position: absolute;left: 50px;top: 700px;"> <!-- 확인용(스타일 삭제 해야함) -->
+    <div id="dialogXXXXX2" title="단답형 옵션 설정" style="position: absolute;left: 50px;top: 850px;"> <!-- 확인용(스타일 삭제 해야함) -->
         <div class="option-setting">
             <div class="option">
                 <p>배점을 선택하세요.</p>
@@ -620,7 +614,7 @@
     </div>
 
     <!-- 단일선택형 옵션 설정 -->
-    <div id="dialogXXXXX3" title="단일선택형 옵션 설정" style="position: absolute;left: 500px;top: 700px;"> <!-- 확인용(스타일 삭제 해야함) -->
+    <div id="dialogXXXXX3" title="단일선택형 옵션 설정" style="position: absolute;left: 500px;top: 850px;"> <!-- 확인용(스타일 삭제 해야함) -->
         <div class="option-setting">
             <div class="option">
                 <p>배점을 선택하세요.</p>
@@ -656,7 +650,7 @@
     </div>
 
     <!-- 복수선택형 옵션 설정 -->
-    <div id="dialogXXXXX4" title="복수선택형 옵션 설정"> <!-- 확인용(스타일 삭제 해야함) -->
+    <div id="dialogXXXXX4" title="복수선택형 옵션 설정" style="position: absolute;left: 500px;top: 850px;"> <!-- 확인용(스타일 삭제 해야함) -->
         <div class="option-setting">
             <div class="option">
                 <p>배점을 선택하세요.</p>
@@ -692,7 +686,7 @@
     </div>
 
     <!-- 드롭다운 옵션 설정 -->
-    <div id="dialogXXXXX5" title="드롭다운 옵션 설정" style="position: absolute;left: 950px;top: 700px;"> <!-- 확인용(스타일 삭제 해야함) -->
+    <div id="dialogXXXXX5" title="드롭다운 옵션 설정" style="position: absolute;left: 950px;top: 850px;"> <!-- 확인용(스타일 삭제 해야함) -->
         <div class="option-setting">
             <div class="option">
                 <p>배점을 선택하세요.</p>
@@ -734,7 +728,7 @@
     </div>
 
     <!-- 선 잇기 옵션 설정 -->
-    <div id="dialogXXXXX5" title="선 잇기 옵션 설정" style="position: absolute;left: 1400px;top: 700px;"> <!-- 확인용(스타일 삭제 해야함) -->
+    <div id="dialogXXXXX5" title="선 잇기 옵션 설정" style="position: absolute;left: 1400px;top: 850px;"> <!-- 확인용(스타일 삭제 해야함) -->
         <div class="option-setting">
             <div class="option">
                 <p>배점을 선택하세요.</p>
@@ -758,7 +752,7 @@
     </div>
 
     <!-- O/X 옵션 설정 -->
-    <div id="dialogXXXXX5" title="O/X 옵션 설정" style="position: absolute;left: 50px;top: 980px;"> <!-- 확인용(스타일 삭제 해야함) -->
+    <div id="dialogXXXXX5" title="O/X 옵션 설정" style="position: absolute;left: 50px;top: 1150px;"> <!-- 확인용(스타일 삭제 해야함) -->
         <div class="option-setting">
             <div class="option">
                 <p>배점을 선택하세요.</p>
@@ -788,7 +782,7 @@
     </div>
 
     <!-- 수식 옵션 설정 -->
-    <div id="dialogXXXXX6" title="O/X 옵션 설정" style="position: absolute;left: 500px;top: 980px;"> <!-- 확인용(스타일 삭제 해야함) -->
+    <div id="dialogXXXXX6" title="O/X 옵션 설정" style="position: absolute;left: 500px;top: 1150px;"> <!-- 확인용(스타일 삭제 해야함) -->
         <div class="option-setting">
             <div class="option">
                 <p>배점을 선택하세요.</p>
@@ -827,7 +821,7 @@
     </div>
 
     <!-- 설정 -->
-    <div id="dialogXXXXX6" title="설정" style="position: absolute;left: 950px;top: 980px;"> <!-- 확인용(스타일 삭제 해야함) -->
+    <div id="dialogXXXXX6" title="설정" style="position: absolute;left: 950px;top: 1150px;"> <!-- 확인용(스타일 삭제 해야함) -->
         <div class="option-setting">
             <div class="option">
                 <p>문항별 점수 기본값:</p>
@@ -968,6 +962,112 @@
             </div>
         </div>
     </div>
+
+    <script src="/asset/js/bootstrap.bundle.min.js"></script>
+    <script src="/asset/serviceFront/js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.tool [data-toggle="tooltip"]').each(function(){
+                $(this).attr('title',$(this).find('.hidden').text());
+            });
+            $('[data-toggle="tooltip"]').tooltip({
+                trigger: 'hover'
+            });
+
+            $('.custom-select').mCustomScrollbar({
+                theme:"dark-2"
+            });
+
+            $('.tool-sub').draggable({
+                cursor: "move",
+                handle: '.fa-arrows',
+                start: function() {
+                    $(this).css({transform: "none", top: $(this).offset().top+"px", left:$(this).offset().left+"px"});
+                }
+            });
+            $( ".fa-arrows" ).disableSelection();
+
+
+            $(window).scroll(function(e){
+                if($(window).scrollTop() > 80){
+                    $('html').addClass('tool-fixed');
+                }else{
+                    $('html').removeClass('tool-fixed');
+                }
+            });
+
+            // 페이지 이동 네비게이션 클릭시 페이지 이동
+            $("li.page-navigation").click(function() {
+                var index = $(this).index();
+                var top = $(".editor-layer").eq(index).offset().top - 161;
+                $("html, body").animate({ scrollTop : top }, 400);
+            });
+
+            // 페이지 이동 네비게이션 접기 / 펼치기
+            $("#quickView .toggler").click(function(){
+                $(this).closest("#quickView").find("ul").slideToggle();
+                $(this).find("i").toggleClass("fa-rotate-180");
+            });
+
+            // 윈도우 스크롤시 스크롤에 해당하는 페이지 표시
+            $(window).scroll(function(){
+                var scrollTop = $(window).scrollTop();
+                var page = Math.ceil(scrollTop / 1163);
+                if(page == 0){
+                    page = 1;
+                }
+
+                if(!$("li.page-navigation").eq(page-1).hasClass("active")){
+                    $(".page-navigation.active").removeClass("active");
+                    $("li.page-navigation").eq(page-1).addClass("active");
+                }
+            });
+
+            //툴 선택 아이콘 활성화
+            $('.main-tool').on('click',function(e){
+                var $item = $(this).closest('.item');
+                $item.siblings().removeClass('active');
+                $item.addClass('active');
+            });
+
+            //커스텀 셀렉트 오픈
+            $('.tool-select .selected').on('click',function(e){
+                e.preventDefault();
+                if($(this).siblings('.custom-select').is(':visible')){
+                    $(this).siblings('.custom-select').hide();
+                    $(this).closest('.tool-select').removeClass('active');
+                    return false;
+                }
+                $('.custom-select').hide();
+                $(this).siblings('.custom-select').show();
+                $(this).closest('.tool-select').addClass('active');
+            });
+
+            //커스텀 셀렉트 아이템 선택
+            $('.tool-select li a').on('click',function(e){
+                e.preventDefault();
+                if(!$(this).closest('.tool-select').hasClass('no-change')){
+                    $(this).closest('.tool-select').find('.selected').empty();
+                    $(this).closest('.tool-select').find('.selected').append($(this).html());
+                }
+                $(this).closest('.tool-select').removeClass('active');
+                $(this).closest('.custom-select').hide();
+            });
+
+            //바깥 클릭
+            $(document).click(function(e) {
+                if(!$('.tool-select').has(e.target).length){
+                    if($('.custom-select').is(':visible')){
+                        $('.custom-select').hide();
+                        $('.tool-select').removeClass('active');
+                    }
+                    /* else{
+                        $(".has-sub.show").removeClass('show');
+                    } */
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
