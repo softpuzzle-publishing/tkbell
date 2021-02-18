@@ -80,7 +80,7 @@
                                 <div class="item">
                                     <a href="#" class="main-tool" data-toggle="tooltip" data-placement="top"><i class="ic-focus"><span class="hidden">선택</span></i></a>
                                 </div>
-                                <div class="item">
+                                <div class="item active">
                                     <a href="#" class="main-tool" data-toggle="tooltip" data-placement="top"><i class="ic-text"><span class="hidden">텍스트</span></i></a>
                                 </div>
                                 <div class="item">
@@ -137,23 +137,6 @@
                                 <div class="bar"></div>
                                 <div class="item">
                                     <a href="#none" class="main-tool" data-toggle="tooltip" data-placement="top"><i class="ic-setting"><span class="hidden">설정</span></i></a>
-                                </div>
-                                <div class="item">
-                                    <div class="tool-select no-arrow no-change">
-                                        <a href="#none" class="main-tool selected" data-toggle="tooltip" data-placement="top"><i class="ic-question"><span class="hidden">도움말</span></i></a>
-                                        <div class="custom-select" style="width:115px;">
-                                            <ul>
-                                                <li><a href="#">시작하기(기본)</a></li>
-                                                <li><a href="#">단답형</a></li>
-                                                <li><a href="#">단일선택형</a></li>
-                                                <li><a href="#">복수선택형</a></li>
-                                                <li><a href="#">드롭다운</a></li>
-                                                <li><a href="#">선 잇기</a></li>
-                                                <li><a href="#">O/X</a></li>
-                                                <li><a href="#">수학</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -350,6 +333,10 @@
 
     <!-- 선택된 박스에 대한 툴 -->
     <div class="tool-sub">
+        <div class="selected-tool">
+            <i class="ic-text"><span class="hidden">텍스트</span></i>
+        </div>
+        <div class="bar"></div>
         <div>
             <div class="tool-select">
                 <a href="#none" class="selected">바탕</a>
@@ -488,7 +475,7 @@
     </div>
 
     <!-- 선 잇기 박스 -->
-    <div class="box-connect" data-type="2x2" style="position: absolute;left: 950px;top: 400px;">
+    <div class="box-connect" data-type="2x4" style="position: absolute;left: 950px;top: 400px;">
         <div class="group">
             <div class="item">
                 <a href="" class="btn-point"><span></span></a>
@@ -516,7 +503,7 @@
             </div>
         </div>
     </div>
-    <div class="box-connect" data-by="3x3" style="position: absolute;left: 1100px;top: 400px;width:300px;height: 300px;">
+    <div class="box-connect" data-by="4x4" style="position: absolute;left: 1150px;top: 400px;width:300px;height: 300px;">
         <div class="group">
             <div class="item">
                 <a href="" class="btn-point"><span></span></a>
@@ -545,6 +532,41 @@
             <div class="item">
                 <a href="" class="btn-point"><span></span></a>
             </div>
+            <div class="item">
+                <a href="" class="btn-point"><span></span></a>
+            </div>
+            <div class="item">
+                <a href="" class="btn-point"><span></span></a>
+            </div>
+            <div class="item">
+                <a href="" class="btn-point"><span></span></a>
+            </div>
+            <div class="item">
+                <a href="" class="btn-point"><span></span></a>
+            </div>
+            <div class="item">
+                <a href="" class="btn-point"><span></span></a>
+            </div>
+            <div class="item">
+                <a href="" class="btn-point"><span></span></a>
+            </div>
+            <div class="item">
+                <a href="" class="btn-point"><span></span></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- o/x 박스 -->
+    <div class="box-o-x" style="position: absolute;left: 940px;top: 560px;width:120px;height: 40px;">
+        <div class="group">
+            <div class="item"><a href="#none" class="btn-select active"><span>O</span></a></div>
+            <div class="item"><a href="#none" class="btn-select"><span>X</span></a></div>
+        </div>
+    </div>
+    <div class="box-o-x" style="position: absolute;left: 940px;top: 660px;width:240px;height: 60px;">
+        <div class="group">
+            <div class="item"><a href="#none" class="btn-select active"><span>참</span></a></div>
+            <div class="item"><a href="#none" class="btn-select"><span>거짓</span></a></div>
         </div>
     </div>
 

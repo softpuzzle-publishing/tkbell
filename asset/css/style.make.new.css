@@ -36,21 +36,21 @@ input.box-style { display: block; width: 100%; background: #fff; height: 56px; p
 
 .editor .contents { padding-top: 25px; width: 992px; }
 
-.tkbell-editor-header { height: 56px; position: relative; }
+.tkbell-editor-header { height: 60px; position: relative; }
 
-.tkbell-editor-header .question-num { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); margin-top: -1px; font-size: 14px; color: #888; letter-spacing: -0.28px; }
+.tkbell-editor-header .question-num { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); margin-top: -1px; font-size: 14px; color: #888; letter-spacing: -0.05em; }
 
 .tkbell-editor-header .question-num span { color: #ff6858; font-weight: 500; }
 
-.tkbell-editor-header .inner { border: 1px solid #ddd; border-radius: 28px; background-color: #fff; width: 992px; position: fixed; top: 0; top: 96px; z-index: 99; }
+.tkbell-editor-header .inner { border: 1px solid #ddd; border-radius: 10px; background-color: #fff; width: 992px; position: fixed; top: 0; top: 96px; z-index: 99; }
 
 html.tool-fixed .tkbell-editor-header .inner { box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05); }
 
 .tool i, .tool-sub i { color: #888; }
 
-.tool i[class^=ic], .tool-sub i[class^=ic] { display: block; width: 24px; height: 24px; background-repeat: no-repeat; background-position: 50% 50%; font-size: 17px; color: #888; line-height: 1; vertical-align: top; font-family: "Font Awesome 5 Pro"; -moz-osx-font-smoothing: grayscale; -webkit-font-smoothing: antialiased; text-rendering: auto; font-style: normal; position: relative; box-sizing: border-box; }
+.tool i[class^=ic-], .tool-sub i[class^=ic-] { display: block; width: 29px; height: 29px; background-repeat: no-repeat; background-position: 50% 50%; font-size: 20px; color: #888; line-height: 1; vertical-align: top; font-family: "Font Awesome 5 Pro"; -moz-osx-font-smoothing: grayscale; -webkit-font-smoothing: antialiased; text-rendering: auto; font-style: normal; position: relative; box-sizing: border-box; }
 
-.tool i[class^=ic]::before, .tool-sub i[class^=ic]::before { display: inline-block; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+.tool i[class^=ic-]::before, .tool-sub i[class^=ic-]::before { display: inline-block; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
 
 .tool i[class$=preview], .tool-sub i[class$=preview] { background-image: url("../images/make/ic-preview.png"); }
 
@@ -84,51 +84,57 @@ html.tool-fixed .tkbell-editor-header .inner { box-shadow: 0 2px 6px rgba(0, 0, 
 
 .tool i[class$=question], .tool-sub i[class$=question] { background-image: url("../images/make/ic-question.png"); }
 
-.tool i[class$=outline], .tool-sub i[class$=outline] { width: 18px; height: 18px; background-color: #e8e7e8; border: 2px solid #000; border-radius: 2px; }
+.tool i[class$=outline], .tool-sub i[class$=outline] { width: 22px; height: 22px; background-color: #e8e7e8; border: 2px solid #000; border-radius: 4px; }
 
-.tool i[class$=fill], .tool-sub i[class$=fill] { background-image: url("../images/make/ic-fill.png"); width: 18px; height: 18px; border: 2px solid #ddd; border-radius: 2px; }
+.tool i[class$=fill], .tool-sub i[class$=fill] { background-image: url("../images/make/ic-fill.png"); width: 22px; height: 22px; border: 2px solid #ddd; border-radius: 2px; }
 
 .tool i[class$=opacity], .tool-sub i[class$=opacity] { background-image: url("../images/make/ic-opacity.png"); }
 
-.tool .active i[class$=text], .tool .show i[class$=text], .tool-sub .active i[class$=text], .tool-sub .show i[class$=text] { background-image: url("../images/make/ic-text-select.png"); }
+.tool .selected-tool i[class$=text], .tool .active i[class$=text], .tool .show i[class$=text], .tool-sub .selected-tool i[class$=text], .tool-sub .active i[class$=text], .tool-sub .show i[class$=text] { background-image: url("../images/make/ic-text-select.png"); }
 
-.tool .active i[class$=pen], .tool .show i[class$=pen], .tool-sub .active i[class$=pen], .tool-sub .show i[class$=pen] { background-image: url("../images/make/ic-pen-select.png"); }
+.tool .selected-tool i[class$=focus], .tool .active i[class$=focus], .tool .show i[class$=focus], .tool-sub .selected-tool i[class$=focus], .tool-sub .active i[class$=focus], .tool-sub .show i[class$=focus] { background-image: url("../images/make/ic-focus-select.png"); }
 
-.tool .active i[class$=eraser], .tool .show i[class$=eraser], .tool-sub .active i[class$=eraser], .tool-sub .show i[class$=eraser] { background-image: url("../images/make/ic-eraser-select.png"); }
+.tool .selected-tool i[class$=pen], .tool .active i[class$=pen], .tool .show i[class$=pen], .tool-sub .selected-tool i[class$=pen], .tool-sub .active i[class$=pen], .tool-sub .show i[class$=pen] { background-image: url("../images/make/ic-pen-select.png"); }
 
-.tool .active i[class$=imgadd], .tool .show i[class$=imgadd], .tool-sub .active i[class$=imgadd], .tool-sub .show i[class$=imgadd] { background-image: url("../images/make/ic-imgadd-select.png"); }
+.tool .selected-tool i[class$=eraser], .tool .active i[class$=eraser], .tool .show i[class$=eraser], .tool-sub .selected-tool i[class$=eraser], .tool-sub .active i[class$=eraser], .tool-sub .show i[class$=eraser] { background-image: url("../images/make/ic-eraser-select.png"); }
 
-.tool .active i[class$=imgsearch], .tool .show i[class$=imgsearch], .tool-sub .active i[class$=imgsearch], .tool-sub .show i[class$=imgsearch] { background-image: url("../images/make/ic-imgsearch-select.png"); }
+.tool .selected-tool i[class$=imgadd], .tool .active i[class$=imgadd], .tool .show i[class$=imgadd], .tool-sub .selected-tool i[class$=imgadd], .tool-sub .active i[class$=imgadd], .tool-sub .show i[class$=imgadd] { background-image: url("../images/make/ic-imgadd-select.png"); }
 
-.tool .active i[class$=textbox], .tool .show i[class$=textbox], .tool-sub .active i[class$=textbox], .tool-sub .show i[class$=textbox] { background-image: url("../images/make/ic-textbox-select.png"); }
+.tool .selected-tool i[class$=imgsearch], .tool .active i[class$=imgsearch], .tool .show i[class$=imgsearch], .tool-sub .selected-tool i[class$=imgsearch], .tool-sub .active i[class$=imgsearch], .tool-sub .show i[class$=imgsearch] { background-image: url("../images/make/ic-imgsearch-select.png"); }
 
-.tool .active i[class$=radiobtn], .tool .show i[class$=radiobtn], .tool-sub .active i[class$=radiobtn], .tool-sub .show i[class$=radiobtn] { background-image: url("../images/make/ic-radiobtn-select.png"); }
+.tool .selected-tool i[class$=textbox], .tool .active i[class$=textbox], .tool .show i[class$=textbox], .tool-sub .selected-tool i[class$=textbox], .tool-sub .active i[class$=textbox], .tool-sub .show i[class$=textbox] { background-image: url("../images/make/ic-textbox-select.png"); }
 
-.tool .active i[class$=checkbox], .tool .show i[class$=checkbox], .tool-sub .active i[class$=checkbox], .tool-sub .show i[class$=checkbox] { background-image: url("../images/make/ic-checkbox-select.png"); }
+.tool .selected-tool i[class$=radiobtn], .tool .active i[class$=radiobtn], .tool .show i[class$=radiobtn], .tool-sub .selected-tool i[class$=radiobtn], .tool-sub .active i[class$=radiobtn], .tool-sub .show i[class$=radiobtn] { background-image: url("../images/make/ic-radiobtn-select.png"); }
 
-.tool .active i[class$=dropdown], .tool .show i[class$=dropdown], .tool-sub .active i[class$=dropdown], .tool-sub .show i[class$=dropdown] { background-image: url("../images/make/ic-dropdown-select.png"); }
+.tool .selected-tool i[class$=checkbox], .tool .active i[class$=checkbox], .tool .show i[class$=checkbox], .tool-sub .selected-tool i[class$=checkbox], .tool-sub .active i[class$=checkbox], .tool-sub .show i[class$=checkbox] { background-image: url("../images/make/ic-checkbox-select.png"); }
 
-.tool .active i[class$=connetline], .tool .show i[class$=connetline], .tool-sub .active i[class$=connetline], .tool-sub .show i[class$=connetline] { background-image: url("../images/make/ic-connetline-select.png"); }
+.tool .selected-tool i[class$=dropdown], .tool .active i[class$=dropdown], .tool .show i[class$=dropdown], .tool-sub .selected-tool i[class$=dropdown], .tool-sub .active i[class$=dropdown], .tool-sub .show i[class$=dropdown] { background-image: url("../images/make/ic-dropdown-select.png"); }
 
-.tool .active i[class$=setting], .tool .show i[class$=setting], .tool-sub .active i[class$=setting], .tool-sub .show i[class$=setting] { background-image: url("../images/make/ic-setting-select.png"); }
+.tool .selected-tool i[class$=connetline], .tool .active i[class$=connetline], .tool .show i[class$=connetline], .tool-sub .selected-tool i[class$=connetline], .tool-sub .active i[class$=connetline], .tool-sub .show i[class$=connetline] { background-image: url("../images/make/ic-connetline-select.png"); }
 
-.tool .active i[class$=question], .tool .show i[class$=question], .tool-sub .active i[class$=question], .tool-sub .show i[class$=question] { background-image: url("../images/make/ic-question-select.png"); }
+.tool .selected-tool i[class$=setting], .tool .active i[class$=setting], .tool .show i[class$=setting], .tool-sub .selected-tool i[class$=setting], .tool-sub .active i[class$=setting], .tool-sub .show i[class$=setting] { background-image: url("../images/make/ic-setting-select.png"); }
 
-.tool i[class$=line-solid], .tool-sub i[class$=line-solid] { background-image: url("../images/make/ic-line-solid.svg"); }
+.tool .selected-tool i[class$=question], .tool .active i[class$=question], .tool .show i[class$=question], .tool-sub .selected-tool i[class$=question], .tool-sub .active i[class$=question], .tool-sub .show i[class$=question] { background-image: url("../images/make/ic-question-select.png"); }
 
-.tool i[class$=line-dashed], .tool-sub i[class$=line-dashed] { background-image: url("../images/make/ic-line-dashed.svg"); }
+.tool i[class$=line-solid], .tool-sub i[class$=line-solid] { background-image: url("../images/make/ic-line-solid.svg"); width: 22px; height: 22px; margin: 0 auto; }
+
+.tool i[class$=line-dashed], .tool-sub i[class$=line-dashed] { background-image: url("../images/make/ic-line-dashed.svg"); width: 22px; height: 22px; margin: 0 auto; }
 
 .tool i[class$=copy]::before, .tool-sub i[class$=copy]::before { content: ''; }
 
 .tool i[class$=delete]::before, .tool-sub i[class$=delete]::before { content: ''; }
 
-.tool .bar, .tool-sub .bar { display: block; width: 1px; height: 23px; background: #ddd; margin: 0 12px; }
+.tool .bar, .tool-sub .bar { display: block; width: 1px; height: 25px; background: #ddd; margin: 0 11px; }
 
-.tool { display: flex; align-items: center; padding: 15px; }
+.tool .selected-tool + .bar, .tool-sub .selected-tool + .bar { height: 60px; }
 
-.tool > * { line-height: 1; color: #888; font-size: 14px; display: block; margin: 0 8px; }
+.tool { display: flex; align-items: center; padding: 14px; }
+
+.tool > * { line-height: 1; color: #888; font-size: 16px; display: block; margin: 0 9px; }
 
 .tool > * > a { color: #888; font-weight: 500; }
+
+.tool > * .selected { color: #8f8f8f; font-weight: 500; }
 
 .tool .show > a { color: #ff6858; }
 
@@ -142,23 +148,23 @@ html.tool-fixed .tkbell-editor-header .inner { box-shadow: 0 2px 6px rgba(0, 0, 
 
 .tool .tooltip-inner { padding: 4px 7px; }
 
-.tool-sub { display: flex; align-items: center; padding: 15px; border-radius: 28px; box-shadow: 0px 4px 5px 1px rgba(0, 0, 0, 0.21); background-color: #fafafa; border: 1px solid #ddd; position: fixed; left: 50%; transform: translate(-50.2%, 0); top: 152px; z-index: 999; }
+.tool-sub { display: flex; align-items: center; height: 60px; padding: 15px; border-radius: 10px; box-shadow: 0px 4px 5px 1px rgba(0, 0, 0, 0.21); background-color: #fafafa; border: 1px solid #ddd; position: fixed; left: 50%; transform: translate(-50.2%, 0); top: 176px; z-index: 999; }
 
-.tool-sub > * { margin: 0 4px; line-height: 1; font-size: 14px; }
+.tool-sub > * { margin: 0 5px; line-height: 1; font-size: 16px; }
 
-.tool-sub > * > a { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; }
+.tool-sub > * > a { width: 24px; min-height: 22px; display: flex; align-items: center; justify-content: center; }
 
 .tool-sub > * > a.active { background: #ddd; border-radius: 3px; }
 
 .tool-sub .bar { margin: 0 12px; }
 
-.tool-sub .fa, .tool-sub .fas, .tool-sub .far, .tool-sub .fal, .tool-sub .fad, .tool-sub .fa { font-size: 18px; }
+.tool-sub .fa, .tool-sub .fas, .tool-sub .far, .tool-sub .fal, .tool-sub .fad, .tool-sub .fa { font-size: 20px; }
 
 .tool-sub .fa-arrows { cursor: move; }
 
 .tool-select { position: relative; min-width: 24px; }
 
-.tool-select .selected { display: block; padding: 0 26px 0 10px; position: relative; white-space: nowrap; line-height: 24px; width: 100%; text-overflow: ellipsis; overflow: hidden; }
+.tool-select .selected { display: block; padding: 0 28px 0 10px; position: relative; white-space: nowrap; line-height: 22px; width: 100%; text-overflow: ellipsis; overflow: hidden; }
 
 .tool-select .selected::before { content: ''; display: block; width: 10px; height: 6px; background: url("../images/make/ic-arrow-down.svg") no-repeat 50% 50%; position: absolute; right: 10px; top: 50%; margin-top: -3px; }
 
@@ -166,7 +172,7 @@ html.tool-fixed .tkbell-editor-header .inner { box-shadow: 0 2px 6px rgba(0, 0, 
 
 .tool-select .custom-select { position: absolute; width: 100%; max-height: 300px; background: #fff; margin-top: 6px; display: none; box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2); border-radius: 4px; }
 
-.tool-select li a { display: block; padding: 10px 10px; font-size: 14px; white-space: nowrap; transition: all .1s; }
+.tool-select li a { display: block; padding: 10px 10px; font-size: 16px; white-space: nowrap; transition: all .1s; }
 
 .tool-select li a:hover { background-color: #f4f4f4; }
 
@@ -317,6 +323,16 @@ html.tool-fixed .tkbell-editor-header .inner { box-shadow: 0 2px 6px rgba(0, 0, 
 
 .line-connect .custom .btn { width: 100%; margin-top: 0.5rem; border-radius: 5px; }
 
+.box-o-x { width: 120px; height: 50px; }
+
+.box-o-x .group { display: flex; flex-wrap: wrap; align-items: center; height: 100%; }
+
+.box-o-x .item { width: 50%; padding: 0 2%; height: 100%; }
+
+.box-o-x .btn-select { display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; text-align: center; border: 1px solid #bbb; color: #666; }
+
+.box-o-x .btn-select.active { background-color: #eee; font-weight: 700; }
+
 .box-connect { width: 120px; height: 120px; }
 
 .box-connect .btn-point { display: block; width: 30%; height: 0; padding-bottom: 30%; position: relative; }
@@ -330,6 +346,8 @@ html.tool-fixed .tkbell-editor-header .inner { box-shadow: 0 2px 6px rgba(0, 0, 
 .box-connect .group .item { width: 50%; text-align: center; display: flex; align-items: center; justify-content: center; }
 
 .box-connect[data-by^='3x'] .group .item { width: 33.33333%; }
+
+.box-connect[data-by^='4x'] .group .item { width: 25%; }
 
 @page { size: A4; }
 
